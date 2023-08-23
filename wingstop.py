@@ -37,7 +37,7 @@ while not driver.current_url.startswith("https://mywingstopsurvey.com/Survey.asp
     datepicker_trigger = driver.find_element(by="class name", value="ui-datepicker-trigger")
     datepicker_trigger.click()
 
-    wait = WebDriverWait(driver, 10)
+    wait = WebDriverWait(driver, 3)
     datepicker = wait.until(EC.visibility_of_element_located((By.ID, "ui-datepicker-div")))
 
 
@@ -75,11 +75,11 @@ wait.until(EC.url_changes(current_url))
 satisfied_option = driver.find_element(by="id", value="ANS000473.5")
 satisfied_option.click()
 
-#wait = WebDriverWait(driver, 5)
+
 in_restaurant_radio = wait.until(EC.element_to_be_clickable((By.XPATH, "//label[text()='In restaurant']")))
 in_restaurant_radio.click()
 
-wait = WebDriverWait(driver, 5)
+wait = WebDriverWait(driver, 3)
 pickup_option_radio = wait.until(EC.element_to_be_clickable((By.XPATH, "//label[text()='Pick up a carry out order in-store']")))
 pickup_option_radio.click()
 
@@ -98,11 +98,19 @@ if next_buttons:
     last_next_button.click()
 
 wait_for_new_url(driver)
+
 try:
-    visit = wait.until(EC.element_to_be_clickable((By.XPATH, "//label[text()='More often']")))
+    visit = EC.element_to_be_clickable((By.XPATH, "//label[text()='More often']"))
     visit.click()  
-except TimeoutException:
-    print("TimeoutException")
+except:
+    wait = WebDriverWait(driver, 3)
+    wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "radioSimpleInput")))
+    radio_button = driver.find_elements(By.CLASS_NAME, "radioSimpleInput")
+    radio_button[len(radio_button)-1].click()
+    wait_for_new_url(driver)
+    radio_button = driver.find_elements(By.CLASS_NAME, "radioSimpleInput")
+    print(len(radio_button))
+    radio_button[len(radio_button)-1].click()
 
 wait_for_new_url(driver)
 
@@ -126,42 +134,7 @@ if next_buttons:
     last_next_button.click()
 
 
-# wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "checkboxSimpleInput")))
-# optionButton = driver.find_elements(By.CLASS_NAME, "cataOption")
-# # for option_button in optionButton:
-# #     print("Element ID:", option_button.get_attribute("id"))
-# #     print("Element Value:", option_button.get_attribute("value"))
-# #     print("Element Style:", option_button.get_attribute("style"))
-# #     print("-" * 30)
-# for option_button in optionButton:
-#     print("Element ID:", option_button.get_attribute("id"))
-#     print("Element Value:", option_button.get_attribute("value"))
-#     print("Element Style:", option_button.get_attribute("style"))
-#     print("-" * 30)
-#     if option_button.get_attribute("id") == "FNSR000012": 
-#         but = driver.find_elements(By.ID, "FNSR000012")
-#         print(len(but))
-#         but[0].click()
-#         break
-#
-#
-#
-# nextLink = driver.find_elements(By.ID, "NextButton")
-# print(len(nextLink))
-# while len(nextLink) != 0:
-#     wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "checkboxSimpleInput")))
-#     optionButton = driver.find_elements(By.CLASS_NAME, "checkboxSimpleInput")
-#     print(optionButton)
-#     print(len(optionButton))
-#     optionButton[0].click()
-#     nextLink = driver.find_elements(By.ID, "NextButton")
-#     if len(nextLink) == 0:
-#         break
-#     nextLink[0].click()
 
-# wait.until(EC.visibility_of_element_located((By.ID, "NextButton")))
-# next_button = driver.find_element(by="id", value="NextButton")
-# next_button.click()
 
 print(driver.current_url)
 input("Press Enter to close the browser...")
