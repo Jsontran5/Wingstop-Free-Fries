@@ -99,9 +99,10 @@ if next_buttons:
 
 wait_for_new_url(driver)
 
+
 try:
-    visit = EC.element_to_be_clickable((By.XPATH, "//label[text()='More often']"))
-    visit.click()  
+    visit = wait.until(EC.element_to_be_clickable((By.XPATH, "//label[text()='More often']")))
+    visit.click()
 except:
     wait = WebDriverWait(driver, 3)
     wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "radioSimpleInput")))
@@ -111,6 +112,7 @@ except:
     radio_button = driver.find_elements(By.CLASS_NAME, "radioSimpleInput")
     print(len(radio_button))
     radio_button[len(radio_button)-1].click()
+    
 
 wait_for_new_url(driver)
 
