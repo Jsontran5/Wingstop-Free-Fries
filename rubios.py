@@ -44,6 +44,9 @@ while search_text not in page_source:
     wait.until(EC.url_changes(current_url))
     page_source = driver.page_source
 
+if driver.current_url.startswith("https://www.tellrubios.com/Finish.aspx"):
+    print("Success!")
+
 text_elements = driver.find_element(By.XPATH, '//*[@id="finishIncentiveHolder"]/p[2]')
 
 print(text_elements.text)

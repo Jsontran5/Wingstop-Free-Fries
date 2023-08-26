@@ -55,5 +55,10 @@ next_button = driver.find_element(by="id", value="NextButton")
 next_button.click()
 
 print(driver.current_url)
+
+if driver.current_url.startswith("https://mywingstopsurvey.com/Finish.aspx"):
+    print("Success!")
+    driver.quit()
+    
 input("Press Enter to close the browser...")
 driver.quit()

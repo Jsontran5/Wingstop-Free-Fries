@@ -54,6 +54,10 @@ wait.until(EC.visibility_of_element_located((By.ID, "NextButton")))
 next_button = driver.find_element(by="id", value="NextButton")
 next_button.click()
 
+if driver.current_url.startswith("https://www.tellblazepizza.com/Finish.aspx"):
+    print("Success!")
+    driver.quit()
+
 print(driver.current_url)
 input("Press Enter to close the browser...")
 driver.quit()
