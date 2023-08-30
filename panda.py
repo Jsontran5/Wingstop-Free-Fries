@@ -93,6 +93,7 @@ print(driver.current_url)
 if driver.current_url.startswith("https://www.pandaguestexperience.com/Finish.aspx"):
     print("Success!")
     driver.quit()
+    exit()
 
 input("Press Enter to close the browser...")
 driver.quit()

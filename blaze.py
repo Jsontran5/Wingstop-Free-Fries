@@ -57,6 +57,7 @@ next_button.click()
 if driver.current_url.startswith("https://www.tellblazepizza.com/Finish.aspx"):
     print("Success!")
     driver.quit()
+    exit()
 
 print(driver.current_url)
 input("Press Enter to close the browser...")
