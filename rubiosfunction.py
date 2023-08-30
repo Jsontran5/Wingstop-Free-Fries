@@ -39,17 +39,17 @@ def rubios_survey():
 
     if driver.current_url.startswith("https://www.tellrubios.com/Finish.aspx"):
         text_elements = driver.find_element(By.XPATH, '//*[@id="finishIncentiveHolder"]/p[2]')
-        print(text_elements.text)
-
+        validation_code = text_elements.text
         print("Success! - Rubio's")
         driver.quit()
-        return
-
+        return validation_code
+        
     input("Press Enter to close the browser...")
     driver.quit()
 
 def main():
-    rubios_survey()
+    valid_code = rubios_survey()
+    print(valid_code)
 
 if __name__ == "__main__":
     main()

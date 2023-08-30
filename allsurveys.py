@@ -21,7 +21,9 @@ def main():
     #     future_panda.result()
     #     future_wingstop.result()
         
-    rubios_survey()
+    rubios_code = rubios_survey()
+    print(rubios_code)
+    
     blaze_pizza_survey(email)
     panda_survey(email)
     wingstop_survey(email)
