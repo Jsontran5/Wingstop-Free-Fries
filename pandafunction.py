@@ -50,9 +50,9 @@ def panda_survey(email):
     next_button.click()
    
     if driver.current_url.startswith("https://www.pandaguestexperience.com/Finish.aspx"):
-        print("Success! - Panda Express")
+        result = "Success! - Panda Express"
         driver.quit()
-        return
+        return result
 
     input("Press Enter to close the browser...")
     driver.quit()

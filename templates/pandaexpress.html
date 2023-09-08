@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Enter your email:</h1>
+<h1>Panda Express Survey</h1>
+<p>Enter your email for Wingstop:</p>
 <form action="/submit" method="POST">
+    <input type="hidden" name="option" value="pandaexpress">
     <input type="email" name="email" required>
     <input type="submit" value="Submit">
 </form>

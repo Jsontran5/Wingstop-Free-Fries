@@ -49,9 +49,9 @@ def blaze_pizza_survey(email):
     next_button.click()
 
     if driver.current_url.startswith("https://www.tellblazepizza.com/Finish.aspx"):
-        print("Success! - Blaze Pizza")
+        result = "Success! - Blaze Pizza"
         driver.quit()
-        return
+        return result
 
     print(driver.current_url)
     input("Press Enter to close the browser...")

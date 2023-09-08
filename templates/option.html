@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ option }} Survey</title>
+</head>
+
+<body>
+    <h1>{{ option }} Survey</h1>
+    <p>Enter your email for {{ option }}:</p>
+    <form action="/submit" method="POST">
+        <input type="email" name="email" required>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+
+</html>

@@ -1,87 +1,55 @@
-from flask import Flask, redirect, url_for, render_template, request, session, flash
-from datetime import timedelta
-from flask_sqlalchemy import SQLAlchemy
-
+from flask import Flask, render_template, request, redirect, url_for
+from blazefunction import blaze_pizza_survey
+from pandafunction import panda_survey
+from wingstopoptimizedfunction import wingstop_survey
+from rubiosfunction import rubios_survey
 
 app = Flask(__name__)
-app.secret_key = "hello"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False	
-app.permanent_session_lifetime = timedelta(days=3)
 
-db = SQLAlchemy(app)
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-class users(db.Model):
-    _id = db.Column("id", db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    email = db.Column(db.String(100))
+@app.route('/submit', methods=['POST'])
+def submit():
+    email = request.form.get('email')
+    # Default message in case no option is selected
+    result = "Please select an option."
 
-    def __init__(self, name, email):
-        self.name = name
-        self.email = email
+    # Check if a specific option was selected and call the respective function
+    selected_option = request.form.get('option')
+    if selected_option == 'wingstop':
+        result = wingstop_survey(email)
+    elif selected_option == 'rubios':
+        result = rubios_survey()
+    elif selected_option == 'pandaexpress':
+        result = panda_survey(email)
+    elif selected_option == 'blazepizza':
+        result = blaze_pizza_survey(email)
 
-@app.route('/') 
-def home():
-    return render_template("index.html")
+    return redirect(url_for('result', result=result))
 
-@app.route('/view')
-def view():
-    return render_template("view.html", values=users.query.all())
+@app.route('/wingstop')
+def wingstop():
+    return render_template('wingstop.html', option="Wingstop")
 
+@app.route('/rubios')
+def rubios():
+    return render_template('rubios.html', option="Rubio's")
 
-@app.route('/login', methods=['POST', 'GET'])
-def login():
-    if request.method == 'POST':
-        session.permanent = True
-        user = request.form['nm']
-        session['user'] = user
+@app.route('/pandaexpress')
+def pandaexpress():
+    return render_template('pandaexpress.html', option="Panda Express")
 
-        found_user = users.query.filter_by(name=user).first()
-        if found_user:
-            session["email"] = found_user.email
-        else:
-            usr = users(user, "")
-            db.session.add(usr)
-            db.session.commit()
+@app.route('/blazepizza')
+def blazepizza():
+    return render_template('blazepizza.html', option="Blaze Pizza")
 
-        flash(f"Login Successful!", "info")
-        return redirect(url_for("user"))
-    else:
-        if "user" in session:
-            flash(f"Already Logged In!", "info")
-            return redirect(url_for("user"))
-        
-        return render_template("login.html")
+@app.route('/result')
+def result():
+    result = request.args.get('result', 'Please select an option.')
+    return render_template('result.html', result=result)
 
-@app.route('/user', methods=['POST', 'GET'])
-def user():
-    email= None
-    if "user" in session:
-        user = session["user"]
-        if request.method == "POST":
-            email = request.form["email"]
-            session["email"] = email
-            found_user = users.query.filter_by(name=user).first()
-            found_user.email = email
-            db.session.commit()
-            flash(f"Email was saved!", "info")
-        else:
-            if "email" in session:
-                email = session["email"]
-
-        return render_template("user.html", email=email)
-    else:
-        flash(f"You are not logged in!", "info")
-        return redirect(url_for("login"))
-
-@app.route('/logout')
-def logout():
-    flash("You have been logged out!", "info")
-    session.pop("user", None)
-    session.pop("email", None)
-    return redirect(url_for("login"))
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)
