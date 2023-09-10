@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service
 from selenium.common.exceptions import TimeoutException
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 import datetime
 from datetime import timedelta
@@ -14,7 +15,7 @@ from datetime import timedelta
 def wingstop_survey(email):
     # Configure Chrome to run in headless mode
     chrome_options = Options()
-    service = Service('C:/Users/jocto/Desktop/wingstopfreefries/chromedriver.exe')
+    chrome_service = Service(ChromeDriverManager().install())
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--window-size=1920,1080")
@@ -24,7 +25,7 @@ def wingstop_survey(email):
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--incognito")
     
-    driver = webdriver.Chrome(service=service, options=chrome_options)
+    driver = webdriver.Chrome(service= chrome_service, options=chrome_options)
     
     try:
         driver.get("https://mywingstopsurvey.com/usa")
