@@ -13,6 +13,7 @@ from datetime import timedelta
 
 
 def wingstop_survey(email):
+ 
     # Configure Chrome to run in headless mode
     chrome_options = Options()
     chrome_service = Service(ChromeDriverManager().install())
