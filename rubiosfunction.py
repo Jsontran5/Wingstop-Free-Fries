@@ -52,9 +52,13 @@ def rubios_survey():
     if driver.current_url.startswith("https://www.tellrubios.com/Finish.aspx"):
         text_elements = driver.find_element(By.XPATH, '//*[@id="finishIncentiveHolder"]/p[2]')
         validation_code = text_elements.text
+        validation_code = validation_code.replace(search_text, "")
+        add_phrase = "Online Code for a free drink or dessert with your next purchase:"
+        result = add_phrase + " " + validation_code
+    
         print("Success! - Rubio's")
         driver.quit()
-        return validation_code
+        return result
         
     input("Press Enter to close the browser...")
     driver.quit()

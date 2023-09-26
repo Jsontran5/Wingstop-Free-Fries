@@ -25,7 +25,7 @@ def wingstop_survey(email):
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
     #chrome_options.add_argument("--incognito")
-    chrome_options.binary_location = '/opt/render/project/.render/chrome/opt/google/chrome' #for render.com
+    chrome_options.binary_location = '/opt/render/project/.render/chrome/opt/google/chrome' #UNCOMMENT BEFORE DEPLOYING TO RENDER.COM/PUSHING TO GITHUB
 
     driver = webdriver.Chrome(options=chrome_options)
     

@@ -29,6 +29,24 @@
             background-color: #ddd;
             color: black;
         }
+
+        /* Add CSS for the footer */
+        footer {
+            color: black;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: transparent;
+            /* Remove the black background */
+        }
+
+        /* Style the link inside the footer */
+        footer a {
+            color: blue;
+            text-decoration: none;
+        }
     </style>
 </head>
 
@@ -42,6 +60,11 @@
     </ul>
 
     {% block content %}{% endblock %}
+
+    <!-- Footer section with contact message -->
+    <footer>
+        Contact <a href="mailto:foodsurveycodes@gmail.com">foodsurveycodes@gmail.com</a> if the site is broken 💀
+    </footer>
 </body>
 
 </html>
