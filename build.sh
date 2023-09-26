@@ -15,6 +15,4 @@ if [[ ! -d $STORAGE_DIR/chrome ]]; then
 else
   echo "...Using Chrome from cache"
 fi
-
 pip install -r requirements.txt
-google-chrome --version
