@@ -15,8 +15,8 @@ from datetime import timedelta
 def wingstop_survey(email):
  
     # Configure Chrome to run in headless mode
-    chrome_options = Options()
-    chrome_service = Service(ChromeDriverManager().install())
+    chrome_options = webdriver.ChromeOptions()
+
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--window-size=1920,1080")
@@ -25,9 +25,9 @@ def wingstop_survey(email):
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--incognito")
-    chrome_options.binary_location = 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'
+    #chrome_options.binary_location = 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'
 
-    driver = webdriver.Chrome(service= chrome_service, options=chrome_options)
+    driver = webdriver.Chrome(options=chrome_options)
     
     try:
         driver.get("https://mywingstopsurvey.com/usa")
