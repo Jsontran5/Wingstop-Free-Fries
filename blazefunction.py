@@ -7,7 +7,19 @@ from selenium.common.exceptions import TimeoutException
 import time
 
 def blaze_pizza_survey(email):
-    driver = webdriver.Chrome()
+    chrome_options = webdriver.ChromeOptions()
+
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--window-size=1920,1080")
+    chrome_options.add_argument("--ignore-certificate-errors")
+    chrome_options.add_argument("--disable-extensions")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    #chrome_options.add_argument("--incognito")
+    chrome_options.binary_location = '/opt/render/project/.render/chrome/opt/google/chrome' #for render.com
+
+    driver = webdriver.Chrome(options=chrome_options)
     driver.get("https://www.tellblazepizza.com/")
 
     current_url = driver.current_url
