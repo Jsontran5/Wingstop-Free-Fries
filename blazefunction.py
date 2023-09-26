@@ -31,7 +31,7 @@ def blaze_pizza_survey(email):
         def url_changed(driver):
             return driver.current_url != previous_url
 
-        wait = WebDriverWait(driver, 5)
+        wait = WebDriverWait(driver, 3)
         wait.until(url_changed)
 
     while not driver.current_url.startswith("https://www.tellblazepizza.com/Survey.aspx"):

@@ -7,7 +7,19 @@ import time
 
 
 def rubios_survey():
+    chrome_options = webdriver.ChromeOptions()
 
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--window-size=1920,1080")
+    chrome_options.add_argument("--ignore-certificate-errors")
+    chrome_options.add_argument("--disable-extensions")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    #chrome_options.add_argument("--incognito")
+    chrome_options.binary_location = '/opt/render/project/.render/chrome/opt/google/chrome' #for render.com
+
+    driver = webdriver.Chrome(options=chrome_options)
     def wait_for_new_url(driver, previous_url, timeout=5):
         def url_changed(driver):
             return driver.current_url != previous_url
@@ -15,7 +27,7 @@ def rubios_survey():
         wait = WebDriverWait(driver, timeout)
         wait.until(url_changed)
 
-    driver = webdriver.Chrome()
+    #driver = webdriver.Chrome()
     driver.get("https://www.tellrubios.com/")
     
     current_url = driver.current_url
