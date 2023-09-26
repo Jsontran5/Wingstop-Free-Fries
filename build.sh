@@ -17,3 +17,4 @@ else
 fi
 
 pip install -r requirements.txt
+google-chrome --version
