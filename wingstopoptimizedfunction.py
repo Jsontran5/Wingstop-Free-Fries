@@ -27,7 +27,7 @@ def wingstop_survey(email):
     chrome_options.add_argument("--incognito")
     #chrome_options.binary_location = 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'
 
-    driver = webdriver.Chrome(executable_path='/opt/render/project/.render/chrome/opt/google/chrome/chromedriver',options=chrome_options)
+    driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
     
     try:
         driver.get("https://mywingstopsurvey.com/usa")
