@@ -25,7 +25,7 @@ def wingstop_survey(email):
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
     #chrome_options.add_argument("--incognito")
-    #chrome_options.binary_location = '/opt/render/project/.render/chrome/opt/google/chrome' #UNCOMMENT BEFORE DEPLOYING TO RENDER.COM/PUSHING TO GITHUB
+    chrome_options.binary_location = '/opt/render/project/.render/chrome/opt/google/chrome' #UNCOMMENT BEFORE DEPLOYING TO RENDER.COM/PUSHING TO GITHUB
 
     driver = webdriver.Chrome(options=chrome_options)
     def wait_for_new_url(driver, previous_url, timeout=5):
@@ -68,7 +68,7 @@ def wingstop_survey(email):
         next_button.click()
 
         if driver.current_url.startswith("https://mywingstopsurvey.com/Finish.aspx"):
-            result = "Success! Coupon sent to your email. - Wingstop"
+            result = "Success! Coupon (usable online) sent to your email. - Wingstop"
         else:
             result = "Unexpected page encountered."
 
