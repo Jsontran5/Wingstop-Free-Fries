@@ -1,0 +1,12 @@
+/* styles.css */
+body {
+    background-image: url('/static/wingstop.jpg');
+    /* Replace 'background.jpg' with your image file's name */
+    background-size: cover;
+    /* Ensures the image covers the entire body */
+    background-repeat: no-repeat;
+    /* Prevents image repetition */
+    background-attachment: fixed;
+    /* Ensures the image remains fixed while scrolling */
+    /* Add more styles as needed */
+}
