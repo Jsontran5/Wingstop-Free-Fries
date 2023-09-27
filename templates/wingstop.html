@@ -8,4 +8,13 @@
     <input type="email" name="email" required>
     <input type="submit" value="Submit">
 </form>
+<div id="loading" style="display: none; text-align: center;">
+    <img src="{{ url_for('static', filename='loading.gif') }}" alt="Loading..." style="width: 100px; height: 100px;">
+</div>
+<script>
+    function showLoading() {
+        document.getElementById('loading').style.display = 'block';
+        document.getElementById('email').disabled = true;
+    }
+</script>
 {% endblock %}

@@ -17,7 +17,7 @@ def blaze_pizza_survey(email):
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
     #chrome_options.add_argument("--incognito")
-    chrome_options.binary_location = '/opt/render/project/.render/chrome/opt/google/chrome' #for render.com
+    #chrome_options.binary_location = '/opt/render/project/.render/chrome/opt/google/chrome' #for render.com
 
     driver = webdriver.Chrome(options=chrome_options)
     driver.get("https://www.tellblazepizza.com/")
