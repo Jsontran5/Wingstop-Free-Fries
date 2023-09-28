@@ -61,7 +61,7 @@ def blaze_pizza_survey(email):
     next_button.click()
 
     if driver.current_url.startswith("https://www.tellblazepizza.com/Finish.aspx"):
-        result = "Success! Coupon sent to your email. - Blaze Pizza"
+        result = "Success! Coupon sent to your email. - Blaze Pizza (works online)"
         driver.quit()
         return result
 

@@ -68,7 +68,7 @@ def wingstop_survey(email):
         next_button.click()
 
         if driver.current_url.startswith("https://mywingstopsurvey.com/Finish.aspx"):
-            result = "Success! Coupon (usable online) sent to your email. - Wingstop"
+            result = "Success! Coupon sent to your email. - Wingstop (works online)"
         else:
             result = "Unexpected page encountered."
 

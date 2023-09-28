@@ -63,7 +63,7 @@ def panda_survey(email):
     next_button.click()
    
     if driver.current_url.startswith("https://www.pandaguestexperience.com/Finish.aspx"):
-        result = "Success! Coupon sent to your email. - Panda Express"
+        result = "Success! Coupon sent to your email. - Panda Express (works online)"
         driver.quit()
         return result
 
