@@ -1,6 +1,65 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    body {
+        background-color: #f5f5f5;
+        font-family: Arial, sans-serif;
+    }
+
+    h1 {
+        text-align: center;
+        color: #C02827 ;
+        font-size: 36px;
+        margin-top: 50px;
+    }
+
+    p {
+        text-align: center;
+        color: #333;
+        font-size: 18px;
+    }
+
+    form {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    input[type="email"] {
+        width: 300px;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+    }
+
+    input[type="submit"] {
+        background-color: #C02827 ;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 18px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #842b2b ;
+    }
+
+    #loading {
+        text-align: center;
+        display: none;
+        margin-top: 20px;
+    }
+
+    #loading img {
+        width: 100px;
+        height: 100px;
+    }
+</style>
+
 <h1>Panda Express Survey</h1>
 <p>Enter your email:</p>
 <form action="/submit" method="POST" onsubmit="return showLoading();">
@@ -8,13 +67,14 @@
     <input type="email" name="email" required>
     <input type="submit" value="Submit">
 </form>
-<div id="loading" style="display: none; text-align: center;">
-    <img src="{{ url_for('static', filename='loading.gif') }}" alt="Loading..." style="width: 100px; height: 100px;">
+<div id="loading">
+    <img src="{{ url_for('static', filename='bgloading.gif') }}" alt="Loading...">
 </div>
+
 <script>
     function showLoading() {
         document.getElementById('loading').style.display = 'block';
-        document.getElementById('email').disabled = true;
+        document.querySelector('input[type="submit"]').disabled = true;
     }
 </script>
 {% endblock %}
