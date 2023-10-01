@@ -53,8 +53,8 @@ def rubios_survey():
         text_elements = driver.find_element(By.XPATH, '//*[@id="finishIncentiveHolder"]/p[2]')
         validation_code = text_elements.text
         validation_code = validation_code.replace(search_text, "")
-        add_phrase = "Online Code for a free drink or dessert with your next purchase:"
-        result = add_phrase + " " + validation_code
+        add_phrase = "Online Code for a free drink or dessert with your next purchase at Rubios's:"
+        result = add_phrase + " " + validation_code 
     
         print("Success! - Rubio's")
         driver.quit()

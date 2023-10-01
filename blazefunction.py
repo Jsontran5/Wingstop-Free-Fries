@@ -20,58 +20,62 @@ def blaze_pizza_survey(email):
     chrome_options.binary_location = '/opt/render/project/.render/chrome/opt/google/chrome' #for render.com
 
     driver = webdriver.Chrome(options=chrome_options)
-    driver.get("https://www.tellblazepizza.com/")
-
-    current_url = driver.current_url
-    wait = WebDriverWait(driver, 3)
-
-    def wait_for_new_url(driver):
-        previous_url = driver.current_url
-
+    
+    def wait_for_new_url(driver, previous_url, timeout=5):
         def url_changed(driver):
             return driver.current_url != previous_url
 
-        wait = WebDriverWait(driver, 3)
+        wait = WebDriverWait(driver, timeout)
         wait.until(url_changed)
 
-    while not driver.current_url.startswith("https://www.tellblazepizza.com/Survey.aspx"):
-        next_button = driver.find_element(by="id", value="NextButton")
-        next_button.click()
+    try:
+        driver.get("https://www.tellblazepizza.com/")
 
-        wait.until(EC.url_changes(current_url))
+        current_url = driver.current_url
+        wait = WebDriverWait(driver, 3)
 
-    search_text = "Please provide your email address below to receive your offer. This information will not be used for any other purpose."
-    page_source = driver.page_source
+        while not driver.current_url.startswith("https://www.tellblazepizza.com/Survey.aspx"):
+            next_button = driver.find_element(by="id", value="NextButton")
+            next_button.click()
 
-    while search_text not in page_source:
+            wait_for_new_url(driver, current_url)
+
+        search_text = "Please provide your email address below to receive your offer. This information will not be used for any other purpose."
+        page_source = driver.page_source
+
+        while search_text not in page_source:
+            wait.until(EC.visibility_of_element_located((By.ID, "NextButton")))
+            next_button = driver.find_element(by="id", value="NextButton")
+            next_button.click()
+            wait_for_new_url(driver, current_url)
+            page_source = driver.page_source
+
+        send_email = driver.find_element(by="id", value="S000031")
+        send_email.send_keys(email)
+
+        conf_email = driver.find_element(by="id", value="S000032")
+        conf_email.send_keys(email)
+
         wait.until(EC.visibility_of_element_located((By.ID, "NextButton")))
         next_button = driver.find_element(by="id", value="NextButton")
         next_button.click()
-        wait.until(EC.url_changes(current_url))
-        page_source = driver.page_source
 
-    send_email = driver.find_element(by="id", value="S000031")
-    send_email.send_keys(email)
+        if driver.current_url.startswith("https://www.tellblazepizza.com/Finish.aspx"):
+            result = "Success! Coupon sent to your email. - Blaze Pizza (works online)"
+        else:
+            result = "Unexpected page encountered."
 
-    conf_email = driver.find_element(by="id", value="S000032")
-    conf_email.send_keys(email)
-
-    wait.until(EC.visibility_of_element_located((By.ID, "NextButton")))
-    next_button = driver.find_element(by="id", value="NextButton")
-    next_button.click()
-
-    if driver.current_url.startswith("https://www.tellblazepizza.com/Finish.aspx"):
-        result = "Success! Coupon sent to your email. - Blaze Pizza (works online)"
+    except Exception as e:
+        result = f"An error occurred: {str(e)}"
+    finally:
         driver.quit()
-        return result
 
-    print(driver.current_url)
-    input("Press Enter to close the browser...")
-    driver.quit()
+    return result
 
 def main():
     email = input("Enter your email: ")
-    blaze_pizza_survey(email)
+    result = blaze_pizza_survey(email)
+    print(result)
 
 if __name__ == "__main__":
     main()

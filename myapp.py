@@ -7,9 +7,6 @@ import re
 
 RESTRICTED_EMAILS = ['foodsurveycodes@gmail.com']
 
-
-
-
 def create_app():
     app = Flask(__name__)
 

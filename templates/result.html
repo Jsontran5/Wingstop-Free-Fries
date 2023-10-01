@@ -1,13 +1,58 @@
 {% extends "base.html" %}
 
 {% block content %}
-<head>
-    <title>Result</title>
-</head>
+<style>
+    body {
+        background-color: #f5f5f5;
+        font-family: Arial, sans-serif;
+    }
 
-<body>
-    <h1>Result:</h1>
-    <p>{{ result }}</p>
-    <a href="/">Run it back</a>
-</body>
+    h1 {
+        text-align: center;
+        color: #333;
+        font-size: 36px;
+        margin-top: 50px;
+    }
+
+    p {
+        text-align: center;
+        color: #333;
+        font-size: 18px;
+    }
+
+    /* Additional styling for the result */
+    .result-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .result {
+        color: #146A34;
+        font-size: 24px;
+    }
+
+    .run-again {
+        background-color: #333;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 18px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 20px;
+    }
+
+    .run-again:hover {
+        background-color: #201f1f;
+    }
+</style>
+
+<h1>Result:</h1>
+<div class="result-container">
+    <p class="result">{{ result }}</p>
+    <a class="run-again" href="/">Run it back</a>
+</div>
+
 {% endblock %}
