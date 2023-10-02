@@ -5,7 +5,7 @@ from wingstopoptimizedfunction import wingstop_survey
 from rubiosfunction import rubios_survey
 import re
 
-RESTRICTED_EMAILS = ['foodsurveycodes@gmail.com']
+RESTRICTED_EMAILS = ['foodsurveycode.s@gmail.com', 'joctopusteo@gmail.com']
 
 def create_app():
     app = Flask(__name__)
@@ -19,7 +19,7 @@ def create_app():
         email = request.form.get('email').lower()
         # Default message in case no option is selected
         result = "Please select an option."
-        if email in RESTRICTED_EMAILS:
+        if email not in RESTRICTED_EMAILS:
             return redirect(url_for('error'))
         # Check if a specific option was selected and call the respective function
         selected_option = request.form.get('option')
