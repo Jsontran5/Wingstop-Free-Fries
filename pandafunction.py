@@ -32,7 +32,7 @@ def panda_survey(email):
         wait.until(url_changed)
 
     try:
-        driver.get("https://www.pandaguestexperience.com/Index.aspx?POSType=PieceMeal")
+        driver.get("https://www.pandaguestexperience.com/")
 
         current_url = driver.current_url
 
