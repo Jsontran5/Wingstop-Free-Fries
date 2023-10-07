@@ -7,19 +7,19 @@
     <meta name="Wingstopfreefries" content="Select a restaurant to get a coupon code to include with your order!">
 
     <style>
-        /* Reset default margin and padding for all elements */
+       
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* Navbar styles */
+        /* Navbar */
         .navbar {
             background-color: #333;
             overflow: hidden;
             list-style: none;
-            /* Remove list item markers (dots) */
+          
         }
 
         .nav-item {
@@ -39,7 +39,7 @@
             color: black;
         }
 
-        /* Footer styles */
+        /* Footer */
         footer {
             color: black;
             text-align: center;
@@ -55,11 +55,10 @@
             text-decoration: none;
         }
 
-        /* Site Down Note */
+        
         .site-down-note {
             position: fixed;
             bottom: 350px;
-            /* Adjusted to be 60 pixels from the bottom */
             left: 50%;
             transform: translateX(-50%);
             background-color: red;
@@ -80,9 +79,9 @@
     </ul>
     {% block content %}{% endblock %}
 
-    <div class="site-down-note">
+    <!-- <div class="site-down-note">
         The site's functionality is currently broken. I think they patched the method. rip ☹️ <br />In the meantime, I have spare coupons if needed. email below 👇👇👇
-    </div>
+    </div> -->
 
     <footer>
         Contact <a href="mailto:foodsurveycodes@gmail.com">foodsurveycodes@gmail.com</a> if the site is broken (make

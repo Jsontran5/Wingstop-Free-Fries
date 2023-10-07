@@ -20,7 +20,6 @@
         font-size: 18px;
     }
 
-    /* Additional styling for the result */
     .result-container {
         text-align: center;
         margin-top: 20px;
@@ -48,16 +47,11 @@
         background-color: #201f1f;
     }
 
-    /* Disclaimer styling */
     .disclaimer {
-        color: #f00;
-        /* Red color for emphasis */
-        font-size: 18px;
-        /* Slightly smaller font size */
+        color: #D3D3D3;
+        font-size: 15px;
         margin-top: 40px;
-        /* Increased margin for spacing */
         font-weight: bold;
-        /* Bold text for emphasis */
     }
 </style>
 
@@ -65,8 +59,7 @@
 <div class="result-container">
     <p class="result">{{ result }}</p>
     <a class="run-again" href="/">Run it back</a>
-    <!-- Prominent Disclaimer -->
-    <!-- <p class="disclaimer">Emails are usually sent instantly or in a few minutes.<br /> However, if this is not the case, email me below for a spare.</p> -->
+    <p class="disclaimer">Emails are usually sent in a couple of minutes/instantly.<br /> However, if this is not the case, email me below for a spare.</p>
 </div>
 
 {% endblock %}

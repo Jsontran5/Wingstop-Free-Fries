@@ -10,7 +10,6 @@
     h1 {
         text-align: center;
         color: #e16b2a;
-        /* Orange color for Blaze Pizza theme */
         font-size: 36px;
         margin-top: 50px;
     }
@@ -37,7 +36,6 @@
 
     input[type="submit"] {
         background-color: #e16b2a;
-        /* Orange color for the submit button */
         color: #fff;
         border: none;
         padding: 10px 20px;
@@ -48,7 +46,6 @@
 
     input[type="submit"]:hover {
         background-color: #aa5629;
-        /* Darker orange color on hover */
     }
 
     #loading {
@@ -76,7 +73,7 @@
 
 <script>
     function showLoading() {
-        location.reload();
+        
         document.getElementById('loading').style.display = 'block';
         document.querySelector('input[type="submit"]').disabled = true;
     }
