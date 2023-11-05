@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from blazefunction import blaze_pizza_survey
 from pandafunction import panda_survey
 from wingstopoptimizedfunction import wingstop_survey
@@ -35,6 +35,9 @@ def create_app():
             result = blaze_pizza_survey(email)
 
         return redirect(url_for('result', result=result))
+    @app.route('/robots.txt')
+    def static_from_root():
+        return send_from_directory(app.static_folder, request.path[1:])
 
     @app.route('/wingstop')
     def wingstop():
