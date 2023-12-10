@@ -1,6 +1,6 @@
 # Website is Up and Running!
-Supported Stores:
-```bash
+###Supported Restaurants:
+```
 Wingstop
 Panda Express
 Rubio's
