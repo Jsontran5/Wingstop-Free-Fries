@@ -1,5 +1,5 @@
 # Website is Up and Running!
-###Supported Restaurants:
+### Supported Restaurants:
 ```
 Wingstop
 Panda Express
