@@ -6,4 +6,4 @@ Panda Express
 Rubio's
 Blaze Pizza
 ```
-[**Visit the Site**](https://wingstopfreefries.xyz)
+[**wingstopfreefries.xyz**](https://wingstopfreefries.xyz)
