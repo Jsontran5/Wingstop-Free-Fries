@@ -5,8 +5,10 @@ from wingstopoptimizedfunction import wingstop_survey
 from rubiosfunction import rubios_survey
 import re
 from datetime import datetime
+import pytz
 
 RESTRICTED_EMAILS = ['foodsurveycodes@gmail.com','', " "]
+pacific_tz = pytz.timezone('America/Los_Angeles')
 
 def create_app():
     app = Flask(__name__)
@@ -20,7 +22,7 @@ def create_app():
     @app.route('/submit', methods=['POST'])
     def submit():
         email = request.form.get('email').lower()
-        timestamp = datetime.now().strftime("%I:%M%p %m/%d/%Y")
+        timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S %p %m/%d/%Y')
 
         # Default message in case no option is selected
         result = "Please select an option."
@@ -57,15 +59,15 @@ def create_app():
     def list():
         if check:
             if not any(item.startswith("Was filled") for item in was_full):
-                was_full.append(f"Was filled at: {datetime.now().strftime('%I:%M:%S %p %m/%d/%Y')}")
+                was_full.append(f"Was filled at: {datetime.now(pacific_tz).strftime('%I:%M:%S %p %m/%d/%Y')}")
             print(was_full)
             for email, timestamps in check.items():
                 print(f"{email}: {timestamps}")
         else:
-            was_full.append(f"Empty at: {datetime.now().strftime('%I:%M:%S%p %m/%d/%Y')}")
+            was_full.append(f"Empty at: {datetime.now(pacific_tz).strftime('%I:%M:%S %p %m/%d/%Y')}")
             print(was_full)
-            print(f"No Emails at: {datetime.now().strftime('%I:%M:%S%p %m/%d/%Y')}")
-        return f"Check console for debugging - {datetime.now().strftime('%I:%M:%S%p %m/%d/%Y')}"
+            print(f"No Emails at: {datetime.now(pacific_tz).strftime('%I:%M:%S %p %m/%d/%Y')}")
+        return f"Check console for debugging - {datetime.now(pacific_tz).strftime('%I:%M:%S %p %m/%d/%Y')}"
     
     @app.route('/clear')
     def clear():
