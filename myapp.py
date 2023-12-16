@@ -4,14 +4,15 @@ from pandafunction import panda_survey
 from wingstopoptimizedfunction import wingstop_survey
 from rubiosfunction import rubios_survey
 import re
+from datetime import datetime
 
 RESTRICTED_EMAILS = ['foodsurveycodes@gmail.com','', " "]
 
 def create_app():
     app = Flask(__name__)
 
-    check = []
-
+    check = {}
+    was_full = []
     @app.route('/')
     def index():
         return render_template('index.html')
@@ -19,13 +20,18 @@ def create_app():
     @app.route('/submit', methods=['POST'])
     def submit():
         email = request.form.get('email').lower()
+        timestamp = datetime.now().strftime("%I:%M%p %m/%d/%Y")
 
         # Default message in case no option is selected
         result = "Please select an option."
         if email in RESTRICTED_EMAILS:
             return redirect(url_for('error'))
         
-        check.append(email)
+        if email in check:
+            check[email].append(timestamp)
+        else:
+            check[email] = [timestamp]
+
         selected_option = request.form.get('option')
         if selected_option == 'wingstop':
             result = wingstop_survey(email)
@@ -48,11 +54,29 @@ def create_app():
     
     @app.route('/list')
     def list():
-        if len(check) > 0:
-            print(check)
+        if check:
+            if not any(item.startswith("Was filled") for item in was_full):
+                was_full.append(f"Was filled at: {datetime.now().strftime('%I:%M:%S %p %m/%d/%Y')}")
+            print(was_full)
+            for email, timestamps in check.items():
+                print(f"{email}: {timestamps}")
         else:
-            print("No emails")
-        return "check console for debugging"
+            was_full.append(f"Empty at: {datetime.now().strftime('%I:%M:%S%p %m/%d/%Y')}")
+            print(was_full)
+            print(f"No Emails at: {datetime.now().strftime('%I:%M:%S%p %m/%d/%Y')}")
+        return f"Check console for debuggin - {datetime.now().strftime('%I:%M:%S%p %m/%d/%Y')}"
+    
+    @app.route('/clear')
+    def clear():
+        was_full.clear()
+        print("Cleared was_full")
+        return "Cleared was_full"
+    
+    @app.route('/sadsnxcvd')
+    def sadsnxcvd():
+        check.clear()
+        print("Cleared all")
+        return "Cleared all"        
 
     @app.route('/rubios')
     def rubios():
