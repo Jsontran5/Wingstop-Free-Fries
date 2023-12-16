@@ -26,7 +26,8 @@ def create_app():
         result = "Please select an option."
         if email in RESTRICTED_EMAILS:
             return redirect(url_for('error'))
-        
+        print(f"{email}: {timestamp}")
+
         if email in check:
             check[email].append(timestamp)
         else:
@@ -64,7 +65,7 @@ def create_app():
             was_full.append(f"Empty at: {datetime.now().strftime('%I:%M:%S%p %m/%d/%Y')}")
             print(was_full)
             print(f"No Emails at: {datetime.now().strftime('%I:%M:%S%p %m/%d/%Y')}")
-        return f"Check console for debuggin - {datetime.now().strftime('%I:%M:%S%p %m/%d/%Y')}"
+        return f"Check console for debugging - {datetime.now().strftime('%I:%M:%S%p %m/%d/%Y')}"
     
     @app.route('/clear')
     def clear():
