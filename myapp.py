@@ -10,20 +10,6 @@ import pytz
 
 RESTRICTED_EMAILS = ['foodsurveycodes@gmail.com','', " "]
 pacific_tz = pytz.timezone('America/Los_Angeles')
-check = {}
-was_full = []
-def list_check():  # Mark the function as asynchronous
-    if check:
-        if not any(item.startswith("Was filled") for item in was_full):
-            was_full.append(f"Was filled at: {datetime.now(pacific_tz).strftime('%I:%M:%S %p %m/%d/%Y')}")
-        print(was_full)
-        for email, timestamps in check.items():
-            print(f"{email}: {timestamps}")
-    else:
-        was_full.append(f"Empty at: {datetime.now(pacific_tz).strftime('%I:%M:%S %p %m/%d/%Y')}")
-        print(was_full)
-        print(f"No Emails at: {datetime.now(pacific_tz).strftime('%I:%M:%S %p %m/%d/%Y')}")
-
 
 def create_app():
     app = Flask(__name__)
@@ -43,11 +29,6 @@ def create_app():
         if email in RESTRICTED_EMAILS:
             return redirect(url_for('error'))
         print(f"{email}: {timestamp}")
-
-        if email in check:
-            check[email].append(timestamp)
-        else:
-            check[email] = [timestamp]
 
         selected_option = request.form.get('option')
         if selected_option == 'wingstop':
@@ -69,24 +50,6 @@ def create_app():
     def wingstop():
         return render_template('wingstop.html', option="Wingstop")
     
-    @app.route('/list')
-    def run_list():
-        list_check()
-        return "Check console for debugging"
-
-
-    @app.route('/clear')
-    def clear():
-        was_full.clear()
-        print("Cleared was_full")
-        return "Cleared was_full"
-    
-    @app.route('/sadsnxcvd')
-    def sadsnxcvd():
-        check.clear()
-        print("Cleared all")
-        return "Cleared all"        
-
     @app.route('/rubios')
     def rubios():
         return render_template('rubios.html', option="Rubio's")
