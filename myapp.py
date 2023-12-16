@@ -10,6 +10,8 @@ RESTRICTED_EMAILS = ['foodsurveycodes@gmail.com','', " "]
 def create_app():
     app = Flask(__name__)
 
+    check = []
+
     @app.route('/')
     def index():
         return render_template('index.html')
@@ -23,7 +25,7 @@ def create_app():
         if email in RESTRICTED_EMAILS:
             return redirect(url_for('error'))
         
-
+        check.append(email)
         selected_option = request.form.get('option')
         if selected_option == 'wingstop':
             result = wingstop_survey(email)
@@ -43,6 +45,14 @@ def create_app():
     @app.route('/wingstop')
     def wingstop():
         return render_template('wingstop.html', option="Wingstop")
+    
+    @app.route('/list')
+    def list():
+        if len(check) > 0:
+            print(check)
+        else:
+            print("No emails")
+        return "check console for debugging"
 
     @app.route('/rubios')
     def rubios():
