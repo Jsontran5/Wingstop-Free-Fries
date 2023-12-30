@@ -56,7 +56,7 @@ def rubios_survey():
         add_phrase = "Online Code for a free drink or dessert with your next purchase at Rubios's:"
         result = add_phrase + " " + validation_code 
     
-        print("Success! - Rubio's")
+
         driver.quit()
         return result
         

@@ -50,7 +50,20 @@
     .disclaimer {
         color: #D3D3D3;
         font-size: 15px;
-        margin-top: 40px;
+        margin-top: 23px;
+        font-weight: bold;
+    }
+
+    /* Tip styles */
+    .tip-container {
+        margin-top: 10px;
+        /* Adjusted margin to move it down */
+    }
+
+
+    .tip-text {
+        color: #FF8000;
+        font-size: 16px;
         font-weight: bold;
     }
 </style>
@@ -58,8 +71,17 @@
 <h1>Result:</h1>
 <div class="result-container">
     <p class="result">{{ result }}</p>
+        <div class="tip-container">
+            <div class="tip">
+                <p class="tip-text">Online Tip: Add coupon item as a Separate item to your cart before entering code.</p>
+            </div>
+        </div>
     <a class="run-again" href="/">Run it back</a>
-    <p class="disclaimer">Emails are usually sent in a couple of minutes/instantly.<br /> However, if this is not the case, email me below for a spare.</p>
+
+    <p class="disclaimer">Emails are usually sent in a couple of minutes/instantly.<br /> However, if this is not the
+        case, email me below for a spare.</p>
+    <!-- Tip: Add items separately -->
+    
 </div>
 
 {% endblock %}
