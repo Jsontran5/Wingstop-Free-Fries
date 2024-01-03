@@ -13,8 +13,11 @@ from dotenv import load_dotenv
 
 RESTRICTED_EMAILS = ['foodsurveycodes@gmail.com','', " "]
 pacific_tz = pytz.timezone('America/Los_Angeles')
+
 dotenv_path = '/etc/secrets/.env' #for render.com
-load_dotenv(dotenv_path=dotenv_path)
+load_dotenv(dotenv_path=dotenv_path) #for render.com
+
+# load_dotenv()
 
 config = {
     "apiKey": os.getenv("API_KEY"),
@@ -103,12 +106,6 @@ def create_app():
         uses = db.child('stats').child('uses').get().val()
         money_saved = db.child('stats').child('money_saved').get().val()
         return render_template('stats.html', uses=uses, money_saved=money_saved)
-    
-    @app.route('/test')
-    def test():
-        increment_uses_count()
-        increment_money_saved("Panda Express")
-        return "check database"
 
 
     @app.route('/robots.txt')
