@@ -3,13 +3,12 @@
 
 <head>
     <title>Food Codes Generator</title>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='logo.png') }}"  type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ url_for('static', filename='logo.png') }}" type="image/x-icon" />
     <meta name="Wingstopfreefries" content="Select a restaurant to get a coupon code to include with your order!">
     <meta property="og:title" content="Wingstop Free Fries">
     <meta name="description" content="Select a restaurant to get a coupon code to include with your order!">
 
     <style>
-       
         * {
             margin: 0;
             padding: 0;
@@ -21,7 +20,6 @@
             background-color: #333;
             overflow: hidden;
             list-style: none;
-          
         }
 
         .nav-item {
@@ -41,6 +39,16 @@
             color: black;
         }
 
+        /* Move the Statistics item to the right */
+        .nav-item:last-child {
+            float: right;
+        }
+
+        .nav-item:last-child a {
+            padding-right: 20px;
+            /* Adjust the padding for better spacing */
+        }
+
         /* Footer */
         footer {
             color: black;
@@ -57,7 +65,6 @@
             text-decoration: none;
         }
 
-        
         .site-down-note {
             position: fixed;
             bottom: 350px;
@@ -78,6 +85,7 @@
         <li class="nav-item"><a href="/rubios" style="color: #FFFFFF;">Rubio's</a></li>
         <li class="nav-item"><a href="/pandaexpress" style="color: #FFFFFF;">Panda Express</a></li>
         <li class="nav-item"><a href="/blazepizza" style="color: #FFFFFF;">Blaze Pizza</a></li>
+        <li class="nav-item"><a href="/stats" style="color: #f6ff00;">Statistics</a></li>
     </ul>
     {% block content %}{% endblock %}
 
