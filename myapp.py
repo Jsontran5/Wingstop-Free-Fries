@@ -13,7 +13,8 @@ from dotenv import load_dotenv
 
 RESTRICTED_EMAILS = ['foodsurveycodes@gmail.com','', " "]
 pacific_tz = pytz.timezone('America/Los_Angeles')
-load_dotenv()
+dotenv_path = '/etc/secrets/.env' #for render.com
+load_dotenv(dotenv_path=dotenv_path)
 
 config = {
     "apiKey": os.getenv("API_KEY"),
