@@ -15,4 +15,5 @@ if [[ ! -d $STORAGE_DIR/chrome ]]; then
 else
   echo "...Using Chrome from cache"
 fi
+/opt/render/project/src/.venv/bin/python3.7 -m pip install --upgrade pip
 pip install -r requirements.txt
