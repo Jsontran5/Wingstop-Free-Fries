@@ -69,7 +69,7 @@ def create_app():
             increment_uses_count()
             increment_money_saved(result)
 
-        return redirect(url_for('result', result=result))
+        return result
     
     def increment_uses_count():
         stats_ref = db.child('stats')

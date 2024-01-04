@@ -63,7 +63,7 @@
 
 <h1>Wingstop Survey</h1>
 <p>Enter an email:</p>
-<form action="/submit" method="POST" onsubmit="return showLoading();">
+<form onsubmit="showLoading()">
     <input type="hidden" name="option" value="wingstop">
     <input type="email" name="email" required>
     <input type="submit" value="Submit">
@@ -72,10 +72,22 @@
     <img src="{{ url_for('static', filename='bgloading.gif') }}" alt="Loading...">
 </div>
 
+<script src="https://code.jquery.com/jquery-3.7.1.js"> </script>
 <script>
     function showLoading() {
+        event.preventDefault();
         document.getElementById('loading').style.display = 'block';
         document.querySelector('input[type="submit"]').disabled = true;
+        $.ajax({
+            type: 'POST',
+            url: '/submit',
+            data: $('form').serialize(),
+            success: function (response) {
+                console.log(response);
+                // Redirect to the result page
+                window.location.href = '/result?result=' + response;
+            }
+        });
     }
 </script>
 {% endblock %}
