@@ -83,11 +83,24 @@
             url: '/submit',
             data: $('form').serialize(),
             success: function (response) {
-                console.log(response);
-                // Redirect to the result page
-                window.location.href = '/result?result=' + response;
-            }
-        });
+            console.log(response);
+            // Redirect to the result page
+            window.location.href = '/result?result=' + response;
+        },
+        error: function (xhr, status, error) {
+            console.log('AJAX request failed:', status, error);
+
+            // Log the error to console
+            console.log('XHR status:', xhr.status);
+            
+            var response = status + ': ' + xhr.status + ' ' + error;
+            
+            window.location.href = '/result?result=' + response;
+        },
+        complete: function () {
+            // Called regardless of success or error
+        }
+    });
     }
 </script>
 {% endblock %}
