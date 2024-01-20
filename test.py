@@ -1,40 +1,70 @@
 import requests
+from bs4 import BeautifulSoup
+def check(result):
+    if "Upon completion of this survey" in result:
+        print("Success")
 
-url = "https://www.pandaguestexperience.com/Survey.aspx?c=353204"
-
-# Original form data
-original_data = {
-    "S000057":"foo.dsurveycodes@gmail.com",
-    "S000064":"foo.dsurveycodes@gmail.com",
-    "IoNF": "229",
-    "PostedFNS": "S000057|S000064",
-    "OneQuestionLeftUnansweredErrorMessageTemplate": "There is {0} error on the page.",
-    "MoreQuestionsLeftUnansweredErrorMessageTemplate": "There are {0} errors on the page."
-}
-headers={
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-"Accept-Encoding": "gzip, deflate, br",
-"Accept-Language": "en-US,en;q=0.9",
-"Cache-Control": "max-age=0",
-"Connection": "keep-alive",
-"Content-Length": "272",
-"Content-Type": "application/x-www-form-urlencoded",
-"Cookie": "AspxAutoDetectCookieSupport=1; BIGipServerpandaguestexperience.com_pool=1580339884.52259.0000; ASP.NET_SessionId=3geh44tsjyj3yfhq2pfm0xw2; LID=US; CCID=index.aspx; SN=CH-WEB-WSE07-P; bhtglocalcooksesstest=1; bhtglocalcookperstest=1; DF_Placed=1; T=SN=CH-WEB-WSE07-P&ST=1/5/2024 10:28:45 AM&FP=/Index.aspx&RA=172.88.39.145&LA=1/5/2024 10:32:36 AM; TS017a8bfa=01af266ec9d592a1278ac590f68aa970d743ccb325719ee02f7ddadf4086755121b9c03eb86f0bb5fdd884c5277b675d08a7ef2856c2d34340054cad37169e07050b279b862f17c2ea5e8937ad8f5157be1351e10c5925eb2788b0dd20fa4c07092ab5f33731cdac4459350c479349844bec3992510b49fb209a8682000597644018be446d30c3b4f74c20d3d8aec95951a5db806cd60ca4b693d64eafe2eee94fe3332fa39cbb68ebb83a802d89909057f46eaf7a; TS709abc9c027=084b59c7b6ab200034e7d1fe961ca6d47146b3d125218ea770ae1c1b42eaa12051dbbe6c07bbac8e08bdb2ace11130004c2b35345935dc5134669684d9fb5ef3713e159f1f68ef79e4ab2c9900f426b0855c8ba8e8b16be24183567ccfc946d9",
-"Host": "www.pandaguestexperience.com",
-"Origin": "https://www.pandaguestexperience.com",
-"Referer": "https://www.pandaguestexperience.com/Survey.aspx?c=262904",
-"Sec-Ch-Ua": '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
-"Sec-Ch-Ua-Mobile": "?0",
-"Sec-Ch-Ua-Platform": '"Windows"',
-"Sec-Fetch-Dest": "document",
-
-
+data1 = {
+  "JavaScriptEnabled": 1,
+  "FIP": "true",
+  "OneQuestionLeftUnansweredErrorMessageTemplate": "There is {0} error on the page.",
+  "MoreQuestionsLeftUnansweredErrorMessageTemplate": "There are {0} errors on the page.",
+  "InputStoreNum": "0175",
+  "Index_VisitDateFormattedDate": "20240107",
+  "Index_VisitDateDatePicker": "01/07/2024",
+  "InputHour": "04",
+  "InputMinute": "02",
+  "InputMeridian": "PM",
+  "InputOrderNum": "154886",
+  "NextButton": "Start"
 }
 
+headers= {
+  "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+  "Accept-Encoding": "gzip, deflate, br",
+  "Accept-Language": "en-US,en;q=0.9",
+  "Cache-Control": "max-age=0",
+  "Connection": "keep-alive",
+  "Content-Length": "240",
+  "Content-Type": "application/x-www-form-urlencoded",
+  "Cookie": "SN=CH-WEB-WSE03-P; BIGipServerpandaguestexperience.com_pool=254939820.52259.0000; bhtglocalcooksesstest=1; bhtglocalcookperstest=1; DF_Placed=1; ASP.NET_SessionId=xcfp4ctvesqubuvdneoaqsyq; LID=US; CCID=index.aspx; T=SN=CH-WEB-WSE03-P&ST=1/7/2024 8:42:26 AM&FP=/Index.aspx&RA=172.88.39.145&LA=1/7/2024 10:50:02 AM; TS017a8bfa=01af266ec9c56cd4eb9ccfa0329102f34e86544d5818155caf79068fc5dc0266646775648947a47c6949e84d1d0f11dc97bb84af557e168f7f8eefee8cf985fcda686a215f0ecfca0b286b52ab3d806f50fd2acd4c034ff8c3d5745d027d959e157fe6566160d174adc0eb5bfb979e9267a509f9fdb64741796fea6c521087e9d3c2baa519c81bd5cad37d2ae40ea07fcc87e078919a537a74f7c8d1191fd2d133870c350f5bac86da4cff27ff54657cfc455eee9c; TS709abc9c027=TS709abc9c027=084b59c7b6ab2000f5d5628b0463888072fa22faee182305868f331e848d29c8a40921d67c7a433708c85771ed113000008370339bda2b1c7c59d0fd80885c8bce1564ac56bdd86961e22e5934c23d980029d4518786a3e28adfc7bff63e30b4",
+  "Host": "www.pandaguestexperience.com",
+  "Origin": "https://www.pandaguestexperience.com",
+  "Referer": "https://www.pandaguestexperience.com/Index.aspx?c=523304",
+  "Sec-Ch-Ua": "\"Not_A Brand\";v=\"8\", \"Chromium\";v=\"120\", \"Google Chrome\";v=\"120\"",
+  "Sec-Ch-Ua-Mobile": "?0",
+  "Sec-Ch-Ua-Platform": "\"Windows\"",
+  "Sec-Fetch-Dest": "document",
+  "Sec-Fetch-Mode": "navigate",
+  "Sec-Fetch-Site": "same-origin",
+  "Sec-Fetch-User": "?1",
+  "Upgrade-Insecure-Requests": "1",
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+}
 
-# Send the POST request with the modified payload
+url = "https://www.pandaguestexperience.com/Survey.aspx?c=523304"
 
-response = requests.post(url, headers= headers,data=original_data)
-print(response)
+# while not url.startswith("https://www.pandaguestexperience.com/Survey.aspx?"):
+#   response = requests.post(url, data=data1, headers=headers )
+#   print(response.url)
+#   print("cookies: ", response.cookies)
 
+for range in range(1, 3):
+  response = requests.post(url, data=data1, headers=headers)
+  print(response.url)
+  print("request headers: ", response.request.headers)
+  print("response headers: ", response.headers)
 
+# newurl = response.url
+# print(response.url)
+# check(response.text)
+# response = requests.post(newurl, data = data1)
+# print(response.url)
+# # soup = BeautifulSoup(response.text, features='html.parser')
+# # print(soup.prettify())
+# check(response.text)
+# newurl = response.url
+# print(response.url)
+# response = requests.post(newurl, data = data1)
+# check(response.text)
+# print(response.url)

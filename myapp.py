@@ -68,6 +68,7 @@ def create_app():
         if result.startswith("Success"):
             increment_uses_count()
             increment_money_saved(result)
+            print("+1")
 
         return result
     
@@ -113,18 +114,22 @@ def create_app():
         return send_from_directory(app.static_folder, request.path[1:])
 
     @app.route('/wingstop')
+    @app.route('/ws')
     def wingstop():
         return render_template('wingstop.html', option="Wingstop")
     
     @app.route('/rubios')
+    @app.route('/r')
     def rubios():
         return render_template('rubios.html', option="Rubio's")
 
     @app.route('/pandaexpress')
+    @app.route('/pe')
     def pandaexpress():
         return render_template('pandaexpress.html', option="Panda Express")
 
     @app.route('/blazepizza')
+    @app.route('/bp')
     def blazepizza():
         return render_template('blazepizza.html', option="Blaze Pizza")
 
