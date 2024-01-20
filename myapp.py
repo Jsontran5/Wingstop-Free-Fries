@@ -132,6 +132,12 @@ def create_app():
     @app.route('/bp')
     def blazepizza():
         return render_template('blazepizza.html', option="Blaze Pizza")
+    
+    @app.route('/dunkin')
+    @app.route('/donuts')
+    @app.route('/dd')
+    def dunkin():
+        return render_template('dunkin.html', option="Dunkin")
 
     @app.route('/result')
     def result():

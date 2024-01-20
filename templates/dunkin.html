@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f5f5f5;
+        font-family: Arial, sans-serif;
+    }
+
+    h1 {
+        text-align: center;
+        color: #c63663;
+        font-size: 36px;
+        margin-top: 50px;
+    }
+
+    p {
+        text-align: center;
+        color: #333;
+        font-size: 18px;
+    }
+
+    form {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    input[type="email"] {
+        width: 300px;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+    }
+
+    input[type="submit"] {
+        background-color: #c63663;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 18px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #97143e;
+    }
+
+    #loading {
+        text-align: center;
+        display: none;
+        margin-top: 20px;
+    }
+
+    #loading img {
+        width: 100px;
+        height: 100px;
+    }
+    #picture {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    #picture img {
+        width: 550px; /* Set the width as needed */
+        height: auto; /* Maintain aspect ratio */
+    }
+</style>
+
+<h1>Dunkin' Survey</h1>
+<p>Soon</p>
+
+<div id="loading">
+    <img src="{{ url_for('static', filename='bgloading.gif') }}" alt="Loading...">
+</div>
+
+<div id="picture">
+    <img src="{{ url_for('static', filename='ddcoupon.png') }}" alt="Sample Coupon">
+</div>
+<script src="https://code.jquery.com/jquery-3.7.1.js"> </script>
+<script>
+    function showLoading() {
+        event.preventDefault();
+        document.getElementById('loading').style.display = 'block';
+        document.querySelector('input[type="submit"]').disabled = true;
+        $.ajax({
+            type: 'POST',
+            url: '/submit',
+            data: $('form').serialize(),
+            success: function (response) {
+                console.log(response);
+                if (response.toLowerCase().includes('error: restricted email')) {
+                console.log('Restricted Email.');
+                window.location.href = '/error';
+                } else {
+                    console.log('Success!')
+                    window.location.href = '/result?result=' + response;
+                }
+        },
+        error: function (xhr, status, error) {
+            console.log('AJAX request failed:', status, error);
+
+            // Log the error to console
+            console.log('XHR status:', xhr.status);
+            
+            var response = status + ': ' + xhr.status + ' ' + error;
+            
+            window.location.href = '/result?result=' + response;
+        },
+        complete: function () {
+
+        }
+    });
+    }
+</script>
+{% endblock %}
