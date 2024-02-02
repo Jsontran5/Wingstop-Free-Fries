@@ -58,6 +58,15 @@
         width: 100px;
         height: 100px;
     }
+    #picture {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    #picture img {
+        width: 375px; /* Set the width as needed */
+        height: 661px; /* Maintain aspect ratio */
+    }
 </style>
 
 <h1>Blaze Pizza Survey</h1>
@@ -71,6 +80,9 @@
     <img src="{{ url_for('static', filename='bgloading.gif') }}" alt="Loading...">
 </div>
 
+<!-- <div id="picture">
+    <img src="{{ url_for('static', filename='bpcoupon.png') }}" alt="Sample Coupon">
+</div> -->
 <script src="https://code.jquery.com/jquery-3.7.1.js"> </script>
 <script>
     function showLoading() {

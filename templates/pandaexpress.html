@@ -58,6 +58,15 @@
         width: 100px;
         height: 100px;
     }
+    #picture {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    #picture img {
+        width: 550px; /* Set the width as needed */
+        height: auto; /* Maintain aspect ratio */
+    }
 </style>
 
 <h1>Panda Express Survey</h1>
@@ -70,6 +79,11 @@
 <div id="loading">
     <img src="{{ url_for('static', filename='bgloading.gif') }}" alt="Loading...">
 </div>
+
+<!-- <div id="picture">
+    <img src="{{ url_for('static', filename='pecoupon.png') }}" alt="Sample Coupon">
+</div> -->
+
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"> </script>
 <script>

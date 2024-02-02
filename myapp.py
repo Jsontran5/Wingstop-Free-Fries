@@ -44,26 +44,29 @@ def create_app():
 
     @app.route('/submit', methods=['POST'])
     def submit():
-        email = request.form.get('email').lower()
+        input = request.form.get('email').lower()
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S %p %m/%d/%Y')
 
+        print(f"{input}: {timestamp}")
+        if input not in RESTRICTED_EMAILS:
+            return redirect(url_for('error'))
         # Default message in case no option is selected
         result = "Please select an option."
-        if email in RESTRICTED_EMAILS:
-            return redirect(url_for('error'))
-        if "@" not in email or "." not in email:
-            return redirect(url_for('error'))
-        print(f"{email}: {timestamp}")
+        # if input in RESTRICTED_EMAILS:
+        #     return redirect(url_for('error'))
+        # if "@" not in input or "." not in input:
+        #     return redirect(url_for('error'))
+        
 
         selected_option = request.form.get('option')
         if selected_option == 'wingstop':
-            result = wingstop_survey(email)
+            result = wingstop_survey(input)
         elif selected_option == 'rubios':
             result = rubios_survey()
         elif selected_option == 'pandaexpress':
-            result = panda_survey(email)
+            result = panda_survey(input)
         elif selected_option == 'blazepizza':
-            result = blaze_pizza_survey(email)
+            result = blaze_pizza_survey(input)
 
         if result.startswith("Success"):
             increment_uses_count()
@@ -124,6 +127,7 @@ def create_app():
         return render_template('rubios.html', option="Rubio's")
 
     @app.route('/pandaexpress')
+    @app.route('/panda')
     @app.route('/pe')
     def pandaexpress():
         return render_template('pandaexpress.html', option="Panda Express")
