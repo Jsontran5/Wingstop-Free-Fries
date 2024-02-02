@@ -48,14 +48,13 @@ def create_app():
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S %p %m/%d/%Y')
 
         print(f"{input}: {timestamp}")
-        if input not in RESTRICTED_EMAILS:
-            return redirect(url_for('error'))
+
         # Default message in case no option is selected
         result = "Please select an option."
-        # if input in RESTRICTED_EMAILS:
-        #     return redirect(url_for('error'))
-        # if "@" not in input or "." not in input:
-        #     return redirect(url_for('error'))
+        if input in RESTRICTED_EMAILS:
+            return redirect(url_for('error'))
+        if "@" not in input or "." not in input:
+            return redirect(url_for('error'))
         
 
         selected_option = request.form.get('option')
