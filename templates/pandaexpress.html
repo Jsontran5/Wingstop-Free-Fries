@@ -112,10 +112,18 @@
 
 
             console.log('XHR status:', xhr.status);
+            if (xhr.status === 200) {
             
+            var response = "Success! Coupon sent to your email.";
+            window.location.href = '/result?result=' + response;
+        }else{
             var response = status + ': ' + xhr.status + ' ' + error;
             
             window.location.href = '/result?result=' + response;
+
+        }
+            
+            
         },
         complete: function () {
 
