@@ -60,13 +60,14 @@
     }
 </style>
 
-<h1>Rubio's Survey</h1>
-<p>Enter an email:</p>
+<h1>Rubio's</h1>
+<p>Code for a Free Drink or Dessert with your next order</p>
 <form onsubmit="showLoading()">
     <input type="hidden" name="option" value="rubios">
-    <input type="email" name="email" required>
+    <input type="email" name="email" placeholder="Email" required>
     <input type="submit" value="Submit">
 </form>
+
 <div id="loading">
     <img src="{{ url_for('static', filename='bgloading.gif') }}" alt="Loading...">
 </div>
