@@ -114,6 +114,11 @@ def create_app():
     @app.route('/robots.txt')
     def static_from_root():
         return send_from_directory(app.static_folder, request.path[1:])
+    
+    @app.route('/populatepanda')
+    def populatepanda():
+        panda_survey("wffpandaexpress@yopmail.com")
+        return "Populated Panda Express mail"
 
     @app.route('/wingstop')
     @app.route('/ws')
