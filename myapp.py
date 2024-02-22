@@ -146,11 +146,49 @@ def create_app():
     @app.route('/dd')
     def dunkin():
         return render_template('dunkin.html', option="Dunkin")
+    
+    @app.route('/pandalightning')
+    def pandalightning():
+        return render_template('pandaexpresslightningform.html', option="pandalightning")
+
 
     @app.route('/result')
     def result():
         result = request.args.get('result', 'Please select an option.')
         return render_template('result.html', result=result)
+    
+    @app.route('/pandalightningresult', methods=['POST'])
+    def pandalightningresult():
+
+        input = request.form.get('email').lower()
+        timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S %p %m/%d/%Y')
+        print(f"Lightning Mode: {input}: {timestamp}")
+
+        # Retrieve the first coupon entry from Pandacoupons and delete it
+        first_coupon_query = db.child("Pandacoupons").order_by_key().limit_to_first(1).get()
+        first_coupon_data = first_coupon_query.val()
+        first_coupon_id = list(first_coupon_data.keys())[0]
+        first_coupon = first_coupon_data[first_coupon_id]
+
+        code = first_coupon_id
+        print(code)
+  
+
+        safeexpiredate = first_coupon["safeexpiredate"]
+        print("SFD", safeexpiredate)
+
+
+        # Delete the first coupon entry from the database
+        db.child("Pandacoupons").child(first_coupon_id).remove()
+
+        return render_template('pandalightningresult.html', code=code, safeexpiredate=safeexpiredate)
+    
+    @app.route('/wingstoplightningresult')
+    def wingstoplightningresult():
+        result = "DASFASFQWRFSFSSA"
+        return render_template('wingstoplightningresult.html', result=result)
+    
+
 
     @app.route('/error')
     def error():

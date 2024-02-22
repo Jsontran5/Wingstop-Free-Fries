@@ -67,6 +67,17 @@
         width: 550px; /* Set the width as needed */
         height: auto; /* Maintain aspect ratio */
     }
+    .site-downss-note {
+            position: fixed;
+            bottom: 350px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: red;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+</style>
 </style>
 
 <h1>Panda Express</h1>
@@ -80,6 +91,9 @@
     <img src="{{ url_for('static', filename='bgloading.gif') }}" alt="Loading...">
 </div>
 
+<div class="site-downss-note">
+    ⚡ Come BETA test the <a href="/pandalightning"> Panda Express Lightning Mode!</a> ⚡
+</div>
 <!-- <div id="picture">
     <img src="{{ url_for('static', filename='pecoupon.png') }}" alt="Sample Coupon">
 </div> -->

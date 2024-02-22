@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 36px;
+            margin-top: 50px;
+        }
+
+        p {
+            text-align: center;
+            color: #333;
+            font-size: 18px;
+        }
+
+        .result-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .result {
+            color: #146A34;
+            font-size: 24px;
+        }
+
+        .run-again {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .run-again:hover {
+            background-color: #201f1f;
+        }
+
+        .disclaimer {
+            color: #D3D3D3;
+            font-size: 15px;
+            margin-top: 23px;
+            font-weight: bold;
+        }
+
+        /* Tip styles */
+        .tip-container {
+            margin-top: 10px;
+            /* Adjusted margin to move it down */
+        }
+
+        .tip-text {
+            color: #FF8000;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        table {
+            margin: auto;
+        }
+    </style>
+
+    <h1>Result:</h1>
+
+    <div class="result-container">
+        
+    </div>
+
+{% endblock %}
