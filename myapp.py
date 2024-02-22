@@ -118,8 +118,14 @@ def create_app():
     
     @app.route('/populatepanda')
     def populatepanda():
-        panda_survey("wffpandaexpress@yopmail.com")
+        panda_survey("wffpandaexpress1@yopmail.com")
         return "Populated Panda Express mail"
+    
+    @app.route('/pandanewemail/<email>')
+    def pandanewemail(email):
+        panda_survey(email)
+        string = "Populated Panda Express: " + email
+        return string
     
     @app.route('/populatewingstop')
     def populatewingstop():
