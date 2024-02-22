@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+import requests
 from blazefunction import blaze_pizza_survey
 from pandafunction import panda_survey
 from wingstopoptimizedfunction import wingstop_survey
@@ -170,8 +171,11 @@ def create_app():
         print(f"Lightning Mode: {input}: {timestamp}")
 
         # Retrieve the first coupon entry from Pandacoupons and delete it
-        first_coupon_query = db.child("Pandacoupons").order_by_key().limit_to_first(1).get()
-        first_coupon_data = first_coupon_query.val()
+        url = "https://wingstopfreefries-ac9e2-default-rtdb.firebaseio.com/Pandacoupons.json?orderBy=%22%24key%22&limitToFirst=1"
+        response = requests.get(url)
+        response.raise_for_status()
+        first_coupon_data = response.json()
+
         first_coupon_id = list(first_coupon_data.keys())[0]
         first_coupon = first_coupon_data[first_coupon_id]
 
@@ -185,6 +189,9 @@ def create_app():
 
         # Delete the first coupon entry from the database
         db.child("Pandacoupons").child(first_coupon_id).remove()
+        increment_uses_count()
+        increment_money_saved("Panda Express")
+        print("+1")
 
         return render_template('pandalightningresult.html', code=code, safeexpiredate=safeexpiredate)
     
