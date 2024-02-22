@@ -119,6 +119,11 @@ def create_app():
     def populatepanda():
         panda_survey("wffpandaexpress@yopmail.com")
         return "Populated Panda Express mail"
+    
+    @app.route('/populatewingstop')
+    def populatewingstop():
+        wingstop_survey("wffwingstop@yopmail.com")
+        return "Populated Wingstop mail"
 
     @app.route('/wingstop')
     @app.route('/ws')
