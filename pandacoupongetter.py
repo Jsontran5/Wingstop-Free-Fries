@@ -33,7 +33,7 @@ db= firebase.database()
 
 pacific_tz = pytz.timezone('America/Los_Angeles')
 
-y = Yopmail('wffpandaexpress', proxies=None)
+y = Yopmail('wffpandaexpress1', proxies=None)
 
 mails_ids = y.get_mail_ids(page=1) + y.get_mail_ids(page=2) + y.get_mail_ids(page=3)
 #print(len(mails_ids))
