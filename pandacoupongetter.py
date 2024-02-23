@@ -37,7 +37,7 @@ def pandacoupongetter():
     y = Yopmail('wffpandaexpress1', proxies=None)
 
     mails_ids = y.get_mail_ids(page=1) + y.get_mail_ids(page=2) + y.get_mail_ids(page=3)
-    #print(len(mails_ids))
+    print("Mail Retrieved: ",len(mails_ids))
 
     i=0
     current_time = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
