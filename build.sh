@@ -16,4 +16,5 @@ else
   echo "...Using Chrome from cache"
 fi
 /opt/render/project/src/.venv/bin/python3.11 -m pip install --upgrade pip
+pip install setuptools wheel
 pip install -r requirements.txt
