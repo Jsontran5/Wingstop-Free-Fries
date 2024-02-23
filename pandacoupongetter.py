@@ -40,6 +40,7 @@ def pandacoupongetter():
     #print(len(mails_ids))
 
     i=0
+    current_time = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
     for mail_id in mails_ids:
 
         mail = y.get_mail_body(mail_id, show_image=True)
@@ -78,7 +79,7 @@ def pandacoupongetter():
         dateaddedunix = int(datetime.now(pacific_tz).timestamp())
         #print(dateaddedunix)
 
-        current_time = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
+        
         db_ref = db.child("Pandacoupons")
         db_ref.child(code).set({
             "realexpiredate": realexpiredate,
