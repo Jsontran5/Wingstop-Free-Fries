@@ -33,8 +33,13 @@ db= firebase.database()
 
 pacific_tz = pytz.timezone('America/Los_Angeles')
 
+proxies = {
+    'http': 'http://184.185.105.105:4481',
+    'http': 'http://159.89.238.138:8000'
+    
+}
 def pandacoupongetter():
-    y = Yopmail('wffpandaexpress1', proxies=None)
+    y = Yopmail('wffpandaexpress1', proxies=proxies)
 
     mails_ids = y.get_mail_ids(page=1) + y.get_mail_ids(page=2) + y.get_mail_ids(page=3)
     print("Mail Retrieved: ",len(mails_ids))
@@ -43,7 +48,7 @@ def pandacoupongetter():
     current_time = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
     for mail_id in mails_ids:
 
-        mail = y.get_mail_body(mail_id, show_image=True)
+        mail = y.get_mail_body(mail_id, show_image=True, proxies=proxies)
         yopmail_str = str(mail)
 
         code, realexpiredate = pandamailparse(yopmail_str)
