@@ -4,6 +4,7 @@ from blazefunction import blaze_pizza_survey
 from pandafunction import panda_survey
 from wingstopoptimizedfunction import wingstop_survey
 from rubiosfunction import rubios_survey
+from pandacoupongetter import pandacoupongetter, pandacoupondeleter, count_panda_coupons
 from datetime import datetime
 import pytz
 import firebase_admin
@@ -161,7 +162,8 @@ def create_app():
     
     @app.route('/pandalightning')
     def pandalightning():
-        return render_template('pandaexpresslightningform.html', option="pandalightning")
+        panda__coupon_count = count_panda_coupons()
+        return render_template('pandaexpresslightningform.html', option="pandalightning", panda__coupon_count=panda__coupon_count)
 
 
     @app.route('/result')
@@ -169,11 +171,21 @@ def create_app():
         result = request.args.get('result', 'Please select an option.')
         return render_template('result.html', result=result)
     
+    @app.route('/stockpandacoupons')
+    def stockpandacoupons():
+        pandacoupongetter()
+        pandacoupondeleter()
+        panda__coupon_count = count_panda_coupons()
+        date_added = datetime.now(pacific_tz).strftime('%I:%M:%S %p %m/%d/%Y')
+        print(f"Total Panda Coupons at {date_added} : {panda__coupon_count}")
+        return "Stocked Panda Express coupons"
+
+
     @app.route('/pandalightningresult', methods=['POST'])
     def pandalightningresult():
 
         input = request.form.get('email').lower()
-        timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S %p %m/%d/%Y')
+        timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
         print(f"Lightning Mode: {input}: {timestamp}")
 
         # Retrieve the first coupon entry from Pandacoupons and delete it
@@ -203,8 +215,8 @@ def create_app():
     
     @app.route('/wingstoplightningresult')
     def wingstoplightningresult():
-        result = "DASFASFQWRFSFSSA"
-        return render_template('wingstoplightningresult.html', result=result)
+        code = "DASFASFQWRFSFSSA"
+        return render_template('wingstoplightningresult.html', code=code)
     
 
 

@@ -56,7 +56,7 @@ def pandamailparse(email):
         # current_date = datetime.fromtimestamp(unix_time_pacific, tz=pytz.utc).astimezone(pytz.timezone('America/Los_Angeles')).strftime("%m/%d/%Y")
         # print(current_date)
     else:
-        print("Codes not found")
+        print("pandamailparse(): Codes not found")
         return "NO CODE", "NO DATE"
     
 def main():
