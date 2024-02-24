@@ -3,21 +3,20 @@
 set -o errexit
 
 # Define paths
-STORAGE_DIR="/opt/render/project/.render"
 SECRETS_DIR="/etc/secrets"
-ls
-pwd
-# Move client_secret.json to the root directory if it exists
+RENDER_DIR="/opt/render/project/src"
+
+# Check if the client_secret.json exists in the secrets directory
 if [[ -f "$SECRETS_DIR/client_secret.json" ]]; then
     echo "client_secret.json found in $SECRETS_DIR"
     
-    # Create the root directory if it doesn't exist
-    mkdir -p "$STORAGE_DIR"
+    # Create the render directory if it doesn't exist
     
-    # Move client_secret.json to the root directory
-    mv "$SECRETS_DIR/client_secret.json" "$STORAGE_DIR/client_secret.json"
     
-    echo "client_secret.json moved to $STORAGE_DIR"
+    # Copy client_secret.json to the render directory
+    cp "$SECRETS_DIR/client_secret.json" "$RENDER_DIR/client_secret.json"
+    
+    echo "client_secret.json copied to $RENDER_DIR"
 else
     echo "Error: client_secret.json not found in $SECRETS_DIR"
 fi
