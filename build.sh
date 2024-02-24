@@ -21,7 +21,7 @@ else
     echo "Error: client_secret.json not found in $SECRETS_DIR"
 fi
 
-# Continue with the rest of the script...
+STORAGE_DIR=/opt/render/project/.render
 
 if [[ ! -d $STORAGE_DIR/chrome ]]; then
   echo "...Downloading Chrome"
