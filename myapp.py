@@ -5,6 +5,7 @@ from pandafunction import panda_survey
 from wingstopoptimizedfunction import wingstop_survey
 from rubiosfunction import rubios_survey
 from pandacoupongetter import pandacoupongetter, pandacoupondeleter, count_panda_coupons
+from expired_emails import delete_coupons
 from yogo import runcmd
 from datetime import datetime
 import pytz
@@ -224,6 +225,11 @@ def create_app():
         runcmd()
         return "ran cmd"
     
+    @app.route('/deleteexpired')
+    def deleteexpired():
+        pandacoupondeleter()
+        delete_coupons()
+        return "Deleted expired coupons"
 
 
     @app.route('/error')

@@ -8,8 +8,9 @@ load_dotenv(dotenv_path=dotenv_path) #for render.com
 
 
 def runcmd():
-    print("Running command")
-    os.system('/opt/render/project/bin/yogo inbox show wffpandaexpress1 1')
+    print("Running command") 
+    os.system('/opt/render/project/bin/yogo inbox list wffwingstop 10')
+    #os.system('yogo inbox show wffpandaexpress1 1')
     print("Ran command")
     return 0
 
