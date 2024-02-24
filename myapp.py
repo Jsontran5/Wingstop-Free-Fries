@@ -124,16 +124,20 @@ def create_app():
         panda_survey("wffpandaexpress1@yopmail.com")
         return "Populated Panda Express mail"
     
-    @app.route('/pandanewemail/<email>')
-    def pandanewemail(email):
-        panda_survey(email)
-        string = "Populated Panda Express: " + email
-        return string
-    
     @app.route('/populatewingstop')
     def populatewingstop():
         wingstop_survey("wffwingstop@yopmail.com")
         return "Populated Wingstop mail"
+    @app.route('/pandaemail/<email>')
+    def pandaemail(email):
+        panda_survey(email)
+        string = "Populated Panda Express: " + email
+        return string
+    @app.route('/wingstopemail/<email>')
+    def wingstopemail(email):
+        wingstop_survey(email)
+        string = "Populated Wingstop: " + email
+        return string
 
     @app.route('/wingstop')
     @app.route('/ws')
@@ -220,11 +224,7 @@ def create_app():
         code = "DASFASFQWRFSFSSA"
         return render_template('wingstoplightningresult.html', code=code)
     
-    @app.route('/runcmd')
-    def runcmdflask():
-        runcmd()
-        return "ran cmd"
-    
+
     @app.route('/deleteexpired')
     def deleteexpired():
         pandacoupondeleter()
