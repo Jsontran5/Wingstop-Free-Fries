@@ -15,6 +15,15 @@ if [[ ! -d $STORAGE_DIR/chrome ]]; then
 else
   echo "...Using Chrome from cache"
 fi
+echo "Downloading yogo..."
+mkdir -p $STORAGE_DIR/yogo
+cd $STORAGE_DIR/yogo
+wget https://github.com/antham/yogo/releases/download/v4.1.1/yogo_4.1.1_linux_amd64.tar.gz
+tar -xzf yogo_4.1.1_linux_amd64.tar.gz
+mv yogo /usr/local/bin/yogo
+chmod +x /usr/local/bin/yogo
+cd $HOME/project/src # Make sure we return to where we were
+
 /opt/render/project/src/.venv/bin/python3.11 -m pip install --upgrade pip
 pip install setuptools wheel
 pip install -r requirements.txt
