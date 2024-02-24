@@ -34,9 +34,9 @@ echo "yogo installed at: $HOME/project/bin/yogo"
 export PATH="$HOME/project/bin:$PATH"
 
 # Run the yogo command
-echo "Running yogo command"
-yogo inbox show wffpandaexpress1 1
-echo "Yogo command executed successfully"
+# echo "Running yogo command"
+# yogo inbox show wffpandaexpress1 1
+# echo "Yogo command executed successfully"
 
 # Return to the source directory
 cd $HOME/project/src

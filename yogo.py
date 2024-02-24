@@ -1,8 +1,15 @@
 import os
+from dotenv import load_dotenv
+
+dotenv_path = '/etc/secrets/.env' #for render.com
+load_dotenv(dotenv_path=dotenv_path) #for render.com
+
+# load_dotenv()
+
 
 def runcmd():
     print("Running command")
-    os.system('yogo inbox show wffpandaexpress1 1')
+    os.system('/opt/render/project/bin/yogo inbox show wffpandaexpress1 1')
     print("Ran command")
     return 0
 
