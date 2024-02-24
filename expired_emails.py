@@ -2,7 +2,7 @@ from simplegmail import Gmail
 from simplegmail.query import construct_query
 
 def delete_coupons():
-    gmail = Gmail()
+    gmail = Gmail(client_secret_file='/opt/render/project/src/client_secret.json')
     #gmail = Gmail(client_secret_file='/etc/secrets/client_secret.json')
 
 

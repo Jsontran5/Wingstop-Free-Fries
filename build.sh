@@ -17,6 +17,8 @@ if [[ -f "$SECRETS_DIR/client_secret.json" ]]; then
     cp "$SECRETS_DIR/client_secret.json" "$RENDER_DIR/client_secret.json"
     
     echo "client_secret.json copied to $RENDER_DIR"
+    echo /opt/render/project/src/client_secret.json
+    ls
 else
     echo "Error: client_secret.json not found in $SECRETS_DIR"
 fi
