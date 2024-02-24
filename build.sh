@@ -18,3 +18,4 @@ fi
 /opt/render/project/src/.venv/bin/python3.11 -m pip install --upgrade pip
 pip install setuptools wheel
 pip install -r requirements.txt
+go install github.com/antham/yogo/v4@latest

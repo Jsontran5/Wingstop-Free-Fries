@@ -5,6 +5,7 @@ from pandafunction import panda_survey
 from wingstopoptimizedfunction import wingstop_survey
 from rubiosfunction import rubios_survey
 from pandacoupongetter import pandacoupongetter, pandacoupondeleter, count_panda_coupons
+from yogo import runcmd
 from datetime import datetime
 import pytz
 import firebase_admin
@@ -217,6 +218,11 @@ def create_app():
     def wingstoplightningresult():
         code = "DASFASFQWRFSFSSA"
         return render_template('wingstoplightningresult.html', code=code)
+    
+    @app.route('/runcmd')
+    def runcmdflask():
+        runcmd()
+        return "ran cmd"
     
 
 
