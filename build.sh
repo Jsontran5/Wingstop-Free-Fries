@@ -20,9 +20,14 @@ mkdir -p $STORAGE_DIR/yogo
 cd $STORAGE_DIR/yogo
 wget https://github.com/antham/yogo/releases/download/v4.1.1/yogo_4.1.1_linux_amd64.tar.gz
 tar -xzf yogo_4.1.1_linux_amd64.tar.gz
-mv yogo /usr/local/bin/yogo
-chmod +x /usr/local/bin/yogo
-cd $HOME/project/src # Make sure we return to where we were
+
+# Move yogo binary to a writable directory within the project structure
+mkdir -p $HOME/project/bin
+mv yogo $HOME/project/bin/yogo
+chmod +x $HOME/project/bin/yogo
+
+# Return to the source directory
+cd $HOME/project/src
 
 /opt/render/project/src/.venv/bin/python3.11 -m pip install --upgrade pip
 pip install setuptools wheel
