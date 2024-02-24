@@ -2,7 +2,7 @@ import os
 
 def runcmd():
     print("Running command")
-    os.system('cmd /c "yogo inbox show wffpandaexpress1 1"')
+    os.system('yogo inbox show wffpandaexpress1 1')
     print("Ran command")
     return 0
 
