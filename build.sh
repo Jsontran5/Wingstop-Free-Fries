@@ -27,8 +27,16 @@ mkdir -p $HOME/project/bin
 mv yogo $HOME/project/bin/yogo
 chmod +x $HOME/project/bin/yogo
 
+# Echo the full path of yogo
+echo "yogo installed at: $HOME/project/bin/yogo"
+
 # Add yogo directory to the PATH
 export PATH="$HOME/project/bin:$PATH"
+
+# Run the yogo command
+echo "Running yogo command"
+yogo inbox show wffpandaexpress1 1
+echo "Yogo command executed successfully"
 
 # Return to the source directory
 cd $HOME/project/src
