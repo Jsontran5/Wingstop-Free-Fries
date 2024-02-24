@@ -2,7 +2,27 @@
 # exit on error
 set -o errexit
 
-STORAGE_DIR=/opt/render/project/.render
+# Define paths
+STORAGE_DIR="/opt/render/project/.render"
+SECRETS_DIR="/etc/secrets"
+ls
+pwd
+# Move client_secret.json to the root directory if it exists
+if [[ -f "$SECRETS_DIR/client_secret.json" ]]; then
+    echo "client_secret.json found in $SECRETS_DIR"
+    
+    # Create the root directory if it doesn't exist
+    mkdir -p "$STORAGE_DIR"
+    
+    # Move client_secret.json to the root directory
+    mv "$SECRETS_DIR/client_secret.json" "$STORAGE_DIR/client_secret.json"
+    
+    echo "client_secret.json moved to $STORAGE_DIR"
+else
+    echo "Error: client_secret.json not found in $SECRETS_DIR"
+fi
+
+# Continue with the rest of the script...
 
 if [[ ! -d $STORAGE_DIR/chrome ]]; then
   echo "...Downloading Chrome"
