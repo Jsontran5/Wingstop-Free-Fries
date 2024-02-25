@@ -9,7 +9,7 @@
 
     h1 {
         text-align: center;
-        color: #C02827 ;
+        color: #146A34;
         font-size: 36px;
         margin-top: 50px;
     }
@@ -35,7 +35,7 @@
     }
 
     input[type="submit"] {
-        background-color: #C02827 ;
+        background-color: #146A34;
         color: #fff;
         border: none;
         padding: 10px 20px;
@@ -45,7 +45,7 @@
     }
 
     input[type="submit"]:hover {
-        background-color: #842b2b ;
+        background-color: #2d834d;
     }
 
     #loading {
@@ -57,6 +57,15 @@
     #loading img {
         width: 100px;
         height: 100px;
+    }
+    #picture {
+        text-align: center; /* Align the content to the left */
+        margin-top: 20px; /* Adjusted margin for the picture */
+    }
+
+    #picture img {
+        width: 400px; /* Set the width as needed */
+        height: auto; /* Maintain aspect ratio */
     }
     .site-downs-note {
             position: fixed;
@@ -70,14 +79,16 @@
         }
 </style>
 
-<h1>⚡⚡[BETA] Panda Express Lightning Mode ⚡⚡</h1>
-<p>Coupon for a Free Small Entrée with purchase of a 2-entrée Plate</p>
-<p>Coupons Left:<strong> {{panda_coupon_count}} </strong> (auto-restocks everyday)</p>
-{% if panda_coupon_count > 0 %}
-    <form action="/pandalightningsubmit" method="POST" onsubmit="return showLoading();">
-        <input type="hidden" name="option" value="pandaexpress">
+<h1>⚡⚡[BETA] Wingstop Lightning Mode ⚡⚡</h1>
+<p>Coupon for Free Regular Fries with your next online order</p>
+<p>Coupons Left:<strong> {{ wingstop_coupon_count }} </strong> (auto-restocks everyday)</p>
+{% if wingstop_coupon_count > 0 %}
+
+    <form action="/wingstoplightningsubmit" method="POST" onsubmit="return showLoading();">
+        <input type="hidden" name="option" value="wingstop">
         <input type="email" name="email" placeholder="Email">
         <input type="submit" value="Generate">
+    </form>
 {% else %}
 <p style="margin-top: 50px;">
     <strong>Sorry, no coupons left at the moment. Use the Manual Version<br>
@@ -86,13 +97,12 @@
 
 {% endif %}
 
-
 <div id="loading">
     <img src="{{ url_for('static', filename='bgloading.gif') }}" alt="Loading...">
 </div>
 
 <div class="site-downs-note">
-    Currently in Beta testing. But this should generate a valid coupon code/barcode for you to scan in O(1) time. You should also use the manual version before, in case the coupon is invalid
+    Currently in Beta testing. But this should generate a valid coupon code in O(1) time. In case the coupon is invalid, you can still use the manual version.
 </div>
 
 

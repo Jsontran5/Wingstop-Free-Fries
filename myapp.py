@@ -4,9 +4,7 @@ from blazefunction import blaze_pizza_survey
 from pandafunction import panda_survey
 from wingstopoptimizedfunction import wingstop_survey
 from rubiosfunction import rubios_survey
-from pandacoupongetter import pandacoupongetter, pandacoupondeleter, count_panda_coupons
-from expired_emails import delete_coupons
-from yogo import runcmd
+from gmailcoupongetter import  PEcoupondeleter, PEcoupongetter, wingstopcoupongetter, wingstopcoupondeleter, count_panda_coupons, count_wingstop_coupons
 from datetime import datetime
 import pytz
 import firebase_admin
@@ -128,6 +126,7 @@ def create_app():
     def populatewingstop():
         wingstop_survey("wffwingstop@yopmail.com")
         return "Populated Wingstop mail"
+    
     @app.route('/pandaemail/<email>')
     def pandaemail(email):
         panda_survey(email)
@@ -166,29 +165,36 @@ def create_app():
     def dunkin():
         return render_template('dunkin.html', option="Dunkin")
     
-    @app.route('/pandalightning')
-    def pandalightning():
-        panda__coupon_count = count_panda_coupons()
-        return render_template('pandaexpresslightningform.html', option="pandalightning", panda__coupon_count=panda__coupon_count)
-
-
     @app.route('/result')
     def result():
         result = request.args.get('result', 'Please select an option.')
         return render_template('result.html', result=result)
     
-    @app.route('/stockpandacoupons')
-    def stockpandacoupons():
-        pandacoupongetter()
-        pandacoupondeleter()
+    @app.route('/updatecoupondatabase')
+    def updatecoupondatabase():
+        print("=====FETCHING========")
+        PEcoupongetter()
+        wingstopcoupongetter()
+        print("=====DELETING======")
+        PEcoupondeleter()
+        wingstopcoupondeleter()
+        print("=====COUNTING======")
         panda__coupon_count = count_panda_coupons()
+        wingstop__coupon_count = count_wingstop_coupons()
+
         date_added = datetime.now(pacific_tz).strftime('%I:%M:%S %p %m/%d/%Y')
         print(f"Total Panda Coupons at {date_added} : {panda__coupon_count}")
-        return "Stocked Panda Express coupons"
+        print(f"Total Wingstop Coupons at {date_added} : {wingstop__coupon_count}")
+        print("===================")
+        return "UPDATED DATABASE"
 
-
-    @app.route('/pandalightningresult', methods=['POST'])
-    def pandalightningresult():
+    @app.route('/pandalightning')
+    def pandalightning():
+        panda_coupon_count = count_panda_coupons()
+        return render_template('pandaexpresslightningform.html', option="pandalightning", panda_coupon_count=panda_coupon_count)
+    
+    @app.route('/pandalightningsubmit', methods=['POST'])
+    def pandalightningsubmit():
 
         input = request.form.get('email').lower()
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
@@ -208,8 +214,11 @@ def create_app():
   
 
         safeexpiredate = first_coupon["safeexpiredate"]
-        print("SFD", safeexpiredate)
+        print("Expire Date:", safeexpiredate)
 
+        source = first_coupon.get("type", None)
+        print("Source:", source)
+        
 
         # Delete the first coupon entry from the database
         db.child("Pandacoupons").child(first_coupon_id).remove()
@@ -217,20 +226,60 @@ def create_app():
         increment_money_saved("Panda Express")
         print("+1")
 
-        return render_template('pandalightningresult.html', code=code, safeexpiredate=safeexpiredate)
+        return redirect(url_for('pandalightningresult',  code=code, safeexpiredate=safeexpiredate))
+
+
+    @app.route('/pandalightningresult')
+    def pandalightningresult():
+        code = request.args.get('code', 'ERROR')
+        safeexpiredate = request.args.get('safeexpiredate', 'ERROR')
+        return render_template('pandalightningresult.html',code=code, safeexpiredate=safeexpiredate)
     
+    @app.route('/wingstoplightning')
+    def wingstoplightning():
+        wingstop_coupon_count = count_wingstop_coupons()
+        return render_template('wingstoplightningform.html', option="wingstoplightning", wingstop_coupon_count=wingstop_coupon_count)
+
+
+    @app.route('/wingstoplightningsubmit', methods=['POST'])
+    def wingstoplightningsubmit():
+        
+        input = request.form.get('email').lower()
+        timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
+        print(f"Lightning Mode: {input}: {timestamp}")
+
+        # Retrieve the first coupon entry from Pandacoupons and delete it
+        url = "https://wingstopfreefries-ac9e2-default-rtdb.firebaseio.com/Wingstopcoupons.json?orderBy=%22%24key%22&limitToFirst=1"
+        response = requests.get(url)
+        response.raise_for_status()
+        first_coupon_data = response.json()
+
+        first_coupon_id = list(first_coupon_data.keys())[0]
+        first_coupon = first_coupon_data[first_coupon_id]
+
+        code = first_coupon_id
+        print(code)
+  
+
+        safeexpiredate = first_coupon["safeexpiredate"]
+        print("Expire Date:", safeexpiredate)
+
+        source = first_coupon.get("type", None)
+        print("Source:", source)
+
+        # Delete the first coupon entry from the database
+        db.child("Wingstopcoupons").child(first_coupon_id).remove()
+        increment_uses_count()
+        increment_money_saved("Wingstop")
+        print("+1")
+
+        return redirect(url_for('wingstoplightningresult',  code=code, safeexpiredate=safeexpiredate))
+
     @app.route('/wingstoplightningresult')
     def wingstoplightningresult():
-        code = "DASFASFQWRFSFSSA"
-        return render_template('wingstoplightningresult.html', code=code)
-    
-
-    @app.route('/deleteexpired')
-    def deleteexpired():
-        pandacoupondeleter()
-        delete_coupons()
-        return "Deleted expired coupons"
-
+        code = request.args.get('code', 'ERROR')
+        safeexpiredate = request.args.get('safeexpiredate', 'ERROR')
+        return render_template('wingstoplightningresult.html',code=code, safeexpiredate=safeexpiredate)
 
     @app.route('/error')
     def error():

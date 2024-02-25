@@ -67,6 +67,16 @@
         width: 400px; /* Set the width as needed */
         height: auto; /* Maintain aspect ratio */
     }
+    .site-downss-note {
+            position: fixed;
+            bottom: 350px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: red;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
 </style>
 
 
@@ -83,11 +93,14 @@
 </div>
 
 
-<!-- <div id="picture">
-    <img src="{{ url_for('static', filename='wscoupon.png') }}" alt="Sample Coupon">
-</div> -->
 
 
+<div id="picture">
+    <a href="/wingstoplightning"> <img  src="{{ url_for('static', filename='bolt.png') }}" alt="Sample Coupon"></a>
+</div>
+<div class="site-downss-note">
+    ⚡ Come BETA test the <a href="/wingstoplightning"> Wingstop Lightning Mode!</a> ⚡
+</div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"> </script>
 <script>
