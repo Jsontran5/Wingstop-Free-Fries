@@ -71,8 +71,13 @@
         }
     </style>
 
-    <h1>Result:</h1>
-    <p class="tip-text">Online Tip: Add coupon items Separately to your cart before applying the code.</p>
+<h1>Result:</h1>
+<p class="tip-text">Online Tip: Add coupon items Separately to your cart before applying the code.</p>
+
+
+  <p class="tip-text">If you want to save or share this coupon. <a  class = "tip-text" href="#" onclick="copyLink(event)">Copy the Link</a></p>
+
+<div class="result-container">
     <div class="result-container">
         <table bgcolor="#f8f7ee" border="0" cellpadding="0" cellspacing="0" width="600">
             <tbody>
@@ -193,5 +198,23 @@
             </tbody>
         </table>
     </div>
+    <script>
+        function copyLink(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+            // Get the current URL
+            var url = window.location.href;
+
+            // Copy the URL to the clipboard
+            navigator.clipboard.writeText(url)
+                .then(function() {
+                    // Provide feedback to the user
+                    console.log("Link copied to clipboard: " + url);
+                })
+                .catch(function(error) {
+                    // Handle any errors
+                    console.error("Unable to copy link: ", error);
+                });
+        }
+    </script>
 
 {% endblock %}
