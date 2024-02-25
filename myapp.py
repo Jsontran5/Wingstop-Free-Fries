@@ -175,17 +175,17 @@ def create_app():
         print("=====FETCHING========")
         PEcoupongetter()
         wingstopcoupongetter()
-        print("=====DELETING======")
+        print("======DELETING=======")
         PEcoupondeleter()
         wingstopcoupondeleter()
-        print("=====COUNTING======")
+        print("=======COUNTING========")
         panda__coupon_count = count_panda_coupons()
         wingstop__coupon_count = count_wingstop_coupons()
 
-        date_added = datetime.now(pacific_tz).strftime('%I:%M:%S %p %m/%d/%Y')
+        date_added = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
         print(f"Total Panda Coupons at {date_added} : {panda__coupon_count}")
         print(f"Total Wingstop Coupons at {date_added} : {wingstop__coupon_count}")
-        print("===================")
+        print("======================")
         return "UPDATED DATABASE"
 
     @app.route('/pandalightning')

@@ -54,7 +54,7 @@ def wingstopcoupongetter():
 
     status, data = mail.search(None, '(FROM "WINGS@smg.com")')
     mail_ids = data[0].split()
-    print("Wingstop Emails: ",len(mail_ids))
+    print("Wingstop Emails Found: ",len(mail_ids))
 
     i=0
     pacific_tz = pytz.timezone('America/Los_Angeles')
@@ -152,7 +152,7 @@ def PEcoupongetter():
 
     status, data = mail.search(None, '(FROM "PandaExpressFeedback@smg.com")')
     mail_ids = data[0].split()
-    print("Panda Express emails: ", len(mail_ids))
+    print("Panda Express Emails Found: ", len(mail_ids))
 
 
     pacific_tz = pytz.timezone('America/Los_Angeles')
@@ -247,7 +247,7 @@ def PEcoupongetter():
 def PEcoupondeleter():
     db_ref = db.child("Pandacoupons")
     all_coupons = db_ref.get()
-    i=0
+    before_delete = count_panda_coupons()
     for coupon in all_coupons.each():
         coupon_dict = coupon.val()
         safeexpiredate = coupon_dict["safeexpiredateunix"]
@@ -256,13 +256,14 @@ def PEcoupondeleter():
         if currentdate > safeexpiredate:
             db.child("Pandacoupons").child(coupon.key()).remove()
             print(f"Removed {coupon.key()}, expired on {coupon_dict['safeexpiredate']}")
-            i +=1
-    print(f"Removed {i} Panda Express coupons")
+    after_delete = count_panda_coupons()
+    total_deleted = before_delete - after_delete
+    print(f"Removed {total_deleted} Panda Express coupons")
 
 def wingstopcoupondeleter():
     db_ref = db.child("Wingstopcoupons")
     all_coupons = db_ref.get()
-    i=0
+    before_delete = count_wingstop_coupons()
     for coupon in all_coupons.each():
         coupon_dict = coupon.val()
         safeexpiredate = coupon_dict["safeexpiredateunix"]
@@ -271,8 +272,10 @@ def wingstopcoupondeleter():
         if currentdate > safeexpiredate:
             db.child("Wingstopcoupons").child(coupon.key()).remove()
             print(f"Removed {coupon.key()}, expired on {coupon_dict['safeexpiredate']}")
-            i +=1
-    print(f"Removed {i} Wingstop coupons")
+            
+    after_delete = count_wingstop_coupons()
+    total_deleted = before_delete - after_delete
+    print(f"Removed {total_deleted} Wingstop coupons")
 
 def count_panda_coupons():
     db_ref = db.child("Pandacoupons")
@@ -291,9 +294,9 @@ def count_wingstop_coupons():
 
 
 def main():
-    wingstopcoupongetter()
+   # wingstopcoupongetter()
     wingstopcoupondeleter()
-    PEcoupongetter()
+   # PEcoupongetter()
     PEcoupondeleter()
     total_panda_coupons = count_panda_coupons()
     print("Total Panda Express coupons: ", total_panda_coupons)
