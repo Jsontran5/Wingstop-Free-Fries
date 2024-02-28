@@ -19,7 +19,7 @@ pacific_tz = pytz.timezone('America/Los_Angeles')
 dotenv_path = '/etc/secrets/.env' #for render.com
 load_dotenv(dotenv_path=dotenv_path) #for render.com
 
-#load_dotenv()
+# load_dotenv()
 
 config = {
     "apiKey": os.getenv("API_KEY"),
@@ -196,7 +196,8 @@ def create_app():
     @app.route('/pandalightningsubmit', methods=['POST'])
     def pandalightningsubmit():
 
-        input = request.form.get('email').lower()
+        input = request.form.get('email')
+
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
         print(f"Lightning Mode: {input}: {timestamp}")
 
@@ -244,7 +245,8 @@ def create_app():
     @app.route('/wingstoplightningsubmit', methods=['POST'])
     def wingstoplightningsubmit():
         
-        input = request.form.get('email').lower()
+        input = request.form.get('email').lower() or "None"
+       
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
         print(f"Lightning Mode: {input}: {timestamp}")
 
