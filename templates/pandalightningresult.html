@@ -69,8 +69,40 @@
         table {
             margin: auto;
         }
-    </style>
+        .feedback-box {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 300px; /* Adjust width as needed */
+            margin: auto; /* Center the box */
+            margin-top: 50px;
+        }
 
+        .feedback-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            resize: vertical;
+        }
+
+        .feedback-button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .feedback-button:hover {
+            background-color: #201f1f;
+        }
+    </style>
 <h1>Result:</h1>
 <p class="tip-text">Online Tip: Add coupon items Separately to your cart before applying the code.</p>
 
@@ -198,6 +230,42 @@
             </tbody>
         </table>
     </div>
+    <div class="feedback-box">
+        <h2>Feedback</h2>
+        <textarea class="feedback-input" id="feedback-text" placeholder=""></textarea>
+        <button class="feedback-button" onclick="sendFeedback()">Send</button>
+    </div>
+</div>
+
+<script>
+    function sendFeedback() {
+        // Get the feedback text
+        var feedbackText = document.getElementById('feedback-text').value;
+        
+        // Send a POST request to /sendfeedback with the feedback data
+        fetch('/sendfeedback', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ feedback: feedbackText })
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Feedback sent successfully');
+                // Hide the feedback box after sending feedback
+                document.querySelector('.feedback-box').style.display = 'none';
+            } else {
+                console.error('Failed to send feedback');
+                // Handle error if needed
+            }
+        })
+        .catch(error => {
+            console.error('Error sending feedback:', error);
+            // Handle error if needed
+        });
+    }
+</script>
     <script>
         function copyLink(event) {
             event.preventDefault(); // Prevent the default behavior of the link

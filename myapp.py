@@ -282,6 +282,18 @@ def create_app():
         code = request.args.get('code', 'ERROR')
         safeexpiredate = request.args.get('safeexpiredate', 'ERROR')
         return render_template('wingstoplightningresult.html',code=code, safeexpiredate=safeexpiredate)
+    
+    @app.route('/sendfeedback', methods=['POST'])
+    def send_feedback():
+        
+        feedback = request.json.get('feedback')
+
+        # Print the feedback
+        print("Feedback received:", feedback)
+
+        
+        return 'Feedback received successfully'
+
 
     @app.route('/error')
     def error():
