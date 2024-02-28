@@ -69,7 +69,7 @@
     }
     .site-downss-note {
             position: fixed;
-            bottom: 350px;
+
             left: 50%;
             transform: translateX(-50%);
             background-color: red;
@@ -79,7 +79,9 @@
         }
 </style>
 
-
+<div class="site-downss-note">
+    ⚡ 🫵Come BETA test the <a href="/wingstoplightning"> Wingstop Lightning Mode!</a> ⚡
+</div>
 <h1>Wingstop </h1>
 <p>Coupon for Free Regular Fries with your next online order</p>
 <form onsubmit="showLoading()">
@@ -98,9 +100,7 @@
 <div id="picture">
     <a href="/wingstoplightning"> <img  src="{{ url_for('static', filename='bolt.png') }}" alt="Sample Coupon"></a>
 </div>
-<div class="site-downss-note">
-    ⚡ Come BETA test the <a href="/wingstoplightning"> Wingstop Lightning Mode!</a> ⚡
-</div>
+
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"> </script>
 <script>
