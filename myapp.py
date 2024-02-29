@@ -72,7 +72,7 @@ def create_app():
         if result.startswith("Success"):
             increment_uses_count()
             increment_money_saved(result)
-            print("+1")
+            
 
         return result
     
@@ -84,6 +84,7 @@ def create_app():
         current_uses_count = int(current_uses_count) + 1
 
         db.child('stats').update({'uses': current_uses_count})
+        print("+1")
     
     def increment_money_saved(result):
         stats_ref = db.child('stats')
@@ -225,7 +226,6 @@ def create_app():
         db.child("Pandacoupons").child(first_coupon_id).remove()
         increment_uses_count()
         increment_money_saved("Panda Express")
-        print("+1")
 
         return redirect(url_for('pandalightningresult',  code=code, safeexpiredate=safeexpiredate))
 
@@ -273,7 +273,7 @@ def create_app():
         db.child("Wingstopcoupons").child(first_coupon_id).remove()
         increment_uses_count()
         increment_money_saved("Wingstop")
-        print("+1")
+        
 
         return redirect(url_for('wingstoplightningresult',  code=code, safeexpiredate=safeexpiredate))
 
@@ -289,7 +289,7 @@ def create_app():
         feedback = request.json.get('feedback')
 
         # Print the feedback
-        print("Feedback received:", feedback)
+        print("Feedback:", feedback)
 
         
         return 'Feedback received successfully'

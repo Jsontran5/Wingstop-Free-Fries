@@ -79,14 +79,14 @@
         }
 </style>
 
-<h1>⚡⚡[BETA] Wingstop Lightning Mode ⚡⚡</h1>
+<h1>⚡⚡Wingstop Lightning Mode ⚡⚡</h1>
 <p>Coupon for Free Regular Fries with your next online order</p>
 <p>Coupons Left:<strong> {{ wingstop_coupon_count }} </strong> (auto-restocks everyday)</p>
 {% if wingstop_coupon_count > 0 %}
 
     <form action="/wingstoplightningsubmit" method="POST" onsubmit="return showLoading();">
         <input type="hidden" name="option" value="wingstop">
-        <input type="any" name="email" placeholder="Email">
+        <input type="any" name="email" placeholder="">
         <input type="submit" value="Generate">
     </form>
 {% else %}
@@ -102,7 +102,7 @@
 </div>
 
 <div class="site-downs-note">
-    Currently in Beta testing. But this should generate a valid coupon code in O(1) time. In case the coupon is invalid, you can still use the <a href="/wingstop">manual version</a>.
+    This should generate a valid coupon code in O(1) time. In case the coupon is invalid, you can still use the <a href="/wingstop">manual version</a>.
 </div>
 
 

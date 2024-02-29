@@ -70,13 +70,13 @@
         }
 </style>
 
-<h1>⚡⚡[BETA] Panda Express Lightning Mode ⚡⚡</h1>
+<h1>⚡⚡Panda Express Lightning Mode ⚡⚡</h1>
 <p>Coupon for a Free Small Entrée with purchase of a 2-entrée Plate</p>
 <p>Coupons Left:<strong> {{panda_coupon_count}} </strong> (auto-restocks everyday)</p>
 {% if panda_coupon_count > 0 %}
     <form action="/pandalightningsubmit" method="POST" onsubmit="return showLoading();">
         <input type="hidden" name="option" value="pandaexpress">
-        <!-- <input type="any" name="email" placeholder="Email"> -->
+        <input type="any" name="email" placeholder="">
         <input type="submit" value="Generate">
 {% else %}
 <p style="margin-top: 50px;">
@@ -92,7 +92,7 @@
 </div>
 
 <div class="site-downs-note">
-    Currently in Beta testing. But this should generate a valid coupon code/barcode for you to scan in O(1) time. You should also use the <a href="/pandaexpress">manual version</a> before, in case the coupon is invalid
+    This should generate a valid coupon code/barcode for you to scan in O(1) time. You can still use the <a href="/pandaexpress">manual version</a> , in case the coupon is invalid
 </div>
 
 
