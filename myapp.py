@@ -197,10 +197,10 @@ def create_app():
     @app.route('/pandalightningsubmit', methods=['POST'])
     def pandalightningsubmit():
 
-        input = request.form.get('email')
+        input = request.form.get('email').lower() or "None"
 
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
-        print(f"Lightning Mode: {input}: {timestamp}")
+        print(f"Panda Lightning Mode: {input}: {timestamp}")
 
         # Retrieve the first coupon entry from Pandacoupons and delete it
         url = "https://wingstopfreefries-ac9e2-default-rtdb.firebaseio.com/Pandacoupons.json?orderBy=%22%24key%22&limitToFirst=1"
@@ -248,7 +248,7 @@ def create_app():
         input = request.form.get('email').lower() or "None"
        
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
-        print(f"Lightning Mode: {input}: {timestamp}")
+        print(f"Wingstop Lightning Mode: {input}: {timestamp}")
 
         # Retrieve the first coupon entry from Pandacoupons and delete it
         url = "https://wingstopfreefries-ac9e2-default-rtdb.firebaseio.com/Wingstopcoupons.json?orderBy=%22%24key%22&limitToFirst=1"
