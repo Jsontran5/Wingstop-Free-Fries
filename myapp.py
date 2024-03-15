@@ -194,10 +194,14 @@ def create_app():
         panda_coupon_count = count_panda_coupons()
         return render_template('pandaexpresslightningform.html', option="pandalightning", panda_coupon_count=panda_coupon_count)
     
+    @app.route('/bruincardnfcpandalightningsubmit', methods=['GET'])
     @app.route('/pandalightningsubmit', methods=['POST'])
     def pandalightningsubmit():
 
-        input = request.form.get('email').lower() or "None"
+        if request.method == 'GET':
+            input = "Jason's bruincard NFC"
+        else:
+            input = request.form.get('email').lower() or "None"
 
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
         print(f"Panda Lightning Mode: {input}: {timestamp}")
@@ -241,7 +245,7 @@ def create_app():
         wingstop_coupon_count = count_wingstop_coupons()
         return render_template('wingstoplightningform.html', option="wingstoplightning", wingstop_coupon_count=wingstop_coupon_count)
 
-
+    
     @app.route('/wingstoplightningsubmit', methods=['POST'])
     def wingstoplightningsubmit():
         
