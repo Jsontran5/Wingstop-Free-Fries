@@ -237,7 +237,7 @@ def create_app():
         wingstop_coupon_count = count_wingstop_coupons()
         return render_template('wingstoplightningform.html', option="wingstoplightning", wingstop_coupon_count=wingstop_coupon_count)
     
-    @app.route('/bruincardnfwingstoplightningsubmit', methods=['GET'])
+    @app.route('/bruincardnfcwingstoplightningsubmit', methods=['GET'])
     @app.route('/wingstoplightningsubmit', methods=['POST'])
     def wingstoplightningsubmit():
         
