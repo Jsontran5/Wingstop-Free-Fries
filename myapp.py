@@ -48,8 +48,9 @@ def create_app():
     def submit():
         input = request.form.get('email').lower()
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S %p %m/%d/%Y')
+        selected_option = request.form.get('option')
 
-        print(f"Manual Mode: {input}: {timestamp}")
+        print(f"{selected_option} Manual Mode: {input}: {timestamp}")
 
         # Default message in case no option is selected
         result = "Please select an option."
@@ -59,7 +60,7 @@ def create_app():
             return redirect(url_for('error'))
         
 
-        selected_option = request.form.get('option')
+        
         if selected_option == 'wingstop':
             result = wingstop_survey(input)
         elif selected_option == 'rubios':
@@ -118,15 +119,6 @@ def create_app():
     def static_from_root():
         return send_from_directory(app.static_folder, request.path[1:])
     
-    @app.route('/populatepanda')
-    def populatepanda():
-        panda_survey("wffpandaexpress1@yopmail.com")
-        return "Populated Panda Express mail"
-    
-    @app.route('/populatewingstop')
-    def populatewingstop():
-        wingstop_survey("wffwingstop@yopmail.com")
-        return "Populated Wingstop mail"
     
     @app.route('/pandaemail/<email>')
     def pandaemail(email):
@@ -244,12 +236,15 @@ def create_app():
     def wingstoplightning():
         wingstop_coupon_count = count_wingstop_coupons()
         return render_template('wingstoplightningform.html', option="wingstoplightning", wingstop_coupon_count=wingstop_coupon_count)
-
     
+    @app.route('/bruincardnfwingstoplightningsubmit', methods=['GET'])
     @app.route('/wingstoplightningsubmit', methods=['POST'])
     def wingstoplightningsubmit():
         
-        input = request.form.get('email').lower() or "None"
+        if request.method == 'GET':
+            input = "Jason's bruincard NFC"
+        else:
+            input = request.form.get('email').lower() or "None"
        
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
         print(f"Wingstop Lightning Mode: {input}: {timestamp}")
