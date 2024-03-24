@@ -50,7 +50,7 @@ def create_app():
         input = request.form.get('email').lower()
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S %p %m/%d/%Y')
         selected_option = request.form.get('option')
-        print('========================')
+        print('=======================')
         print(f"{selected_option} Manual Mode: {input}: {timestamp}")
 
         # Default message in case no option is selected
@@ -62,19 +62,19 @@ def create_app():
         
 
         
-        if selected_option == 'wingstop':
+        if selected_option == 'Wingstop':
             result = wingstop_survey(input)
-        elif selected_option == 'rubios':
+        elif selected_option == 'Rubios':
             result = rubios_survey()
-        elif selected_option == 'pandaexpress':
+        elif selected_option == 'Panda Express':
             result = panda_survey(input)
-        elif selected_option == 'blazepizza':
+        elif selected_option == 'Blaze Pizza':
             result = blaze_pizza_survey(input)
 
         if result.startswith("Success"):
             increment_uses_count()
             increment_money_saved(result)
-        print('========================')
+        print('=======================')
             
 
         return result
@@ -222,12 +222,12 @@ def create_app():
     @app.route('/bruincardnfcpandalightningsubmit', methods=['GET'])
     @app.route('/pandalightningsubmit', methods=['POST'])
     def pandalightningsubmit():
-
+        print('=======================')
         if request.method == 'GET':
             input = "Jason's bruincard NFC"
         else:
             input = request.form.get('email').lower() or "None"
-        print('========================')
+        
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
         print(f"Panda Lightning Mode: {input}: {timestamp}")
 
@@ -255,7 +255,7 @@ def create_app():
         db.child("Pandacoupons").child(first_coupon_id).remove()
         increment_uses_count()
         increment_money_saved("Panda Express")
-        print('========================')
+        print('=======================')
         #Change coupon labels
         t = Thread(target=usedcoupon, args=(code,))
         t.start()
@@ -280,12 +280,12 @@ def create_app():
     @app.route('/bruincardnfcwingstoplightningsubmit', methods=['GET'])
     @app.route('/wingstoplightningsubmit', methods=['POST'])
     def wingstoplightningsubmit():
-        
+        print('=======================')
         if request.method == 'GET':
             input = "Jason's bruincard NFC"
         else:
             input = request.form.get('email').lower() or "None"
-        print('========================')
+        
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
         print(f"Wingstop Lightning Mode: {input}: {timestamp}")
 
@@ -312,7 +312,7 @@ def create_app():
         db.child("Wingstopcoupons").child(first_coupon_id).remove()
         increment_uses_count()
         increment_money_saved("Wingstop")
-        print('========================')
+        print('=======================')
         #Change coupon labels
         t = Thread(target=usedcoupon, args=(code,))
         t.start()
