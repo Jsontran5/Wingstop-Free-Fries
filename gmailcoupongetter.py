@@ -62,10 +62,9 @@ def wingstopcoupongetter():
     # Read each email
     current_time = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
     for mail_id in mail_ids:
-        
         # Fetch the email data
         status, email_data = mail.fetch(mail_id, '(RFC822)')
-        
+  
         # Extract the email content
         raw_email = email_data[0][1]
         msg = email.message_from_bytes(raw_email)
@@ -125,7 +124,7 @@ def wingstopcoupongetter():
             "dateadded": dateadded,
             "dateaddedunix": dateaddedunix
         })
-        mail.store(mail_id, '+X-GM-LABELS', 'USED') #added the email to the USED label
+        mail.store(mail_id, '+X-GM-LABELS', '"UNUSED: IN DB"') #added the email to the USED label
         mail.store(mail_id, '+FLAGS', '\\Deleted') #removed the email from the inbox
         i +=1
     print(f"Added {i} Wingstop coupons at {current_time}")
@@ -237,7 +236,7 @@ def PEcoupongetter():
             "dateadded": dateadded,
             "dateaddedunix": dateaddedunix
         })
-        mail.store(mail_id, '+X-GM-LABELS', 'USED') #added the email to the USED label
+        mail.store(mail_id, '+X-GM-LABELS', '"UNUSED: IN DB"') #added the email to the USED label
         mail.store(mail_id, '+FLAGS', '\\Deleted') #removed the email from the inbox
         i +=1
     print(f"Added {i} PE coupons at {current_time}")
@@ -248,6 +247,20 @@ def PEcoupondeleter():
     db_ref = db.child("Pandacoupons")
     all_coupons = db_ref.get()
     before_delete = count_panda_coupons()
+
+    IMAP_SERVER = 'imap.gmail.com'
+    IMAP_PORT = 993
+    EMAIL = os.getenv("EMAIL_USER")
+    PASSWORD = os.getenv("EMAIL_PASS")
+
+    # Connect to the server
+    mail = imaplib.IMAP4_SSL(IMAP_SERVER, IMAP_PORT)
+
+    # Login to your account
+    mail.login(EMAIL, PASSWORD)
+    mail.select('"UNUSED: IN DB"')
+
+    i = 0
     for coupon in all_coupons.each():
         coupon_dict = coupon.val()
         safeexpiredate = coupon_dict["safeexpiredateunix"]
@@ -256,6 +269,20 @@ def PEcoupondeleter():
         if currentdate > safeexpiredate:
             db.child("Pandacoupons").child(coupon.key()).remove()
             print(f"Removed {coupon.key()}, expired on {coupon_dict['safeexpiredate']}")
+
+            #MOVING EMAIL LABELS
+            search_text = coupon.key()
+            search_criteria = f'(TEXT "{search_text}")'
+            result, data = mail.search(None, search_criteria)
+            i += 1
+            if result == 'OK':
+                for num in data[0].split():
+                    mail.store(num, '+X-GM-LABELS', '"UNUSED: NOT IN DB"')
+
+                    mail.store(num, '+FLAGS', '\\Deleted')
+                    mail.expunge()
+
+                    print(f'Moved {coupon.key()} from "UNUSED: IN DB" to "UNUSED: NOT IN DB"')
     after_delete = count_panda_coupons()
     total_deleted = before_delete - after_delete
     print(f"Removed {total_deleted} Panda Express coupons")
@@ -264,6 +291,20 @@ def wingstopcoupondeleter():
     db_ref = db.child("Wingstopcoupons")
     all_coupons = db_ref.get()
     before_delete = count_wingstop_coupons()
+
+    IMAP_SERVER = 'imap.gmail.com'
+    IMAP_PORT = 993
+    EMAIL = os.getenv("EMAIL_USER")
+    PASSWORD = os.getenv("EMAIL_PASS")
+
+    # Connect to the server
+    mail = imaplib.IMAP4_SSL(IMAP_SERVER, IMAP_PORT)
+
+    # Login to your account
+    mail.login(EMAIL, PASSWORD)
+    mail.select('"UNUSED: IN DB"')
+
+    i=0
     for coupon in all_coupons.each():
         coupon_dict = coupon.val()
         safeexpiredate = coupon_dict["safeexpiredateunix"]
@@ -272,7 +313,20 @@ def wingstopcoupondeleter():
         if currentdate > safeexpiredate:
             db.child("Wingstopcoupons").child(coupon.key()).remove()
             print(f"Removed {coupon.key()}, expired on {coupon_dict['safeexpiredate']}")
-            
+            search_text = coupon.key()
+            search_criteria = f'(TEXT "{search_text}")'
+            result, data = mail.search(None, search_criteria)
+            i += 1
+            if result == 'OK':
+                for num in data[0].split():
+                    mail.store(num, '+X-GM-LABELS', '"UNUSED: NOT IN DB"')
+
+                    mail.store(num, '+FLAGS', '\\Deleted')
+                    mail.expunge()
+
+                    print(f'Moved {coupon.key()} from "UNUSED: IN DB" to "UNUSED: NOT IN DB"')
+                
+           
     after_delete = count_wingstop_coupons()
     total_deleted = before_delete - after_delete
     print(f"Removed {total_deleted} Wingstop coupons")
@@ -292,12 +346,40 @@ def count_wingstop_coupons():
     return count
 
 
+def usedcoupon(code):
+    IMAP_SERVER = 'imap.gmail.com'
+    IMAP_PORT = 993
+    EMAIL = os.getenv("EMAIL_USER")
+    PASSWORD = os.getenv("EMAIL_PASS")
+
+    # Connect to the server
+    mail = imaplib.IMAP4_SSL(IMAP_SERVER, IMAP_PORT)
+
+    # Login to your account
+    mail.login(EMAIL, PASSWORD)
+    mail.select('"UNUSED: IN DB"')
+
+    i=0
+    search_text = code
+    search_criteria = f'(TEXT "{search_text}")'
+    result, data = mail.search(None, search_criteria)
+    i += 1
+    if result == 'OK':
+        for num in data[0].split():
+            mail.store(num, '+X-GM-LABELS', '"USED: NOT IN DB"')
+            mail.store(num, '+FLAGS', '\\Deleted')
+            mail.expunge()
+            
+            print(f'Moved {code} from "UNUSED: IN DB" to "USED: NOT IN DB"')
+
 
 def main():
-   # wingstopcoupongetter()
+
+    #wingstopcoupongetter()
     wingstopcoupondeleter()
    # PEcoupongetter()
     PEcoupondeleter()
+
     total_panda_coupons = count_panda_coupons()
     print("Total Panda Express coupons: ", total_panda_coupons)
     total_wingstop_coupons = count_wingstop_coupons()

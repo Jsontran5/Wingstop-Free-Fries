@@ -4,7 +4,7 @@ from blazefunction import blaze_pizza_survey
 from pandafunction import panda_survey
 from wingstopoptimizedfunction import wingstop_survey
 from rubiosfunction import rubios_survey
-from gmailcoupongetter import  PEcoupondeleter, PEcoupongetter, wingstopcoupongetter, wingstopcoupondeleter, count_panda_coupons, count_wingstop_coupons
+from gmailcoupongetter import  PEcoupondeleter, PEcoupongetter, wingstopcoupongetter, wingstopcoupondeleter, count_panda_coupons, count_wingstop_coupons, usedcoupon
 from datetime import datetime
 import pytz
 import firebase_admin
@@ -12,6 +12,7 @@ import pyrebase
 from firebase_admin import credentials, db
 import os
 from dotenv import load_dotenv
+from threading import Thread
 
 RESTRICTED_EMAILS = ['foodsurveycodes@gmail.com','', " "]
 pacific_tz = pytz.timezone('America/Los_Angeles')
@@ -49,7 +50,7 @@ def create_app():
         input = request.form.get('email').lower()
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S %p %m/%d/%Y')
         selected_option = request.form.get('option')
-
+        print('========================')
         print(f"{selected_option} Manual Mode: {input}: {timestamp}")
 
         # Default message in case no option is selected
@@ -73,6 +74,7 @@ def create_app():
         if result.startswith("Success"):
             increment_uses_count()
             increment_money_saved(result)
+        print('========================')
             
 
         return result
@@ -180,6 +182,37 @@ def create_app():
         print(f"Total Wingstop Coupons at {date_added} : {wingstop__coupon_count}")
         print("======================")
         return "UPDATED DATABASE"
+    
+    @app.route('/deleteexpiredcoupons')
+    def deleteexpiredcoupons():
+        print("======DELETING=======")
+        PEcoupondeleter()
+        wingstopcoupondeleter()
+        print("=======COUNTING========")
+        panda__coupon_count = count_panda_coupons()
+        wingstop__coupon_count = count_wingstop_coupons()
+
+        date_added = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
+        print(f"Total Panda Coupons at {date_added} : {panda__coupon_count}")
+        print(f"Total Wingstop Coupons at {date_added} : {wingstop__coupon_count}")
+        print("======================")
+        return "DELETED EXPIRED COUPONS"
+    
+    @app.route('/fetchcoupons')
+    def fetchcoupons():
+        print("=====FETCHING========")
+        PEcoupongetter()
+        wingstopcoupongetter()
+        print("=======COUNTING========")
+        panda__coupon_count = count_panda_coupons()
+        wingstop__coupon_count = count_wingstop_coupons()
+
+        date_added = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
+        print(f"Total Panda Coupons at {date_added} : {panda__coupon_count}")
+        print(f"Total Wingstop Coupons at {date_added} : {wingstop__coupon_count}")
+        print("======================")
+        return "FETCHED COUPONS"
+
 
     @app.route('/pandalightning')
     def pandalightning():
@@ -194,7 +227,7 @@ def create_app():
             input = "Jason's bruincard NFC"
         else:
             input = request.form.get('email').lower() or "None"
-
+        print('========================')
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
         print(f"Panda Lightning Mode: {input}: {timestamp}")
 
@@ -222,6 +255,10 @@ def create_app():
         db.child("Pandacoupons").child(first_coupon_id).remove()
         increment_uses_count()
         increment_money_saved("Panda Express")
+        print('========================')
+        #Change coupon labels
+        t = Thread(target=usedcoupon, args=(code,))
+        t.start()
 
         return redirect(url_for('pandalightningresult',  code=code, safeexpiredate=safeexpiredate))
 
@@ -230,6 +267,9 @@ def create_app():
     def pandalightningresult():
         code = request.args.get('code', 'ERROR')
         safeexpiredate = request.args.get('safeexpiredate', 'ERROR')
+
+        
+
         return render_template('pandalightningresult.html',code=code, safeexpiredate=safeexpiredate)
     
     @app.route('/wingstoplightning')
@@ -245,7 +285,7 @@ def create_app():
             input = "Jason's bruincard NFC"
         else:
             input = request.form.get('email').lower() or "None"
-       
+        print('========================')
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
         print(f"Wingstop Lightning Mode: {input}: {timestamp}")
 
@@ -272,7 +312,10 @@ def create_app():
         db.child("Wingstopcoupons").child(first_coupon_id).remove()
         increment_uses_count()
         increment_money_saved("Wingstop")
-        
+        print('========================')
+        #Change coupon labels
+        t = Thread(target=usedcoupon, args=(code,))
+        t.start()
 
         return redirect(url_for('wingstoplightningresult',  code=code, safeexpiredate=safeexpiredate))
 
@@ -280,6 +323,7 @@ def create_app():
     def wingstoplightningresult():
         code = request.args.get('code', 'ERROR')
         safeexpiredate = request.args.get('safeexpiredate', 'ERROR')
+
         return render_template('wingstoplightningresult.html',code=code, safeexpiredate=safeexpiredate)
     
     @app.route('/sendfeedback', methods=['POST'])
