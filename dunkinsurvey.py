@@ -2,11 +2,14 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions as ECsad
+
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import Select
 import time
 import datetime
+from datetime import timedelta
+
 
 def dunkin_survey(email):
     chrome_options = webdriver.ChromeOptions()
