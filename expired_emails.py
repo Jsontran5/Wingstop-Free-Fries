@@ -2,6 +2,8 @@ from simplegmail import Gmail
 from simplegmail.query import construct_query
 import os
 
+#Function to automatically "delete" expired coupons in your email (use option #1)
+
 def delete_coupons(account):
     os.remove("gmail_token.json")
     gmail = Gmail()

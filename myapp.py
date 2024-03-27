@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, send_from_
 import requests
 from blazefunction import blaze_pizza_survey
 from pandafunction import panda_survey
-from wingstopoptimizedfunction import wingstop_survey
+from wingstopfunction import wingstop_survey
 from rubiosfunction import rubios_survey
 from gmailcoupongetter import  PEcoupondeleter, PEcoupongetter, wingstopcoupongetter, wingstopcoupondeleter, count_panda_coupons, count_wingstop_coupons, usedcoupon
 from datetime import datetime
