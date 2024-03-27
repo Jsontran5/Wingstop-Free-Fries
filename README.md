@@ -1,6 +1,6 @@
 # WingstopFreeFries
 
-Github Repository for WingstopFreeFries
+Github Repository for the website [**wingstopfreefries.xyz**](https://wingstopfreefries.xyz)
 
 Will generate you a coupon for the supported stores below by filling out the survey autmatically and bypassing the need for a survey code.
 ### Supported Stores:
@@ -10,9 +10,6 @@ Panda Express
 Rubio's
 Blaze Pizza
 ```
-Come get a free coupon at the link below!
-
-[**wingstopfreefries.xyz**](https://wingstopfreefries.xyz)
 
 
 
