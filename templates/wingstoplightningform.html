@@ -25,7 +25,7 @@
         margin-top: 20px;
     }
 
-    input[type="any"] {
+    input[type="email"] {
         width: 300px;
         padding: 10px;
         font-size: 16px;
@@ -86,7 +86,7 @@
 
     <form action="/wingstoplightningsubmit" method="POST" onsubmit="return showLoading();">
         <input type="hidden" name="option" value="wingstop">
-        <input type="any" name="email" placeholder="Email" required >
+        <input type="email" name="email" placeholder="Email" required>
         <input type="submit" value="Generate">
     </form>
 {% else %}
