@@ -232,7 +232,7 @@ def create_app():
         print(f"Panda Lightning Mode: {input}: {timestamp}")
 
         # Retrieve the first coupon entry from Pandacoupons and delete it
-        url = "https://wingstopfreefries-ac9e2-default-rtdb.firebaseio.com/Pandacoupons.json?orderBy=%22%24key%22&limitToFirst=1"
+        url = os.getenv("PANDA_URL")
         response = requests.get(url)
         response.raise_for_status()
         first_coupon_data = response.json()
@@ -290,7 +290,7 @@ def create_app():
         print(f"Wingstop Lightning Mode: {input}: {timestamp}")
 
         # Retrieve the first coupon entry from Pandacoupons and delete it
-        url = "https://wingstopfreefries-ac9e2-default-rtdb.firebaseio.com/Wingstopcoupons.json?orderBy=%22%24key%22&limitToFirst=1"
+        url = os.getenv("WINGSTOP_URL")
         response = requests.get(url)
         response.raise_for_status()
         first_coupon_data = response.json()

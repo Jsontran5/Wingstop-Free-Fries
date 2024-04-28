@@ -12,10 +12,10 @@ from firebase_admin import credentials, db
 import os
 from dotenv import load_dotenv
 
-dotenv_path = '/etc/secrets/.env' #for render.com
-load_dotenv(dotenv_path=dotenv_path) #for render.com
+# # dotenv_path = '/etc/secrets/.env' #for render.com
+# # load_dotenv(dotenv_path=dotenv_path) #for render.com
 
-# load_dotenv()
+load_dotenv()
 
 pacific_tz =pytz.timezone('America/Los_Angeles')
 
