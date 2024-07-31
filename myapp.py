@@ -52,8 +52,8 @@ def create_app():
         selected_option = request.form.get('option')
         print('=======================')
         print(f"{selected_option} Manual Mode: {input}: {timestamp}")
-        visitor = request.remote_addr
-        print(f"Visitor: {visitor}")
+        if request.environ.get('HTTP_X_FORWARDED_FOR') is None:
+            print(f"Visitor: {request.environ['REMOTE_ADDR']}")
         # Default message in case no option is selected
         result = "Please select an option."
         if input in RESTRICTED_EMAILS:
@@ -231,8 +231,8 @@ def create_app():
         
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
         print(f"Panda Lightning Mode: {input}: {timestamp}")
-        visitor = request.remote_addr
-        print(f"Visitor: {visitor}")
+        if request.environ.get('HTTP_X_FORWARDED_FOR') is None:
+            print(f"Visitor: {request.environ['REMOTE_ADDR']}")
         # Retrieve the first coupon entry from Pandacoupons and delete it
         url = os.getenv("PANDA_URL")
         response = requests.get(url)
@@ -287,8 +287,8 @@ def create_app():
             input = "Jason's bruincard NFC"
         else:
             input = request.form.get('email').lower() or "None"
-        visitor = request.remote_addr
-        print(f"Visitor: {visitor}")
+        if request.environ.get('HTTP_X_FORWARDED_FOR') is None:
+            print(f"Visitor: {request.environ['REMOTE_ADDR']}")
         
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
         print(f"Wingstop Lightning Mode: {input}: {timestamp}")
