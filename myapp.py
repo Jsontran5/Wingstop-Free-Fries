@@ -52,6 +52,11 @@ def create_app():
         selected_option = request.form.get('option')
         print('=======================')
         print(f"{selected_option} Manual Mode: {input}: {timestamp}")
+        visitor = request.headers.get('cf-connecting-ip')
+        if visitor:
+            print(f"Visitor: {visitor}")
+        else:
+            print(f"Visitor: Unable to determine")
 
         # Default message in case no option is selected
         result = "Please select an option."
@@ -230,6 +235,13 @@ def create_app():
         
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
         print(f"Panda Lightning Mode: {input}: {timestamp}")
+
+        visitor = request.headers.get('cf-connecting-ip')
+        if visitor:
+            print(f"Visitor: {visitor}")
+        else:
+            print(f"Visitor: Unable to determine")
+        
         if input in RESTRICTED_EMAILS:
             return redirect(url_for('error'))
         if "@" not in input or "." not in input:
@@ -294,6 +306,11 @@ def create_app():
         
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
         print(f"Wingstop Lightning Mode: {input}: {timestamp}")
+        visitor = request.headers.get('cf-connecting-ip')
+        if visitor:
+            print(f"Visitor: {visitor}")
+        else:
+            print(f"Visitor: Unable to determine")
         if input in RESTRICTED_EMAILS:
             return redirect(url_for('error'))
         if "@" not in input or "." not in input:
