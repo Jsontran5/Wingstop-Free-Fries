@@ -230,6 +230,11 @@ def create_app():
         
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
         print(f"Panda Lightning Mode: {input}: {timestamp}")
+        if input in RESTRICTED_EMAILS:
+            return redirect(url_for('error'))
+        if "@" not in input or "." not in input:
+            return redirect(url_for('error'))
+        
 
         # Retrieve the first coupon entry from Pandacoupons and delete it
         url = os.getenv("PANDA_URL")
@@ -245,7 +250,7 @@ def create_app():
   
 
         safeexpiredate = first_coupon["safeexpiredate"]
-        print("Expire Date:", safeexpiredate)
+        print("Expiration Date:", safeexpiredate)
 
         source = first_coupon.get("type", None)
         print("Source:", source)
@@ -289,6 +294,10 @@ def create_app():
         
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
         print(f"Wingstop Lightning Mode: {input}: {timestamp}")
+        if input in RESTRICTED_EMAILS:
+            return redirect(url_for('error'))
+        if "@" not in input or "." not in input:
+            return redirect(url_for('error'))
 
         # Retrieve the first coupon entry from Pandacoupons and delete it
         url = os.getenv("WINGSTOP_URL")
@@ -304,7 +313,7 @@ def create_app():
   
 
         safeexpiredate = first_coupon["safeexpiredate"]
-        print("Expire Date:", safeexpiredate)
+        print("Expiration Date:", safeexpiredate)
 
         source = first_coupon.get("type", None)
         print("Source:", source)
