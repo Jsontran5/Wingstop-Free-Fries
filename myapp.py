@@ -51,8 +51,9 @@ def create_app():
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S %p %m/%d/%Y')
         selected_option = request.form.get('option')
         print('=======================')
-        print(f"{selected_option} Manual Mode: {input}: {timestamp}")
         visitor = request.headers.get('cf-connecting-ip')
+        print(f"{selected_option} Manual Mode:  {input} ({visitor}): {timestamp}")
+        
         if visitor:
             print(f"Visitor: {visitor}")
         else:
@@ -229,18 +230,19 @@ def create_app():
     def pandalightningsubmit():
         print('=======================')
         if request.method == 'GET':
-            input = "Jason's bruincard NFC"
+            input = "JasonBruincardNFC"
         else:
             input = request.form.get('email').lower() or "None"
         
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
-        print(f"Panda Lightning Mode: {input}: {timestamp}")
-
         visitor = request.headers.get('cf-connecting-ip')
+        print(f"Panda Lightning Mode: {input} ({visitor}): {timestamp}")
+
+        
         if visitor:
-            print(f"Visitor: {visitor}")
+            print(f"Unique ID: {visitor}")
         else:
-            print(f"Visitor: Unable to determine")
+            print(f"Unique ID: Unable to determine")
         
         if input in RESTRICTED_EMAILS:
             return redirect(url_for('error'))
@@ -299,18 +301,18 @@ def create_app():
     def wingstoplightningsubmit():
         print('=======================')
         if request.method == 'GET':
-            input = "Jason's bruincard NFC"
+            input = "JasonBruincardNFC"
         else:
             input = request.form.get('email').lower() or "None"
     
-        
         timestamp = datetime.now(pacific_tz).strftime('%I:%M:%S%p %m/%d/%Y')
-        print(f"Wingstop Lightning Mode: {input}: {timestamp}")
         visitor = request.headers.get('cf-connecting-ip')
+        print(f"Wingstop Lightning Mode:  {input} ({visitor}): {timestamp}")
+        
         if visitor:
-            print(f"Visitor: {visitor}")
+            print(f"Unique ID: {visitor}")
         else:
-            print(f"Visitor: Unable to determine")
+            print(f"Unique ID: Unable to determine")
         if input in RESTRICTED_EMAILS:
             return redirect(url_for('error'))
         if "@" not in input or "." not in input:
