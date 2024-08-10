@@ -15,6 +15,7 @@ from dotenv import load_dotenv
 from threading import Thread
 
 RESTRICTED_EMAILS = ['foodsurveycodes@gmail.com','', " "]
+ALLOWED_EMAILS = ['JasonBruincardNFC']
 pacific_tz = pytz.timezone('America/Los_Angeles')
 
 dotenv_path = '/etc/secrets/.env' #for render.com
@@ -246,7 +247,7 @@ def create_app():
         
         if input in RESTRICTED_EMAILS:
             return redirect(url_for('error'))
-        if "@" not in input or "." not in input:
+        if "@" not in input or "." not in input and input not in ALLOWED_EMAILS:
             return redirect(url_for('error'))
         
 
@@ -315,7 +316,7 @@ def create_app():
             print(f"Unique ID: Unable to determine")
         if input in RESTRICTED_EMAILS:
             return redirect(url_for('error'))
-        if "@" not in input or "." not in input:
+        if "@" not in input or "." not in input and input not in ALLOWED_EMAILS:
             return redirect(url_for('error'))
 
         # Retrieve the first coupon entry from Pandacoupons and delete it
