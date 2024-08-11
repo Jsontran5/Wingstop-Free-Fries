@@ -247,8 +247,9 @@ def create_app():
         
         if input in RESTRICTED_EMAILS:
             return redirect(url_for('error'))
-        if "@" not in input or "." not in input and input not in ALLOWED_EMAILS:
-            return redirect(url_for('error'))
+        if "@" not in input or "." not in input:
+            if input not in ALLOWED_EMAILS:
+                return redirect(url_for('error'))
         
 
         # Retrieve the first coupon entry from Pandacoupons and delete it
@@ -316,8 +317,11 @@ def create_app():
             print(f"Unique ID: Unable to determine")
         if input in RESTRICTED_EMAILS:
             return redirect(url_for('error'))
-        if "@" not in input or "." not in input and input not in ALLOWED_EMAILS:
-            return redirect(url_for('error'))
+        if "@" not in input or "." not in input:
+            if input not in ALLOWED_EMAILS:
+                return redirect(url_for('error'))
+
+        
 
         # Retrieve the first coupon entry from Pandacoupons and delete it
         url = os.getenv("WINGSTOP_URL")
