@@ -44,6 +44,9 @@ def create_app():
 
     @app.route('/')
     def index():
+        visitor = request.headers.get('cf-connecting-ip')
+        if visitor:
+            print(f"Visitor: {visitor}")
         return render_template('index.html')
 
     @app.route('/submit', methods=['POST'])
