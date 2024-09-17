@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+</head>
+
+
 <style>
     body {
         background-color: #f5f5f5;
@@ -78,6 +84,91 @@
             padding: 10px;
             border-radius: 5px;
         }
+                /* Slider and Card Styles */
+                .slider {
+            width: 90%;
+            margin: 50px auto; /* Centers the slider */
+            overflow: hidden; /* Hides any overflow */
+        }
+
+        .card {
+            position: relative;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            width: 300px; /* Default width for desktop */
+            height: 350px; /* Default height for desktop */
+            display: flex; /* Flexbox for centering */
+            flex-direction: column; /* Column layout */
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+        }
+
+        .card img {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+            margin: auto; /* Center the image */
+            border-radius: 8px;
+        }
+
+        .card h2 {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .card .checkbox {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .icon {
+            margin-top: 10px;
+        }
+
+        .icon svg {
+            width: 24px;
+            height: 24px;
+            fill: #f44336; /* Spicy Icon Color */
+        }
+
+        /* Media Queries for Mobile Devices */
+        @media (max-width: 768px) { /* Tablet and below */
+            .card {
+                width: 220px; /* Adjust width for smaller screens */
+                height: 300px; /* Adjust height for smaller screens */
+            }
+
+            .slider {
+                width: 95%; /* Make slider full width */
+            }
+        }
+
+        @media (max-width: 480px) { /* Mobile devices */
+            .card {
+                width: 180px; /* Smaller width for mobile */
+                height: 250px; /* Smaller height for mobile */
+            }
+            
+            h1 {
+                font-size: 28px; /* Adjust header size for mobile */
+            }
+
+            p {
+                font-size: 16px; /* Adjust paragraph size for mobile */
+            }
+        }
+    
 </style>
 
 <h1><a href="/wingstoplightning">
@@ -108,6 +199,25 @@
 <!-- <div class="site-downs-note">
     Looking for the Wingstop Manual Mode? <a href="/wingstop">click here</a>
  </div> -->
+    <!-- Slick Slider at the Bottom -->
+    <div class="slider" style="margin-top: 185px;">
+        <!-- Card 1 -->
+
+        
+        <div class="card">
+            
+            <img src="https://cdn.bfldr.com/NDQASMJ1/as/r5js3kn8xrjs6p3nkcwfns98/Seasoned_Fries?auto=webp&format=png&width=675" alt="Regular Seasoned Fries">
+            <h2>Regular Seasoned Fries</h2>
+            <p><strong>FREE</strong></p>
+           
+        </div>
+    
+      
+    </div>
+
+<!-- jQuery and Slick JS -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
 
 
@@ -117,5 +227,59 @@
         document.getElementById('loading').style.display = 'block';
         document.querySelector('input[type="submit"]').disabled = true;
     }
+
+    // Initialize Slick Slider
+    $(document).ready(function(){
+        $('.slider').slick({
+            infinite: true,  // Enables infinite scrolling
+            slidesToShow: 7, // Number of slides to show at once
+            slidesToScroll: 1, // Number of slides to scroll at once
+            autoplay: true,   // Enable auto-play
+            autoplaySpeed: 0, // Auto-play speed (0 for continuous sliding)
+            speed: 10000, // Speed of sliding in milliseconds (10 seconds for full transition)
+            cssEase: 'linear', // Linear easing for continuous sliding effect
+            arrows: false, // Hide navigation arrows
+            dots: false,    // Hide navigation dots
+            pauseOnHover: false, // Don't pause on hover
+            swipe: true,   // Enable swipe gestures for mobile devices
+            draggable: true, // Enable dragging for mobile devices
+            responsive: [  // Responsive settings for different screen sizes
+                {
+                    breakpoint: 768, // Tablet breakpoint
+                    settings: {
+                        infinite: true,  // Enables infinite scrolling
+                        slidesToShow: 2, // Number of slides to show at once
+                        slidesToScroll: 1, // Number of slides to scroll at once
+                        autoplay: true,   // Enable auto-play
+                        autoplaySpeed: 0, // Auto-play speed (0 for continuous sliding)
+                        speed: 3000, // Speed of sliding in milliseconds (10 seconds for full transition)
+                        cssEase: 'linear', // Linear easing for continuous sliding effect
+                        arrows: false, // Hide navigation arrows
+                        dots: false,    // Hide navigation dots
+                        pauseOnHover: false, // Don't pause on hover
+                        swipe: true,   // Enable swipe gestures for mobile devices
+                        draggable: true, // Enable dragging for mobile devices
+                    }
+                },
+                {
+                    breakpoint: 480, // Mobile breakpoint
+                    settings: {
+                        infinite: true,  // Enables infinite scrolling
+                        slidesToShow: 2, // Number of slides to show at once
+                        slidesToScroll: 1, // Number of slides to scroll at once
+                        autoplay: true,   // Enable auto-play
+                        autoplaySpeed: 0, // Auto-play speed (0 for continuous sliding)
+                        speed: 3000, // Speed of sliding in milliseconds (10 seconds for full transition)
+                        cssEase: 'linear', // Linear easing for continuous sliding effect
+                        arrows: false, // Hide navigation arrows
+                        dots: false,    // Hide navigation dots
+                        pauseOnHover: false, // Don't pause on hover
+                        swipe: true,   // Enable swipe gestures for mobile devices
+                        draggable: true, // Enable dragging for mobile devices
+                    }
+                }
+            ]
+        });
+    });
 </script>
 {% endblock %}
