@@ -1,322 +1,204 @@
-{% extends "base.html" %}
-
-{% block content %}
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panda Express Coupon</title>
     <style>
         body {
-            background-color: #f5f5f5;
             font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
         }
-
-        h1 {
+        .coupon {
+            border: 2px solid #ccc;
+            width: 600px;
+            margin: 20px auto;
             text-align: center;
-            color: #333;
-            font-size: 36px;
-            margin-top: 50px;
+            padding: 20px;
         }
-
-        p {
+        .coupon-header {
+            background-color: #C8102E;
+            color: white;
+            padding: 10px;
             text-align: center;
-            color: #333;
-            font-size: 18px;
-        }
-
-        .result-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .result {
-            color: #146A34;
             font-size: 24px;
-        }
-
-        .run-again {
-            background-color: #333;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 18px;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 20px;
-        }
-
-        .run-again:hover {
-            background-color: #201f1f;
-        }
-
-        .disclaimer {
-            color: #D3D3D3;
-            font-size: 15px;
-            margin-top: 23px;
             font-weight: bold;
         }
-
-        /* Tip styles */
-        .tip-container {
+        .coupon-body {
+            padding: 20px;
+        }
+        .coupon-body img {
+            width: 80px;
+            margin: 10px;
+        }
+        .coupon-body h1 {
+            color: #C8102E;
+            margin: 20px 0;
+            font-size: 30px;
+        }
+        .coupon-barcode {
+            margin: 20px 0;
+        }
+        .coupon-barcode img {
+            width: 300px;
+        }
+        .coupon-text {
+            font-size: 14px;
+            color: #333;
             margin-top: 10px;
-            /* Adjusted margin to move it down */
+        }
+        .highlight {
+            font-weight: bold;
+            color: #C8102E;
+        }
+    </style>
+</head>
+<body>
+    <div class="coupon">
+        <div class="coupon-header">
+            <img src="https://www.pandaguestexperience.com/Projects/PRG2_CSI/images/emailer/smg-px-hero-ty-01.png" alt="Panda Express Logo" width="100%">
+            
+        </div>
+        <div class="coupon-body">
+            <h1>FREE SMALL ENTRÉE</h1>
+            <p>WITH PURCHASE OF 2-ENTRÉE PLATE</p>
+            <div class="coupon-barcode">
+                <img src="https://www.pandaguestexperience.com/Common/controls/IDAutomation/Barcode.aspx?D=ERROR&LM=.25&TM=0&ST=F" alt="Barcode">
+                <div>ERROR</div>
+            </div>
+            <div class="coupon-text">
+                Offer will expire on <span class="highlight">ERROR</span>. This coupon code is good for one-time use only and is limited to one coupon code per order. Valid only at participating locations and online at PandaExpress.com or on the Panda Express app. <span class="highlight">No additional charge for premium entrée.</span> Delivery, tax and other fees still apply. Cannot be combined with any other offer, discount, or promotion. Cash value of 1/100 cent. Panda Restaurant Group, Inc. reserves the right to modify or discontinue the offer at any time and additional restrictions may apply.
+            </div>
+        </div>
+    </div>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wingstop Coupon</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
-        .tip-text {
-            color: #FF8000;
-            font-size: 16px;
+        .coupon {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            max-width: 90%;
+            width: 600px;
+            margin: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .coupon-header {
+            background-color: #00562C;
+            color: white;
+            padding: 20px;
+        }
+
+        .coupon-header img {
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .coupon-body {
+            padding: 20px;
+        }
+
+        .coupon-body h1 {
+            color: #333;
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .coupon-body p {
+            color: #333;
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+
+        .coupon-body img {
+            width: 100px;
+            margin: 20px 0;
+        }
+
+        .coupon-offer {
+            font-size: 1rem;
+            margin: 20px 0;
+        }
+
+        .coupon-offer strong {
             font-weight: bold;
         }
 
-        table {
-            margin: auto;
-        }
-        .feedback-box {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #ffffff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 300px; /* Adjust width as needed */
-            margin: auto; /* Center the box */
-            margin-top: 50px;
+        .coupon-text {
+            font-size: 0.9rem;
+            color: #333;
+            margin: 20px 0;
+            text-align: left;
+            line-height: 1.5;
         }
 
-        .feedback-input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            resize: vertical;
+        .highlight {
+            color: #00562C;
+            font-weight: bold;
         }
 
-        .feedback-button {
-            background-color: #333;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 18px;
-            border-radius: 5px;
-            cursor: pointer;
+        .divider {
+            border-top: 2px solid #d4af37;
+            margin: 20px 0;
         }
 
-        .feedback-button:hover {
-            background-color: #201f1f;
+        .footer {
+            font-weight: bold;
+            margin: 20px 0;
         }
-        .result-container {
-    text-align: center;
-    margin-top: 20px;
-    width: 100%; /* Allow the container to take the full width */
-    max-width: 100%; /* Ensure it does not exceed the screen width */
-    padding: 0 15px; /* Add padding for small screens */
-    box-sizing: border-box; /* Include padding in the width calculation */
-}
 
-.result-container table {
-    width: 100%; /* Make tables take full width of the container */
-    max-width: 600px; /* Limit the maximum width */
-    margin: 0 auto; /* Center the tables */
-}
-
-.result-content {
-    display: flex; /* Use flexbox for side-by-side layout */
-    justify-content: center; /* Center the content */
-    align-items: center; /* Center the items vertically */
-    gap: 20px; /* Gap between the left and right content */
-    flex-wrap: nowrap; /* Prevent wrapping */
-    max-width: 600px; /* Limit the overall width */
-    margin: 0 auto; /* Center the result content */
-}
-
-.result-content img {
-    width: 100%; /* Make the image take the full width of its container */
-    height: auto; /* Automatically adjust the height to maintain aspect ratio */
-    max-width: 100%; /* Ensure it fits within its container */
-    display: block; /* Remove any inline spacing */
-    margin: 0 auto; /* Center the image */
-}
-
-.barcode-container {
-    display: flex; /* Flexbox to align barcode and image side by side */
-    justify-content: space-between; /* Spacing between elements */
-    align-items: center; /* Center items vertically */
-    flex-wrap: nowrap; /* No wrapping */
-    margin-top: 20px;
-    gap: 20px; /* Gap between elements */
-    max-width: 600px; /* Limit width of barcode container */
-    margin: 0 auto; /* Center the barcode container */
-}
-
-.barcode-container .barcode {
-    width: 100%; /* Allow barcode container to take full width */
-    max-width: 200px; /* Constrain the width */
-    text-align: center; /* Center align barcode */
-    margin: 0 auto; /* Center within container */
-    flex-shrink: 0; /* Prevent the barcode section from shrinking */
-}
-
-.barcode-container .coupon-image {
-    flex: 1; /* Allow the image to grow to fill available space */
-    max-width: 300px; /* Adjust the width for the coupon image */
-    height: auto; /* Maintain aspect ratio */
-    margin: 0 auto; /* Center the image */
-    object-fit: contain; /* Contain the image without distortion */
-}
+        .footer-logo img {
+            width: 100px;
+        }
     </style>
-<h1>Result:</h1>
-<p class="tip-text">Online Tip: Add coupon items Separately to your cart before applying the code.</p>
-
-
-  <p class="tip-text">If you want to save or share this coupon. <a  class = "tip-text" href="#" onclick="copyLink(event)">Copy the Link</a></p>
-
-<div class="result-container">
-    <div class="result-container">
-        <table bgcolor="#f8f7ee" border="0" cellpadding="0" cellspacing="0" width="600">
-            <tbody>
-                <tr>
-                    <td valign="top">
-                        <table cellpadding="0" cellspacing="0" class="result-content">
-                            <tbody>
-                                <tr>
-                                    <td valign="top">
-                                        <a href="https://www.pandaexpress.com" style="border: 0; text-decoration: none; color: rgba(209, 40, 46, 1)">
-                                            <img alt="THANK YOU for your feedback!" src="https://www.pandaguestexperience.com/Projects/PRG2_CSI/images/emailer/smg-px-hero-ty-01.png" width="600" class="responsive-image">
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td valign="top">
-                                        <div style="background-color: rgba(255, 255, 255, 1); display: none; font-family: Arial, Helvetica, sans-serif; color: rgba(255, 255, 255, 1); font-size: 0; height: 0; line-height: 0; padding: 0; text-align: center">
-                                            <a href="#" style="border: 0; text-decoration: none; color: rgba(209, 40, 46, 1)">
-                                                <img alt="THANK YOU for your feedback!" src="https://www.pandaguestexperience.com/Projects/PRG2_CSI/images/emailer/smg-px-hero-ty-02.png" width="320" class="responsive-image">
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td valign="top">
-                                        <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" width="100%">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="barcode-container">
-                                                        <!-- Left: Barcode and Code -->
-                                                        <div class="barcode">
-                                                            <img alt="Present this barcode at your next in-store purchase" src="https://www.pandaguestexperience.com/Common/controls/IDAutomation/Barcode.aspx?D={{ code }}&amp;LM=.25&amp;TM=0&amp;ST=F">
-                                                            <span style="font-family: 'Montserrat', Arial, sans-serif"><strong>{{ code }}</strong></span>
-                                                        </div>
-                                                      
-                                                        <p style="color: #d1282e;">
-                                                            <strong style="font-size: 25px;">FREE SMALL ENTRÉE</strong> <br> <strong style="font-size: 14px;">WITH PURCHASE OF 2-ENTRÉE PLATE</strong>
-                                                        </p>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td valign="top">
-                                        <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" width="100%">
-                                            <tbody>
-                                                <tr>
-                                                    <td valign="top">
-                                                        <span style="font-family: &quot;Gotham&quot;, &quot;Montserrat&quot;, Arial, sans-serif !important">
-                                                            Offer will expire on <strong>{{ safeexpiredate }}</strong>. This coupon code is good for one-time use only and is limited to one coupon code per order. Valid only at participating locations and online at PandaExpress.com or on the Panda Express app. <strong>No additional charge for premium entrée.</strong>  Delivery, tax and other fees still apply. Cannot be combined with any other offer, discount, or promotion. Cash value of 1/100 cent. Panda Restaurant Group, Inc. reserves the right to modify or discontinue the offer at any time and additional restrictions may apply.
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td valign="top">
-                        <table bgcolor="#f8f7ee" border="0" cellpadding="0" cellspacing="0" width="600">
-                            <tbody>
-                                <tr>
-                                    <td valign="top">
-                                        <table border="0" cellpadding="0" cellspacing="0" width="600">
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+</head>
+<body>
+    <div class="coupon">
+        <div class="coupon-header">
+            <img src="https://mywingstopsurvey.com/Projects/WINGS_CSI/images/emailer/smg-wingstop-invite-header.png" alt="Wingstop Logo">
+            <h1>THANK YOU<br>FOR YOUR FEEDBACK</h1>
+            <p>Here’s a free fry on us.</p>
+            <img src="https://via.placeholder.com/150x100.png?text=Fry+Image" alt="Free Fry Image">
+        </div>
+        <div class="coupon-body">
+           
+            <p class="coupon-offer"><strong>FREE REGULAR-SIZE, SEASONED FRY</strong><br>with your next <span class="highlight">online purchase</span> of wings or tenders.</p>
+            <div class="divider"></div>
+            <p class="coupon-text">
+                To redeem, add the regular seasoned fry to your order and then enter the coupon code on the payment page when you order using our mobile app or <span class="highlight">wingstop.com</span>. Offer is redeemable on wingstop.com or in the Wingstop mobile app only.<br><br>
+                Code: <span class="highlight">ERROR</span><br>
+                Expires on <span class="highlight">ERROR</span>
+            </p>
+            <div class="divider"></div>
+            <div class="footer">WHERE FLAVOR GETS ITS WINGS™</div>
+            <div class="footer-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6e/Wingstop_logo.svg/1200px-Wingstop_logo.svg.png" alt="Wingstop Logo">
+            </div>
+        </div>
     </div>
-    <div class="feedback-box">
-        <h2>Feedback</h2>
-        <textarea class="feedback-input" id="feedback-text" placeholder=""></textarea>
-        <button class="feedback-button" onclick="sendFeedback()">Send</button>
-    </div>
-</div>
-
-<script>
-    function sendFeedback() {
-        // Get the feedback text
-        var feedbackText = document.getElementById('feedback-text').value;
-        
-        // Send a POST request to /sendfeedback with the feedback data
-        fetch('/sendfeedback', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ feedback: feedbackText })
-        })
-        .then(response => {
-            if (response.ok) {
-                console.log('Feedback sent successfully');
-                // Hide the feedback box after sending feedback
-                document.querySelector('.feedback-box').style.display = 'none';
-            } else {
-                console.error('Failed to send feedback');
-                // Handle error if needed
-            }
-        })
-        .catch(error => {
-            console.error('Error sending feedback:', error);
-            // Handle error if needed
-        });
-    }
-</script>
-    <script>
-        function copyLink(event) {
-            event.preventDefault(); // Prevent the default behavior of the link
-            // Get the current URL
-            var url = window.location.href;
-
-            // Copy the URL to the clipboard
-            navigator.clipboard.writeText(url)
-                .then(function() {
-                    // Provide feedback to the user
-                    console.log("Link copied to clipboard: " + url);
-                })
-                .catch(function(error) {
-                    // Handle any errors
-                    console.error("Unable to copy link: ", error);
-                });
-        }
-    </script>
-
-{% endblock %}
+</body>
+</html>
