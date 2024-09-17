@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
     body {
         background-color: #f5f5f5;
@@ -69,8 +70,11 @@
     }
 </style>
 
-<h1>Blaze Pizza </h1>
-<p>Coupon for a Free Dessert </p>
+<h1><a href="/blazepizza">
+    <img src="{{ url_for('static', filename='blazepizza.png') }}" alt="Blaze Pizza">
+    
+</a></h1>
+<p>Coupon for a Free Dessert with your next order </p>
 <form onsubmit="showLoading()">
     <input type="hidden" name="option" value="Blaze Pizza">
     <input type="email" name="email" placeholder="Email" required>

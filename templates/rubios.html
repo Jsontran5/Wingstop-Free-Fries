@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-
 {% block content %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
     body {
         background-color: #f5f5f5;
@@ -60,7 +60,11 @@
     }
 </style>
 
-<h1>Rubio's</h1>
+
+<h1><a href="/rubios">
+    <img src="{{ url_for('static', filename='rubios.png') }}" alt="Rubios">
+    
+</a></h1>
 <p>Code for a Free Drink or Dessert with your next order</p>
 <form onsubmit="showLoading()">
     <input type="hidden" name="option" value="Rubios">

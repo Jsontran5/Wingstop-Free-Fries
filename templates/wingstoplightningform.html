@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
     body {
         background-color: #f5f5f5;
@@ -79,7 +80,10 @@
         }
 </style>
 
-<h1>⚡⚡Wingstop Lightning Mode ⚡⚡</h1>
+<h1><a href="/wingstoplightning">
+    <img src="{{ url_for('static', filename='wingstop-logo-green-340.png') }}" alt="Wingstop Lightning">
+    
+</a></h1>
 <p>Coupon for Free Regular Fries with your next online order</p>
 <p>Coupons Left:<strong> {{ wingstop_coupon_count }} </strong> (auto-restocks everyday)</p>
 {% if wingstop_coupon_count > 0 %}
@@ -101,8 +105,9 @@
     <img src="{{ url_for('static', filename='bgloading.gif') }}" alt="Loading...">
 </div>
 
-<div class="site-downs-note">
-    Looking for the Wingstop Manual Mode? <a href="/wingstop">click here</a> </div>
+<!-- <div class="site-downs-note">
+    Looking for the Wingstop Manual Mode? <a href="/wingstop">click here</a>
+ </div> -->
 
 
 

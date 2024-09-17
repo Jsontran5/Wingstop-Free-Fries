@@ -1,64 +1,75 @@
 {% extends "base.html" %}
 
 {% block content %}
-<style>
-    body {
-        background-color: #f5f5f5;
-        font-family: Arial, sans-serif;
-    }
 
-    h1 {
-        text-align: center;
-        color: #C02827 ;
-        font-size: 36px;
-        margin-top: 50px;
-    }
+<head>
+    
+    <title>Panda Express Coupon Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Slick CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 
-    p {
-        text-align: center;
-        color: #333;
-        font-size: 18px;
-    }
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+        }
 
-    form {
-        text-align: center;
-        margin-top: 20px;
-    }
+        h1 {
+            text-align: center;
+            color: #C02827;
+            font-size: 36px;
+            margin-top: 50px;
+        }
 
-    input[type="email"] {
-        width: 300px;
-        padding: 10px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        outline: none;
-    }
+        p {
+            text-align: center;
+            color: #333;
+            font-size: 18px;
+        }
 
-    input[type="submit"] {
-        background-color: #C02827 ;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        font-size: 18px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
 
-    input[type="submit"]:hover {
-        background-color: #842b2b ;
-    }
+        input[type="email"] {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
 
-    #loading {
-        text-align: center;
-        display: none;
-        margin-top: 20px;
-    }
+        input[type="submit"] {
+            background-color: #C02827;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-    #loading img {
-        width: 100px;
-        height: 100px;
-    }
-    .site-downs-note {
+        input[type="submit"]:hover {
+            background-color: #842b2b;
+        }
+
+        #loading {
+            text-align: center;
+            display: none;
+            margin-top: 20px;
+        }
+
+        #loading img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .site-downs-note {
             position: fixed;
             bottom: 350px;
             left: 50%;
@@ -68,40 +79,370 @@
             padding: 10px;
             border-radius: 5px;
         }
-</style>
 
-<h1>⚡⚡Panda Express Lightning Mode ⚡⚡</h1>
-<p>Coupon for a Free Small Entrée with purchase of a 2-entrée Plate</p>
+        h1 img {
+            width: 350px; 
+            height: 119px; 
+        }
+
+        /* Slider and Card Styles */
+        .slider {
+            width: 90%;
+            margin: 50px auto; /* Centers the slider */
+            overflow: hidden; /* Hides any overflow */
+        }
+
+        .card {
+            position: relative;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            width: 300px; /* Default width for desktop */
+            height: 350px; /* Default height for desktop */
+            display: flex; /* Flexbox for centering */
+            flex-direction: column; /* Column layout */
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+        }
+
+        .card img {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+            margin: auto; /* Center the image */
+            border-radius: 8px;
+        }
+
+        .card h2 {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .card .checkbox {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .icon {
+            margin-top: 10px;
+        }
+
+        .icon svg {
+            width: 24px;
+            height: 24px;
+            fill: #f44336; /* Spicy Icon Color */
+        }
+
+        /* Media Queries for Mobile Devices */
+        @media (max-width: 768px) { /* Tablet and below */
+            .card {
+                width: 220px; /* Adjust width for smaller screens */
+                height: 300px; /* Adjust height for smaller screens */
+            }
+
+            .slider {
+                width: 95%; /* Make slider full width */
+            }
+        }
+
+        @media (max-width: 480px) { /* Mobile devices */
+            .card {
+                width: 180px; /* Smaller width for mobile */
+                height: 250px; /* Smaller height for mobile */
+            }
+            
+            h1 {
+                font-size: 28px; /* Adjust header size for mobile */
+            }
+
+            p {
+                font-size: 16px; /* Adjust paragraph size for mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Main Content -->
+<h1><a href="/pandalightning">
+    <img src="{{ url_for('static', filename='Panda-Express-Emblem.png') }}" alt="Panda Express Lightning">
+</a></h1>
+<p><br>Coupon for a Free Small Entrée with purchase of a 2-entrée Plate</p>
 <p>Coupons Left:<strong> {{panda_coupon_count}} </strong> (auto-restocks everyday)</p>
 {% if panda_coupon_count > 0 %}
     <form action="/pandalightningsubmit" method="POST" onsubmit="return showLoading();">
         <input type="hidden" name="option" value="pandaexpress">
         <input type="email" name="email" placeholder="Email" required>
         <input type="submit" value="Generate">
+    </form>
 {% else %}
 <p style="margin-top: 50px;">
     <strong>Sorry, no coupons left at the moment. Use the Manual Version<br>
     Will auto-restock every 24hrs</strong>
 </p>
-
 {% endif %}
-
 
 <div id="loading">
     <img src="{{ url_for('static', filename='bgloading.gif') }}" alt="Loading...">
 </div>
 
-<div class="site-downs-note">
+<!-- <div class="site-downs-note">
     Looking for the Panda Express Manual Mode? <a href="/pandaexpress">click here</a> 
-</div>
+</div> -->
+
+    <!-- Slick Slider at the Bottom -->
+    <div class="slider" style="margin-top: 175px;">
+        <!-- Card 1 -->
+
+        
+        <div class="card">
+            
+            <img src="https://nomnom-files.pandaexpress.com/global/assets/modifiers/Hot+Bourbon+Chicken_5_24_OLO_2.png" alt="Hot Ones Blazing Bourbon Chicken">
+            <h2>Hot Ones Blazing Bourbon Chicken</h2>
+            <p><strong>FREE</strong></p>
+           
+        </div>
+    
+        <!-- Card 2 -->
+        <div class="card">
+            
+            <img src="https://nomnom-files.pandaexpress.com/global/assets/modifiers/Chicken_OrangeChicken.png" alt="The Original Orange Chicken">
+            <h2>The Original Orange Chicken</h2>
+            <p><strong>FREE</strong></p>
+        </div>
+    
+        <div class="card">
+            
+            <img src="https://nomnom-files.pandaexpress.com/global/assets/modifiers/Beef_ShanghaiAngusSteak.png" alt="Black Pepper Sirloin Steak">
+            <h2>Black Pepper Sirloin Steak</h2>
+            <p><strong>FREE</strong></p>
+            <div class="icon">
+                <!-- Spicy Icon -->
+                <svg aria-hidden="true" class="spicy icon-24" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" fill="#efd04a"></circle>
+                </svg>
+            </div>
+        </div>
+    
+        <!-- Card 4 -->
+        <div class="card">
+            
+            <img src="https://nomnom-files.pandaexpress.com/global/assets/modifiers/Seafood_HoneyWalnutShrimp.png" alt="Honey Walnut Shrimp">
+            <h2>Honey Walnut Shrimp</h2>
+            <p><strong>FREE</strong></p>
+            <div class="icon">
+                <!-- Spicy Icon -->
+                <svg aria-hidden="true" class="spicy icon-24" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" fill="#efd04a"></circle>
+                </svg>
+            </div>
+        </div>
+        
 
 
+        <div class="card">
+            
+            <img src="https://olo-images-live.imgix.net/52/524bbb9023e2409b8d3fceae944a808f.png?auto=format%2Ccompress&q=60&cs=tinysrgb&w=810&h=540&fit=crop&fm=png32&s=4f4cc30df356786bbe3968181f8c5160" alt="Chicken Egg Roll">
+            <h2>Chicken Egg Roll</h2>
+            <p><strong>FREE</strong></p>
+            <div class="icon">
+                <!-- Spicy Icon -->
+                <svg aria-hidden="true" class="spicy icon-24" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" fill="#efd04a"></circle>
+                </svg>
+            </div>
+        </div>
+    
+        <!-- Card 4 -->
+        <div class="card">
+            
+            <img src="https://olo-images-live.imgix.net/18/183834b8a35a4737a73a28421f68b4f0.png?auto=format%2Ccompress&q=60&cs=tinysrgb&w=810&h=540&fit=crop&fm=png32&s=0d4be7c417ec1998251da41d5bfe13fb" alt="Veggie Spring Roll">
+            <h2>Veggie Spring Roll</h2>
+            <p><strong>FREE</strong></p>
+            <div class="icon">
+                <!-- Spicy Icon -->
+                <svg aria-hidden="true" class="spicy icon-24" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" fill="#efd04a"></circle>
+                </svg>
+            </div>
+        </div>
 
+        <div class="card">
+            
+            <img src="https://olo-images-live.imgix.net/fe/fef7db209d7d41e6ae065af16afa1577.png?auto=format%2Ccompress&q=60&cs=tinysrgb&w=810&h=540&fit=crop&fm=png32&s=f14d518edf4e7ee0fd22b4d3cddc59b8" alt="Cream Cheese Rangoon">
+            <h2>Cream Cheese Rangoon</h2>
+            <p><strong>FREE</strong></p>
+            <div class="icon">
+                <!-- Spicy Icon -->
+                <svg aria-hidden="true" class="spicy icon-24" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" fill="#efd04a"></circle>
+                </svg>
+            </div>
+        </div>
+    
+        <!-- Card 4 -->
+        <div class="card">
+            
+            <img src="https://olo-images-live.imgix.net/ab/ab4e688dea2b4b56b79fa2ff42a31f24.png?auto=format%2Ccompress&q=60&cs=tinysrgb&w=810&h=540&fit=crop&fm=png32&s=4b9d93576ba69591523a4c60034d54d3" alt="Apple Pie Roll">
+            <h2>Apple Pie Roll</h2>
+            <p><strong>FREE</strong></p>
+            <div class="icon">
+                <!-- Spicy Icon -->
+                <svg aria-hidden="true" class="spicy icon-24" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" fill="#efd04a"></circle>
+                </svg>
+            </div>
+        </div>
+      
+        <!-- Card 5 -->
+        <div class="card">
+            
+            <img src="https://nomnom-files.pandaexpress.com/global/assets/modifiers/Chicken_GrilledTeriyakiChicken.png" alt="Grilled Teriyaki Chicken">
+            <h2>Grilled Teriyaki Chicken</h2>
+            <p><strong>FREE</strong></p>
+        </div>
+    
+        <!-- Card 6 -->
+        <div class="card">
+            
+            <img src="https://nomnom-files.pandaexpress.com/global/assets/modifiers/Beef_BroccoliBeef.png" alt="Broccoli Beef">
+            <h2>Broccoli Beef</h2>
+            <p><strong>FREE</strong></p>
+        </div>
+    
+        <!-- Card 7 -->
+        <div class="card">
+           
+            <img src="https://nomnom-files.pandaexpress.com/global/assets/modifiers/Chicken_KungPaoChicken.png" alt="Kung Pao Chicken">
+            <h2>Kung Pao Chicken</h2>
+            <p><strong>FREE</strong></p>
+           
+        </div>
+    
+        <!-- Card 8 -->
+        <div class="card">
+           
+            <img src="https://nomnom-files.pandaexpress.com/global/assets/modifiers/ChickenBreast_HoneySesameChickenBreast.png" alt="Honey Sesame Chicken Breast">
+            <h2>Honey Sesame Chicken Breast</h2>
+            <p><strong>FREE</strong></p>
+        </div>
+    
+        <!-- Card 9 -->
+        <div class="card">
+          
+            <img src="https://nomnom-files.pandaexpress.com/global/assets/modifiers/Beef_BeijingBeef.png" alt="Beijing Beef">
+            <h2>Beijing Beef</h2>
+            <p><strong>FREE</strong></p>
+         
+        </div>
+    
+        <!-- Card 10 -->
+        <div class="card">
+         
+            <img src="https://nomnom-files.pandaexpress.com/global/assets/modifiers/Chicken_MushroomChicken.png" alt="Mushroom Chicken">
+            <h2>Mushroom Chicken</h2>
+            <p><strong>FREE</strong></p>
+        </div>
+    
+        <!-- Card 11 -->
+        <div class="card">
+       
+            <img src="https://nomnom-files.pandaexpress.com/global/assets/modifiers/ChickenBreast_StringBeanChickenBreast.png" alt="String Bean Chicken Breast">
+            <h2>String Bean Chicken Breast</h2>
+            <p><strong>FREE</strong></p>
+        </div>
+    
+        <!-- Card 12 -->
+        <div class="card">
+         
+            <img src="https://nomnom-files.pandaexpress.com/global/assets/modifiers/Chicken_BlackPepperChicken.png" alt="Black Pepper Chicken">
+            <h2>Black Pepper Chicken</h2>
+            <p><strong>FREE</strong></p>
+        </div>
+        <!-- Card 13 -->
+        <div class="card">
+        
+            <img src="https://nomnom-files.pandaexpress.com/global/assets/modifiers/Vegetables_SuperGreens.png" alt="Super Greens">
+            <h2>Super Greens</h2>
+            <p><strong>FREE</strong></p>
+        </div>
+    </div>
+
+<!-- jQuery and Slick JS -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<!-- Custom JavaScript -->
 <script>
     function showLoading() {
-        
         document.getElementById('loading').style.display = 'block';
         document.querySelector('input[type="submit"]').disabled = true;
     }
+
+    // Initialize Slick Slider
+    $(document).ready(function(){
+        $('.slider').slick({
+            infinite: true,  // Enables infinite scrolling
+            slidesToShow: 7, // Number of slides to show at once
+            slidesToScroll: 1, // Number of slides to scroll at once
+            autoplay: true,   // Enable auto-play
+            autoplaySpeed: 0, // Auto-play speed (0 for continuous sliding)
+            speed: 10000, // Speed of sliding in milliseconds (10 seconds for full transition)
+            cssEase: 'linear', // Linear easing for continuous sliding effect
+            arrows: false, // Hide navigation arrows
+            dots: false,    // Hide navigation dots
+            pauseOnHover: false, // Don't pause on hover
+            swipe: true,   // Enable swipe gestures for mobile devices
+            draggable: true, // Enable dragging for mobile devices
+            responsive: [  // Responsive settings for different screen sizes
+                {
+                    breakpoint: 768, // Tablet breakpoint
+                    settings: {
+                        infinite: true,  // Enables infinite scrolling
+                        slidesToShow: 2, // Number of slides to show at once
+                        slidesToScroll: 1, // Number of slides to scroll at once
+                        autoplay: true,   // Enable auto-play
+                        autoplaySpeed: 0, // Auto-play speed (0 for continuous sliding)
+                        speed: 3000, // Speed of sliding in milliseconds (10 seconds for full transition)
+                        cssEase: 'linear', // Linear easing for continuous sliding effect
+                        arrows: false, // Hide navigation arrows
+                        dots: false,    // Hide navigation dots
+                        pauseOnHover: false, // Don't pause on hover
+                        swipe: true,   // Enable swipe gestures for mobile devices
+                        draggable: true, // Enable dragging for mobile devices
+                    }
+                },
+                {
+                    breakpoint: 480, // Mobile breakpoint
+                    settings: {
+                        infinite: true,  // Enables infinite scrolling
+                        slidesToShow: 2, // Number of slides to show at once
+                        slidesToScroll: 1, // Number of slides to scroll at once
+                        autoplay: true,   // Enable auto-play
+                        autoplaySpeed: 0, // Auto-play speed (0 for continuous sliding)
+                        speed: 3000, // Speed of sliding in milliseconds (10 seconds for full transition)
+                        cssEase: 'linear', // Linear easing for continuous sliding effect
+                        arrows: false, // Hide navigation arrows
+                        dots: false,    // Hide navigation dots
+                        pauseOnHover: false, // Don't pause on hover
+                        swipe: true,   // Enable swipe gestures for mobile devices
+                        draggable: true, // Enable dragging for mobile devices
+                    }
+                }
+            ]
+        });
+    });
 </script>
+</body>
+</html>
 {% endblock %}
