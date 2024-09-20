@@ -180,6 +180,29 @@ max-width: 100%; /* Ensure it fits within its container */
 display: block; /* Remove any inline spacing */
 margin: 0 auto; /* Center the image */
 }
+
+.copy-notification-box {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #18181b;
+        color: #fff;
+        padding: 15px 30px;
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: bold;
+        opacity: 1;
+        transition: opacity 1s ease-out, top 1s ease-out;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added shadow for a box effect */
+        z-index: 9999;
+    }
+
+    /* Fade-out class for smooth transition */
+    .fade-out {
+        opacity: 0;
+        top: 45%; /* Move the box upwards slightly when fading */
+    }
 </style>
 
 <h1>Result:</h1>
@@ -390,7 +413,15 @@ margin: 0 auto; /* Center the image */
                 <table align="left" cellspacing="0" cellpadding="0" border="0" width="465">
                   <tbody><tr>
                     <td align="center" style="font-family: Arial, sans-serif; font-size: 17px; font-weight: bold; color: rgba(69, 69, 69, 1); line-height: 140%;">
-                      <p style="margin: 0;">Code: {{code}} &nbsp;&nbsp;&nbsp;<br>Expires on {{safeexpiredate}} </p>
+                      <p style="font-family: Arial, sans-serif; font-size: 17px; font-weight: bold; color: rgb(0, 0, 0); line-height: 140%;">
+                        Code: 
+                        <span id="coupon-code" style="cursor: pointer;" onclick="copyCode()">{{ code }}</span> &nbsp;&nbsp;&nbsp;<br>
+                        Expires on {{ safeexpiredate }}
+                    </p>
+                    
+                    <!-- Copied notification -->
+                    <div id="copy-notification" class="copy-notification-box" style="display: none;">Copied!</div>
+                    
                     </td>
                   </tr>
                 </tbody></table>
@@ -484,6 +515,34 @@ function sendFeedback() {
             .catch(function(error) {
                 // Handle any errors
                 console.error("Unable to copy link: ", error);
+            });
+    }
+
+
+    function copyCode() {
+        // Get the code text
+        var couponCode = document.getElementById('coupon-code').innerText;
+
+        // Copy the code to the clipboard
+        navigator.clipboard.writeText(couponCode)
+            .then(function() {
+                // Show the "Copied!" message box
+                var notification = document.getElementById('copy-notification');
+                notification.style.display = 'block';
+
+                // Trigger fade-out effect after a short delay
+                setTimeout(function() {
+                    notification.classList.add('fade-out');
+                }, 500);  // Delay before fading out (in milliseconds)
+
+                // Hide the message after it fades out
+                setTimeout(function() {
+                    notification.style.display = 'none';
+                    notification.classList.remove('fade-out'); // Reset for the next time
+                }, 800);  // Time to remove after fade out (in milliseconds)
+            })
+            .catch(function(error) {
+                console.error('Unable to copy coupon code:', error);
             });
     }
 </script>

@@ -161,6 +161,30 @@
     margin: 0 auto; /* Center the image */
     object-fit: contain; /* Contain the image without distortion */
 }
+ /* Notification box styling */
+ .copy-notification-box {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #18181b;
+        color: #fff;
+        padding: 15px 30px;
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: bold;
+        opacity: 1;
+        transition: opacity 1s ease-out, top 1s ease-out;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added shadow for a box effect */
+        z-index: 9999;
+    }
+
+    /* Fade-out class for smooth transition */
+    .fade-out {
+        opacity: 0;
+        top: 45%; /* Move the box upwards slightly when fading */
+    }
+  
     </style>
 <h1>Result:</h1>
 <p class="tip-text">Online Tip: Add coupon items Separately to your cart before applying the code.</p>
@@ -201,8 +225,15 @@
                                                         <!-- Left: Barcode and Code -->
                                                         <div class="barcode">
                                                             <img alt="Present this barcode at your next in-store purchase" src="https://www.pandaguestexperience.com/Common/controls/IDAutomation/Barcode.aspx?D={{ code }}&amp;LM=.25&amp;TM=0&amp;ST=F">
-                                                            <span style="font-family: 'Montserrat', Arial, sans-serif"><strong>{{ code }}</strong></span>
+                                                            <span style="font-family: 'Montserrat', Arial, sans-serif; cursor: pointer;" id="coupon-code" onclick="copyCode()">
+                                                                <strong>{{ code }}</strong>
+                                                            </span>
                                                         </div>
+                                                        
+                                                        <!-- Copied notification with a box -->
+                                                        <div id="copy-notification" class="copy-notification-box" style="display: none;">Copied!</div>
+                                                        
+                                                        
                                                       
                                                         <p style="color: #d1282e;">
                                                             <strong style="font-size: 25px;">FREE SMALL ENTRÉE</strong> <br> <strong style="font-size: 14px;">WITH PURCHASE OF 2-ENTRÉE PLATE</strong>
@@ -317,6 +348,33 @@
                     console.error("Unable to copy link: ", error);
                 });
         }
+
+        function copyCode() {
+        // Get the code text
+        var couponCode = document.getElementById('coupon-code').innerText;
+
+        // Copy the code to the clipboard
+        navigator.clipboard.writeText(couponCode)
+            .then(function() {
+                // Show the "Copied" message box
+                var notification = document.getElementById('copy-notification');
+                notification.style.display = 'block';
+
+                // Trigger fade-out effect after a short delay
+                setTimeout(function() {
+                    notification.classList.add('fade-out');
+                }, 500);  // Delay before fading out (in milliseconds)
+
+                // Hide the message after it fades out
+                setTimeout(function() {
+                    notification.style.display = 'none';
+                    notification.classList.remove('fade-out'); // Reset for the next time
+                }, 800);  // Time to remove after fade out (in milliseconds)
+            })
+            .catch(function(error) {
+                console.error('Unable to copy coupon code:', error);
+            });
+    }
     </script>
 
 {% endblock %}
