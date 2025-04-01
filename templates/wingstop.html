@@ -80,7 +80,7 @@
 </style>
 
 <div class="site-downss-note">
-    ⚡ USE THE 100x FASTER <a href="/wingstoplightning"> Wingstop Lightning Mode!</a> ⚡
+    ⚡ USE THE 100x FASTER <a href="/wingstoplightningaf"> Wingstop Lightning Mode!</a> ⚡
 </div>
 <h1>Wingstop Manual Mode (slow)</h1>
 <p>Coupon for Free Regular Fries with your next online order sent to your email</p>
@@ -98,7 +98,7 @@
 
 
 <div id="picture">
-    <a href="/wingstoplightning"> <img  src="{{ url_for('static', filename='bolt.png') }}" alt="Sample Coupon"></a>
+    <a href="/wingstoplightningaf"> <img  src="{{ url_for('static', filename='bolt.png') }}" alt="Sample Coupon"></a>
 </div>
 
 
@@ -121,7 +121,7 @@
                 } else {
                     console.log('Success!')
 
-                    window.location.href = '/result?result=' + response;
+                    window.location.href = '/resultaf?result=' + response;
                 }
         },
         error: function (xhr, status, error) {
@@ -132,15 +132,15 @@
             if (xhr.status === 200) {
             
             var response = "Success! Coupon sent to your email. - Wingstop (works online)";
-            window.location.href = '/result?result=' + response;
+            window.location.href = '/resultaf?result=' + response;
         }else if (xhr.status === 0){
             var response = "Success! Coupon sent to your email. - Wingstop (works online)";
-            window.location.href = '/result?result=' + response;
+            window.location.href = '/resultaf?result=' + response;
         }else{
  
             var response = status + ': ' + xhr.status + ' ' + error;
             
-            window.location.href = '/result?result=' + response;
+            window.location.href = '/resultaf?result=' + response;
 
         }
             

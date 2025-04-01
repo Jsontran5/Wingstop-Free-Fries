@@ -80,7 +80,7 @@
 </style>
 </style>
 <div class="site-downss-note">
-    ⚡ USE THE 100x FASTER <a href="/pandalightning"> Panda Express Lightning Mode!</a> ⚡
+    ⚡ USE THE 100x FASTER <a href="/pandalightningaf"> Panda Express Lightning Mode!</a> ⚡
 </div>
 <h1>Panda Express Manual Mode (slow)</h1>
 <p>Coupon for a Free Small Entrée with purchase of a 2-Entrée Plate sent to your email</p>
@@ -95,7 +95,7 @@
 
 
 <div id="picture">
-    <a href="/pandalightning"> <img  src="{{ url_for('static', filename='bolt.png') }}" alt="Sample Coupon"></a>
+    <a href="/pandalightningaf"> <img  src="{{ url_for('static', filename='bolt.png') }}" alt="Sample Coupon"></a>
 </div>
 <!-- <div class="site-downss-note">
     ⚡ Come BETA test the <a href="/pandalightning"> Panda Express Lightning Mode!</a> ⚡
@@ -120,7 +120,7 @@
                 } else {
                     console.log('Success!')
 
-                    window.location.href = '/result?result=' + response;
+                    window.location.href = '/resultaf?result=' + response;
                 }
         },
         error: function (xhr, status, error) {
@@ -131,15 +131,15 @@
             if (xhr.status === 200) {
             
             var response = "Success! Coupon sent to your email. - Panda Express (works online)";
-            window.location.href = '/result?result=' + response;
+            window.location.href = '/resultaf?result=' + response;
         }else if (xhr.status === 0){
             var response = "Success! Coupon sent to your email. - Panda Express (works online)";
-            window.location.href = '/result?result=' + response;
+            window.location.href = '/resultaf?result=' + response;
         }else{
  
             var response = status + ': ' + xhr.status + ' ' + error;
             
-            window.location.href = '/result?result=' + response;
+            window.location.href = '/resultaf?result=' + response;
 
         }
             

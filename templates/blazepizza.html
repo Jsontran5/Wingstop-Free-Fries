@@ -78,7 +78,7 @@
     }
 </style>
 
-<h1><a href="/blazepizza">
+<h1><a href="/blazepizzaaf">
     <img src="{{ url_for('static', filename='blazepizza.png') }}" alt="Blaze Pizza">
     
 </a></h1>
@@ -115,7 +115,7 @@
                 } else {
                     console.log('Success!')
 
-                    window.location.href = '/result?result=' + response;
+                    window.location.href = '/resultaf?result=' + response;
                 }
         },
         error: function (xhr, status, error) {
@@ -126,15 +126,15 @@
             if (xhr.status === 200) {
             
             var response = "Success! Coupon sent to your email. - Blaze Pizza (works online)";
-            window.location.href = '/result?result=' + response;
+            window.location.href = '/resultaf?result=' + response;
         }else if (xhr.status === 0){
             var response = "Success! Coupon sent to your email. - Blaze Pizza (works online)";
-            window.location.href = '/result?result=' + response;
+            window.location.href = '/resultaf?result=' + response;
         }else{
  
             var response = status + ': ' + xhr.status + ' ' + error;
             
-            window.location.href = '/result?result=' + response;
+            window.location.href = '/resultaf?result=' + response;
 
         }
             

@@ -1,141 +1,140 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap"
+  rel="stylesheet"
+/>
 
-{% block content %}
-<link rel="preconnect" href="https://fonts.googleapis.com"> 
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+<!-- Custom CSS -->
+<style>
+  body {
+    background-color: #f5f5f5;
+    font-family: "Lexend", sans-serif; /* Applied Lexend font */
+  }
 
- <!-- Custom CSS -->
- <style>
-     
-     body {
-         background-color: #f5f5f5;
-         font-family: "Lexend", sans-serif; /* Applied Lexend font */
-     }
-  
+  h1 {
+    text-align: center;
+    color: #333;
+    font-size: 36px;
+    margin-top: 50px;
+  }
 
-    h1 {
-        text-align: center;
-        color: #333;
-        font-size: 36px;
-        margin-top: 50px;
-    }
+  p {
+    text-align: center;
+    color: #333;
+    font-size: 18px;
+  }
 
-    p {
-        text-align: center;
-        color: #333;
-        font-size: 18px;
-    }
+  .result-container {
+    text-align: center;
 
-    .result-container {
-text-align: center;
+    width: 100%; /* Allow the container to take the full width */
+    max-width: 100%; /* Ensure it does not exceed the screen width */
+    padding: 0 15px; /* Add padding for small screens */
+    box-sizing: border-box; /* Include padding in the width calculation */
+  }
 
-width: 100%; /* Allow the container to take the full width */
-max-width: 100%; /* Ensure it does not exceed the screen width */
-padding: 0 15px; /* Add padding for small screens */
-box-sizing: border-box; /* Include padding in the width calculation */
-}
+  .result-container table {
+    width: 100%; /* Make tables take full width of the container */
+    max-width: 550px; /* Limit the maximum width */
+    margin: 0 auto; /* Center the tables */
+  }
+  .responsive-image {
+    width: 100%; /* Make the image take the full width of its container */
+    height: auto; /* Automatically adjust the height to maintain aspect ratio */
+    max-width: 550px; /* Set a maximum width to avoid becoming too large */
+    display: block; /* Remove any inline spacing */
+    margin: 0 auto; /* Center the image */
+  }
 
-.result-container table {
-width: 100%; /* Make tables take full width of the container */
-max-width: 550px; /* Limit the maximum width */
-margin: 0 auto; /* Center the tables */
-}
-.responsive-image {
-width: 100%; /* Make the image take the full width of its container */
-height: auto; /* Automatically adjust the height to maintain aspect ratio */
-max-width: 550px; /* Set a maximum width to avoid becoming too large */
-display: block; /* Remove any inline spacing */
-margin: 0 auto; /* Center the image */
-}
+  .result {
+    color: #146a34;
+    font-size: 24px;
+  }
 
-    .result {
-        color: #146A34;
-        font-size: 24px;
-    }
+  .run-again {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+  }
 
-    .run-again {
-        background-color: #333;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        font-size: 18px;
-        border-radius: 5px;
-        cursor: pointer;
-        text-decoration: none;
-        display: inline-block;
-        margin-top: 20px;
-    }
+  .run-again:hover {
+    background-color: #201f1f;
+  }
 
-    .run-again:hover {
-        background-color: #201f1f;
-    }
+  .disclaimer {
+    color: #d3d3d3;
+    font-size: 15px;
+    margin-top: 23px;
+    font-weight: bold;
+  }
 
-    .disclaimer {
-        color: #D3D3D3;
-        font-size: 15px;
-        margin-top: 23px;
-        font-weight: bold;
-    }
+  /* Tip styles */
+  .tip-container {
+    margin-top: 10px;
+    /* Adjusted margin to move it down */
+  }
 
-    /* Tip styles */
-    .tip-container {
-        margin-top: 10px;
-        /* Adjusted margin to move it down */
-    }
+  .tip-text {
+    color: #ff8000;
+    font-size: 16px;
+    font-weight: bold;
+  }
 
-    .tip-text {
-        color: #FF8000;
-        font-size: 16px;
-        font-weight: bold;
-    }
+  table {
+    margin: auto;
+  }
+  .feedback-box {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px; /* Adjust width as needed */
+    margin: auto; /* Center the box */
+    margin-top: 50px;
+  }
 
-    table {
-        margin: auto;
-    }
-    .feedback-box {
-        margin-top: 20px;
-        padding: 10px;
-        background-color: #ffffff;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        width: 300px; /* Adjust width as needed */
-        margin: auto; /* Center the box */
-        margin-top: 50px;
-    }
+  .feedback-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    resize: vertical;
+  }
 
-    .feedback-input {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        resize: vertical;
-    }
+  .feedback-button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 
-    .feedback-button {
-        background-color: #333;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        font-size: 18px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+  .feedback-button:hover {
+    background-color: #201f1f;
+  }
+  .result-container {
+    text-align: center;
 
-    .feedback-button:hover {
-        background-color: #201f1f;
-    }
-    .result-container {
-text-align: center;
+    width: 100%; /* Allow the container to take the full width */
+    max-width: 100%; /* Ensure it does not exceed the screen width */
+    padding: 0 15px; /* Add padding for small screens */
+    box-sizing: border-box; /* Include padding in the width calculation */
+  }
 
-width: 100%; /* Allow the container to take the full width */
-max-width: 100%; /* Ensure it does not exceed the screen width */
-padding: 0 15px; /* Add padding for small screens */
-box-sizing: border-box; /* Include padding in the width calculation */
-}
-
-.result-content {
+  .result-content {
     display: flex; /* Use flexbox for side-by-side layout */
     justify-content: center; /* Center the content */
     align-items: stretch; /* Stretch items to have the same height */
@@ -144,413 +143,855 @@ box-sizing: border-box; /* Include padding in the width calculation */
     max-width: 550px; /* Limit the overall width */
     margin: 0 auto; /* Center the result content */
     background-color: #ededed;
+  }
 
-}
-
-.result-left, .result-right {
+  .result-left,
+  .result-right {
     flex: 1; /* Flex item to take equal space */
     max-width: 50%; /* Maximum width for each side */
     display: flex; /* Use flexbox */
     flex-direction: column; /* Stack items vertically */
     justify-content: center; /* Center the content vertically */
-}
+  }
 
-.result-left {
+  .result-left {
     text-align: center; /* Align text to the left */
     padding-right: 20px; /* Add padding to the right */
     font-size: 2.5vw; /* Dynamic font size based on viewport width */
     line-height: 1.2; /* Slightly tighter line spacing */
     min-height: 200px; /* Minimum height to align with the image */
-}
+  }
 
-.result-left span {
+  .result-left span {
     font-size: 1.5em; /* Adjust font size relative to parent */
-}
+  }
 
-.result-right {
+  .result-right {
     text-align: center; /* Center the image */
     display: flex; /* Use flexbox */
     justify-content: center; /* Center the image horizontally */
     align-items: center; /* Center the image vertically */
-}
+  }
 
-.result-right img {
+  .result-right img {
     max-height: 100%; /* Ensure the image fills the height of its container */
     width: auto; /* Adjust the width automatically */
     object-fit: cover; /* Cover the entire container */
     max-width: 100%; /* Ensure it fits within its container */
-}
-.responsive-image {
-width: 100%; /* Make the image take the full width of its container */
-height: auto; /* Automatically adjust the height to maintain aspect ratio */
-max-width: 100%; /* Ensure it fits within its container */
-display: block; /* Remove any inline spacing */
-margin: 0 auto; /* Center the image */
-}
+  }
+  .responsive-image {
+    width: 100%; /* Make the image take the full width of its container */
+    height: auto; /* Automatically adjust the height to maintain aspect ratio */
+    max-width: 100%; /* Ensure it fits within its container */
+    display: block; /* Remove any inline spacing */
+    margin: 0 auto; /* Center the image */
+  }
 
-.copy-notification-box {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: #18181b;
-        color: #fff;
-        padding: 15px 30px;
-        border-radius: 8px;
-        font-size: 18px;
-        font-weight: bold;
-        opacity: 1;
-        transition: opacity 1s ease-out, top 1s ease-out;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added shadow for a box effect */
-        z-index: 9999;
-    }
+  .copy-notification-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #18181b;
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    opacity: 1;
+    transition: opacity 1s ease-out, top 1s ease-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added shadow for a box effect */
+    z-index: 9999;
+  }
 
-    /* Fade-out class for smooth transition */
-    .fade-out {
-        opacity: 0;
-        top: 45%; /* Move the box upwards slightly when fading */
-    }
+  /* Fade-out class for smooth transition */
+  .fade-out {
+    opacity: 0;
+    top: 45%; /* Move the box upwards slightly when fading */
+  }
 </style>
 
 <h1>Result:</h1>
-<p class="tip-text">Online Tip: Add coupon items Separately to your cart before applying the code.</p>
+<p class="tip-text">
+  Online Tip: Add coupon items Separately to your cart before applying the code.
+</p>
 
+<p class="tip-text">
+  If you want to save or share this coupon.
+  <a class="tip-text" href="#" onclick="copyLink(event)">Copy the Link</a>
+</p>
 
-  <p class="tip-text">If you want to save or share this coupon. <a class="tip-text" href="#" onclick="copyLink(event)">Copy the Link</a></p>
-
-  <div class="result-container">
-    <table bgcolor="#e5e5e5" cellspacing="0" cellpadding="0" border="0" align="center" width="550">
-        <tbody><tr>
-            <td align="center">
-                <table cellspacing="0" cellpadding="0" border="0" align="center" width="550">
-                    <tbody><tr>
-                        <td width="275" align="left" valign="top" style="padding-right: 20px;">
-                        </td>
-                    </tr>
-                </tbody></table>
-            </td>
-        </tr>
-    </tbody></table>
-
-    <table bgcolor="#ffffff" cellspacing="0" cellpadding="0" border="0" align="center" width="550">
-        <tbody><tr>
-            <td align="center" style="font-family: sans-serif; font-size: 24px; font-weight: bold;">
-                <a href="#" target="_blank" style="color: rgba(0, 0, 0, 1); text-decoration: none;">
-                    <img src="https://mywingstopsurvey.com/Projects/WINGS_CSI/images/emailer/smg-wingstop-invite-header.png" alt="WINGSTOP" class="responsive-image">
-                </a>
-            </td>
-        </tr>
-    </tbody></table>
-
-    <div class="result-content">
-        <!-- Left content -->
-        <div class="result-left">
-            <span style="font-weight: 800; font-size: 33px;">THANK YOU FOR YOUR FEEDBACK</span>
-            <span style="font-size: 27px;">Here’s a free fry on us.</span>
-        </div>
-        <!-- Right content -->
-        <div class="result-right">
-            <a href="#" target="_blank" style="color: rgba(0, 0, 0, 1); text-decoration: none;">
-                <img src="https://mywingstopsurvey.com/Projects/WINGS_CSI/images/emailer/smg-wingstop-incentive-03-bg.png" alt="" class="responsive-image">
-            </a>
-        </div>
-    </div>
-</div>
 <div class="result-container">
-    <table bgcolor="#e5e5e5" cellspacing="0" cellpadding="0" border="0" align="center" width="550">
-      <tbody><tr>
+  <table
+    bgcolor="#e5e5e5"
+    cellspacing="0"
+    cellpadding="0"
+    border="0"
+    align="center"
+    width="550"
+  >
+    <tbody>
+      <tr>
         <td align="center">
-          <table cellspacing="0" cellpadding="0" border="0" align="center" width="550">
-            <tbody><tr>
-              <td width="275" align="left" valign="top" style="padding-right: 20px;">
-              </td>
-            </tr>
-          </tbody></table>
+          <table
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            align="center"
+            width="550"
+          >
+            <tbody>
+              <tr>
+                <td
+                  width="275"
+                  align="left"
+                  valign="top"
+                  style="padding-right: 20px"
+                ></td>
+              </tr>
+            </tbody>
+          </table>
         </td>
       </tr>
-    </tbody></table>
-  
-    <table bgcolor="#ffffff" cellspacing="0" cellpadding="0" border="0" align="center" width="550">
-      <tbody><tr>
-        <td align="center" style="font-family: sans-serif; font-size: 24px; font-weight: bold;">
-          <a href="#" target="_blank" style="color: rgba(0, 0, 0, 1); text-decoration: none;">
-            
+    </tbody>
+  </table>
 
+  <table
+    bgcolor="#ffffff"
+    cellspacing="0"
+    cellpadding="0"
+    border="0"
+    align="center"
+    width="550"
+  >
+    <tbody>
+      <tr>
+        <td
+          align="center"
+          style="font-family: sans-serif; font-size: 24px; font-weight: bold"
+        >
+          <a
+            href="#"
+            target="_blank"
+            style="color: rgba(0, 0, 0, 1); text-decoration: none"
+          >
+            <img
+              src="https://mywingstopsurvey.com/Projects/WINGS_CSI/images/emailer/smg-wingstop-invite-header.png"
+              alt="WINGSTOP"
+              class="responsive-image"
+            />
           </a>
         </td>
       </tr>
-    </tbody></table>
-  
-    <table bgcolor="#ededed" cellspacing="0" cellpadding="0" border="0" align="center" width="550">
-      <tbody><tr>
-        <td align="center">
-          <table cellspacing="0" cellpadding="0" border="0" align="center" width="550">
-            <tbody><tr>
-              <td align="left">
-                <table align="left" cellspacing="0" cellpadding="0" border="0" width="275">
-                  <tbody><tr>
-                    <td align="left">
-                      <table align="left" cellspacing="0" cellpadding="0" border="0">
-                        <tbody><tr>
-                          
-                        </tr>
-                        <tr>
-                          
-                        </tr>
-                      </tbody></table>
-                    </td>
-                  </tr>
-                </tbody></table>
-  
-                <table bgcolor="#ffffff" cellspacing="0" cellpadding="0" border="0" align="center" width="275">
-                  <tbody><tr>
-                    <td align="center" style="font-family: sans-serif; font-size: 24px; font-weight: bold;">
-                      <a href="#" target="_blank" style="color: rgba(0, 0, 0, 1); text-decoration: none;">
-                        
+    </tbody>
+  </table>
 
-                      </a>
-                    </td>
-                  </tr>
-                </tbody></table>
-              </td>
-            </tr>
-          </tbody></table>
-        </td>
-      </tr>
-    </tbody></table>
-  
-    <table bgcolor="#ffffff" cellspacing="0" cellpadding="0" border="0" align="center" width="550">
-      <tbody><tr>
-        <td height="10">
-        </td>
-      </tr>
-    </tbody></table>
-  
-    <table bgcolor="#ffffff" cellspacing="0" cellpadding="0" border="0" align="center" width="550">
-      <tbody><tr>
+  <div class="result-content">
+    <!-- Left content -->
+    <div class="result-left">
+      <span style="font-weight: 800; font-size: 33px"
+        >THANK YOU FOR YOUR FEEDBACK</span
+      >
+      <span style="font-size: 27px">Here’s a free fry on us.</span>
+    </div>
+    <!-- Right content -->
+    <div class="result-right">
+      <a
+        href="#"
+        target="_blank"
+        style="color: rgba(0, 0, 0, 1); text-decoration: none"
+      >
+        <img
+          src="https://mywingstopsurvey.com/Projects/WINGS_CSI/images/emailer/smg-wingstop-incentive-03-bg.png"
+          alt=""
+          class="responsive-image"
+        />
+      </a>
+    </div>
+  </div>
+</div>
+<div class="result-container">
+  <table
+    bgcolor="#e5e5e5"
+    cellspacing="0"
+    cellpadding="0"
+    border="0"
+    align="center"
+    width="550"
+  >
+    <tbody>
+      <tr>
         <td align="center">
-          <table cellspacing="0" cellpadding="0" border="0" align="center" width="465">
-            <tbody><tr>
-              <td align="left">
-                <table align="left" cellspacing="0" cellpadding="0" border="0" width="465">
-                  <tbody><tr>
-                    <td align="center" style="font-family: Arial, sans-serif; font-size: 32px; font-weight: bold; font-style: italic; color: rgba(0, 105, 57, 1); line-height: 100%;">
-                      <p style="margin: 0;"><span style="font-weight: 800;">FREE REGULAR‑SIZE, SEASONED FRY</span></p>
-                    </td>
-                  </tr>
-                </tbody></table>
-              </td>
-            </tr>
-          </tbody></table>
+          <table
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            align="center"
+            width="550"
+          >
+            <tbody>
+              <tr>
+                <td
+                  width="275"
+                  align="left"
+                  valign="top"
+                  style="padding-right: 20px"
+                ></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table
+    bgcolor="#ffffff"
+    cellspacing="0"
+    cellpadding="0"
+    border="0"
+    align="center"
+    width="550"
+  >
+    <tbody>
+      <tr>
+        <td
+          align="center"
+          style="font-family: sans-serif; font-size: 24px; font-weight: bold"
+        >
+          <a
+            href="#"
+            target="_blank"
+            style="color: rgba(0, 0, 0, 1); text-decoration: none"
+          >
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table
+    bgcolor="#ededed"
+    cellspacing="0"
+    cellpadding="0"
+    border="0"
+    align="center"
+    width="550"
+  >
+    <tbody>
+      <tr>
+        <td align="center">
+          <table
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            align="center"
+            width="550"
+          >
+            <tbody>
+              <tr>
+                <td align="left">
+                  <table
+                    align="left"
+                    cellspacing="0"
+                    cellpadding="0"
+                    border="0"
+                    width="275"
+                  >
+                    <tbody>
+                      <tr>
+                        <td align="left">
+                          <table
+                            align="left"
+                            cellspacing="0"
+                            cellpadding="0"
+                            border="0"
+                          >
+                            <tbody>
+                              <tr></tr>
+                              <tr></tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <table
+                    bgcolor="#ffffff"
+                    cellspacing="0"
+                    cellpadding="0"
+                    border="0"
+                    align="center"
+                    width="275"
+                  >
+                    <tbody>
+                      <tr>
+                        <td
+                          align="center"
+                          style="
+                            font-family: sans-serif;
+                            font-size: 24px;
+                            font-weight: bold;
+                          "
+                        >
+                          <a
+                            href="#"
+                            target="_blank"
+                            style="
+                              color: rgba(0, 0, 0, 1);
+                              text-decoration: none;
+                            "
+                          >
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table
+    bgcolor="#ffffff"
+    cellspacing="0"
+    cellpadding="0"
+    border="0"
+    align="center"
+    width="550"
+  >
+    <tbody>
+      <tr>
+        <td height="10"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table
+    bgcolor="#ffffff"
+    cellspacing="0"
+    cellpadding="0"
+    border="0"
+    align="center"
+    width="550"
+  >
+    <tbody>
+      <tr>
+        <td align="center">
+          <table
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            align="center"
+            width="465"
+          >
+            <tbody>
+              <tr>
+                <td align="left">
+                  <table
+                    align="left"
+                    cellspacing="0"
+                    cellpadding="0"
+                    border="0"
+                    width="465"
+                  >
+                    <tbody>
+                      <tr>
+                        <td
+                          align="center"
+                          style="
+                            font-family: Arial, sans-serif;
+                            font-size: 32px;
+                            font-weight: bold;
+                            font-style: italic;
+                            color: rgba(0, 105, 57, 1);
+                            line-height: 100%;
+                          "
+                        >
+                          <p style="margin: 0">
+                            <span style="font-weight: 800"
+                              >FREE REGULAR‑SIZE, SEASONED FRY</span
+                            >
+                          </p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </td>
       </tr>
       <tr>
         <td align="center">
-          <table cellspacing="0" cellpadding="0" border="0" align="center" width="465">
-            <tbody><tr>
-              <td align="left">
-                <table align="left" cellspacing="0" cellpadding="0" border="0" width="465">
-                  <tbody><tr>
-                    <td align="center" style="font-family: Arial, sans-serif; font-size: 16px; font-weight: normal; color: rgba(181, 153, 88, 1); line-height: 140%;">
-                      <p style="margin: 0;">with your next <span style="font-weight: bold; text-decoration: underline;">online purchase</span> of wings or tenders.</p>
-                    </td>
-                  </tr>
-                </tbody></table>
-              </td>
-            </tr>
-          </tbody></table>
+          <table
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            align="center"
+            width="465"
+          >
+            <tbody>
+              <tr>
+                <td align="left">
+                  <table
+                    align="left"
+                    cellspacing="0"
+                    cellpadding="0"
+                    border="0"
+                    width="465"
+                  >
+                    <tbody>
+                      <tr>
+                        <td
+                          align="center"
+                          style="
+                            font-family: Arial, sans-serif;
+                            font-size: 16px;
+                            font-weight: normal;
+                            color: rgba(181, 153, 88, 1);
+                            line-height: 140%;
+                          "
+                        >
+                          <p style="margin: 0">
+                            with your next
+                            <span
+                              style="
+                                font-weight: bold;
+                                text-decoration: underline;
+                              "
+                              >online purchase</span
+                            >
+                            of wings or tenders.
+                          </p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </td>
       </tr>
       <tr>
         <td align="center">
-          <table cellspacing="0" cellpadding="0" border="0" align="center" width="465">
-            <tbody><tr>
-              <td align="left">
-                <table align="left" cellspacing="0" cellpadding="0" border="0" width="465">
-                  <tbody><tr>
-                    <td align="center" style="font-family: Arial, sans-serif; font-size: 16px; font-weight: normal; color: rgba(181, 153, 88, 1); line-height: 150%;">
-                      <img src="https://mywingstopsurvey.com/Projects/WINGS_CSI/images/emailer/smg-wingstop-incentive-hr-top.png" alt="" border="0" width="465" style="width: 100%; display: block;">
-                    </td>
-                  </tr>
-                </tbody></table>
-              </td>
-            </tr>
-          </tbody></table>
+          <table
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            align="center"
+            width="465"
+          >
+            <tbody>
+              <tr>
+                <td align="left">
+                  <table
+                    align="left"
+                    cellspacing="0"
+                    cellpadding="0"
+                    border="0"
+                    width="465"
+                  >
+                    <tbody>
+                      <tr>
+                        <td
+                          align="center"
+                          style="
+                            font-family: Arial, sans-serif;
+                            font-size: 16px;
+                            font-weight: normal;
+                            color: rgba(181, 153, 88, 1);
+                            line-height: 150%;
+                          "
+                        >
+                          <img
+                            src="https://mywingstopsurvey.com/Projects/WINGS_CSI/images/emailer/smg-wingstop-incentive-hr-top.png"
+                            alt=""
+                            border="0"
+                            width="465"
+                            style="width: 100%; display: block"
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </td>
       </tr>
       <tr>
         <td align="center">
-          <table cellspacing="0" cellpadding="0" border="0" align="center" width="465">
-            <tbody><tr>
-              <td align="left">
-                <table align="left" cellspacing="0" cellpadding="0" border="0" width="465">
-                  <tbody><tr>
-                    <td align="center" style="font-family: Arial, sans-serif; font-size: 17px; font-weight: bold; color: rgba(0, 105, 57, 1); line-height: 140%;">
-                      <p style="margin: 0;">To redeem, add the regular seasoned fry to your order and then enter the coupon code on the payment page when you order using our mobile app or <a href="http://www.wingstop.com" style="color: rgba(0, 105, 57, 1); text-decoration: none;">wingstop.com.</a></p>
-                    </td>
-                  </tr>
-                </tbody></table>
-              </td>
-            </tr>
-          </tbody></table>
+          <table
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            align="center"
+            width="465"
+          >
+            <tbody>
+              <tr>
+                <td align="left">
+                  <table
+                    align="left"
+                    cellspacing="0"
+                    cellpadding="0"
+                    border="0"
+                    width="465"
+                  >
+                    <tbody>
+                      <tr>
+                        <td
+                          align="center"
+                          style="
+                            font-family: Arial, sans-serif;
+                            font-size: 17px;
+                            font-weight: bold;
+                            color: rgba(0, 105, 57, 1);
+                            line-height: 140%;
+                          "
+                        >
+                          <p style="margin: 0">
+                            To redeem, add the regular seasoned fry to your
+                            order and then enter the coupon code on the payment
+                            page when you order using our mobile app or
+                            <a
+                              href="http://www.wingstop.com"
+                              style="
+                                color: rgba(0, 105, 57, 1);
+                                text-decoration: none;
+                              "
+                              >wingstop.com.</a
+                            >
+                          </p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </td>
       </tr>
       <tr>
         <td align="center">
-          <table cellspacing="0" cellpadding="0" border="0" align="center" width="465">
-            <tbody><tr>
-              <td align="left">
-                <table align="left" cellspacing="0" cellpadding="0" border="0" width="465">
-                  <tbody><tr>
-                    <td align="center" style="font-family: Arial, sans-serif; font-size: 14px; font-weight: 300; color: rgba(92, 92, 92, 1); line-height: 140%;">
-                      <p style="margin: 0;"><span style="font-weight: bold; text-decoration: underline;">Offer is redeemable on </span><a href="http://www.wingstop.com" target="_blank" style="color: rgba(92, 92, 92, 1) !important; font-weight: bold; text-decoration: underline;"><span style="color: rgba(92, 92, 92, 1); font-weight: bold; text-decoration: underline;">wingstop.com</span></a><span style="font-weight: bold; text-decoration: underline;"> or in the Wingstop mobile app only.</span></p>
-                    </td>
-                  </tr>
-                </tbody></table>
-              </td>
-            </tr>
-          </tbody></table>
+          <table
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            align="center"
+            width="465"
+          >
+            <tbody>
+              <tr>
+                <td align="left">
+                  <table
+                    align="left"
+                    cellspacing="0"
+                    cellpadding="0"
+                    border="0"
+                    width="465"
+                  >
+                    <tbody>
+                      <tr>
+                        <td
+                          align="center"
+                          style="
+                            font-family: Arial, sans-serif;
+                            font-size: 14px;
+                            font-weight: 300;
+                            color: rgba(92, 92, 92, 1);
+                            line-height: 140%;
+                          "
+                        >
+                          <p style="margin: 0">
+                            <span
+                              style="
+                                font-weight: bold;
+                                text-decoration: underline;
+                              "
+                              >Offer is redeemable on </span
+                            ><a
+                              href="http://www.wingstop.com"
+                              target="_blank"
+                              style="
+                                color: rgba(92, 92, 92, 1) !important;
+                                font-weight: bold;
+                                text-decoration: underline;
+                              "
+                              ><span
+                                style="
+                                  color: rgba(92, 92, 92, 1);
+                                  font-weight: bold;
+                                  text-decoration: underline;
+                                "
+                                >wingstop.com</span
+                              ></a
+                            ><span
+                              style="
+                                font-weight: bold;
+                                text-decoration: underline;
+                              "
+                            >
+                              or in the Wingstop mobile app only.</span
+                            >
+                          </p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </td>
       </tr>
       <tr>
         <td align="center">
-          <table cellspacing="0" cellpadding="0" border="0" align="center" width="465">
-            <tbody><tr>
-              <td align="left">
-                <table align="left" cellspacing="0" cellpadding="0" border="0" width="465">
-                  <tbody><tr>
-                    <td align="center" style="font-family: Arial, sans-serif; font-size: 17px; font-weight: bold; color: rgba(69, 69, 69, 1); line-height: 140%;">
-                      <p style="font-family: Arial, sans-serif; font-size: 17px; font-weight: bold; color: rgb(0, 0, 0); line-height: 140%;">
-                        Code: 
-                        <span id="coupon-code" style="cursor: pointer;" onclick="copyCode()">{{ code }}</span> &nbsp;&nbsp;&nbsp;<br>
-                        Expires on {{ safeexpiredate }}
-                    </p>
-                    
-                    <!-- Copied notification -->
-                    <div id="copy-notification" class="copy-notification-box" style="display: none;">Copied!</div>
-                    
-                    </td>
-                  </tr>
-                </tbody></table>
-              </td>
-            </tr>
-          </tbody></table>
+          <table
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            align="center"
+            width="465"
+          >
+            <tbody>
+              <tr>
+                <td align="left">
+                  <table
+                    align="left"
+                    cellspacing="0"
+                    cellpadding="0"
+                    border="0"
+                    width="465"
+                  >
+                    <tbody>
+                      <tr>
+                        <td
+                          align="center"
+                          style="
+                            font-family: Arial, sans-serif;
+                            font-size: 17px;
+                            font-weight: bold;
+                            color: rgba(69, 69, 69, 1);
+                            line-height: 140%;
+                          "
+                        >
+                          <p
+                            style="
+                              font-family: Arial, sans-serif;
+                              font-size: 17px;
+                              font-weight: bold;
+                              color: rgb(0, 0, 0);
+                              line-height: 140%;
+                            "
+                          >
+                            Code:
+                            <span
+                              id="coupon-code"
+                              style="cursor: pointer"
+                              onclick="copyCode()"
+                              >{{ code }}</span
+                            >
+                            &nbsp;&nbsp;&nbsp;<br />
+                            Expires on {{ safeexpiredate }}
+                          </p>
+
+                          <!-- Copied notification -->
+                          <div
+                            id="copy-notification"
+                            class="copy-notification-box"
+                            style="display: none"
+                          >
+                            Copied!
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </td>
       </tr>
       <tr>
         <td align="center">
-          <table cellspacing="0" cellpadding="0" border="0" align="center" width="465">
-            <tbody><tr>
-              <td align="left">
-                <table align="left" cellspacing="0" cellpadding="0" border="0" width="465">
-                  <tbody><tr>
-                    <td align="center" style="font-family: Arial, sans-serif; font-size: 16px; font-weight: normal; color: rgba(181, 153, 88, 1); line-height: 150%;">
-                      <img src="https://mywingstopsurvey.com/Projects/WINGS_CSI/images/emailer/smg-wingstop-incentive-hr-btm.png" alt="WHERE FLAVOR GETS ITS WINGS" border="0" width="465" style="width: 100%; display: block;">
-                    </td>
-                  </tr>
-                </tbody></table>
-              </td>
-            </tr>
-          </tbody></table>
+          <table
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            align="center"
+            width="465"
+          >
+            <tbody>
+              <tr>
+                <td align="left">
+                  <table
+                    align="left"
+                    cellspacing="0"
+                    cellpadding="0"
+                    border="0"
+                    width="465"
+                  >
+                    <tbody>
+                      <tr>
+                        <td
+                          align="center"
+                          style="
+                            font-family: Arial, sans-serif;
+                            font-size: 16px;
+                            font-weight: normal;
+                            color: rgba(181, 153, 88, 1);
+                            line-height: 150%;
+                          "
+                        >
+                          <img
+                            src="https://mywingstopsurvey.com/Projects/WINGS_CSI/images/emailer/smg-wingstop-incentive-hr-btm.png"
+                            alt="WHERE FLAVOR GETS ITS WINGS"
+                            border="0"
+                            width="465"
+                            style="width: 100%; display: block"
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </td>
       </tr>
-    </tbody></table>
-  
-    <table bgcolor="#ffffff" cellspacing="0" cellpadding="0" border="0" align="center" width="550">
-      <tbody><tr>
-        <td height="30">
-        </td>
+    </tbody>
+  </table>
+
+  <table
+    bgcolor="#ffffff"
+    cellspacing="0"
+    cellpadding="0"
+    border="0"
+    align="center"
+    width="550"
+  >
+    <tbody>
+      <tr>
+        <td height="30"></td>
       </tr>
-    </tbody></table>
-  
-    <table cellpadding="0" cellspacing="0" border="0" align="center" width="550">
-      <tbody><tr>
+    </tbody>
+  </table>
+
+  <table cellpadding="0" cellspacing="0" border="0" align="center" width="550">
+    <tbody>
+      <tr>
         <td height="1">
-          <img src="https://mywingstopsurvey.com/Projects/WINGS_CSI/images/emailer/itsy-spacer.gif" alt="" width="550" height="1" style="display: block; max-height: 1px; min-height: 1px; min-width: 550px; width: 550px;">
+          <img
+            src="https://mywingstopsurvey.com/Projects/WINGS_CSI/images/emailer/itsy-spacer.gif"
+            alt=""
+            width="550"
+            height="1"
+            style="
+              display: block;
+              max-height: 1px;
+              min-height: 1px;
+              min-width: 550px;
+              width: 550px;
+            "
+          />
         </td>
       </tr>
-    </tbody></table>
-  </div>
-  <div class="feedback-box">
-    <h2>Feedback</h2>
-    <textarea class="feedback-input" id="feedback-text" placeholder=""></textarea>
-    <button class="feedback-button" onclick="sendFeedback()">Send</button>
-  </div>
-
+    </tbody>
+  </table>
+</div>
+<div class="feedback-box">
+  <h2>Feedback</h2>
+  <textarea class="feedback-input" id="feedback-text" placeholder=""></textarea>
+  <button class="feedback-button" onclick="sendFeedback()">Send</button>
+</div>
 
 <script>
-function sendFeedback() {
+  function sendFeedback() {
     // Get the feedback text
-    var feedbackText = document.getElementById('feedback-text').value;
-    
+    var feedbackText = document.getElementById("feedback-text").value;
+
     // Send a POST request to /sendfeedback with the feedback data
-    fetch('/sendfeedback', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ feedback: feedbackText })
+    fetch("/sendfeedback", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ feedback: feedbackText }),
     })
-    .then(response => {
+      .then((response) => {
         if (response.ok) {
-            console.log('Feedback sent successfully');
-            // Hide the feedback box after sending feedback
-            document.querySelector('.feedback-box').style.display = 'none';
+          console.log("Feedback sent successfully");
+          // Hide the feedback box after sending feedback
+          document.querySelector(".feedback-box").style.display = "none";
         } else {
-            console.error('Failed to send feedback');
-            // Handle error if needed
+          console.error("Failed to send feedback");
+          // Handle error if needed
         }
-    })
-    .catch(error => {
-        console.error('Error sending feedback:', error);
+      })
+      .catch((error) => {
+        console.error("Error sending feedback:", error);
         // Handle error if needed
-    });
-}
+      });
+  }
 </script>
-  <script>
-    function copyLink(event) {
-        event.preventDefault(); // Prevent the default behavior of the link
-        // Get the current URL
-        var url = window.location.href;
+<script>
+  function copyLink(event) {
+    event.preventDefault(); // Prevent the default behavior of the link
+    // Get the current URL
+    var url = window.location.href;
 
-        // Copy the URL to the clipboard
-        navigator.clipboard.writeText(url)
-            .then(function() {
-                // Provide feedback to the user
-                console.log("Link copied to clipboard: " + url);
-            })
-            .catch(function(error) {
-                // Handle any errors
-                console.error("Unable to copy link: ", error);
-            });
-    }
+    // Copy the URL to the clipboard
+    navigator.clipboard
+      .writeText(url)
+      .then(function () {
+        // Provide feedback to the user
+        console.log("Link copied to clipboard: " + url);
+      })
+      .catch(function (error) {
+        // Handle any errors
+        console.error("Unable to copy link: ", error);
+      });
+  }
 
+  function copyCode() {
+    // Get the code text
+    var couponCode = document.getElementById("coupon-code").innerText;
 
-    function copyCode() {
-        // Get the code text
-        var couponCode = document.getElementById('coupon-code').innerText;
+    // Copy the code to the clipboard
+    navigator.clipboard
+      .writeText(couponCode)
+      .then(function () {
+        // Show the "Copied!" message box
+        var notification = document.getElementById("copy-notification");
+        notification.style.display = "block";
 
-        // Copy the code to the clipboard
-        navigator.clipboard.writeText(couponCode)
-            .then(function() {
-                // Show the "Copied!" message box
-                var notification = document.getElementById('copy-notification');
-                notification.style.display = 'block';
+        // Trigger fade-out effect after a short delay
+        setTimeout(function () {
+          notification.classList.add("fade-out");
+        }, 500); // Delay before fading out (in milliseconds)
 
-                // Trigger fade-out effect after a short delay
-                setTimeout(function() {
-                    notification.classList.add('fade-out');
-                }, 500);  // Delay before fading out (in milliseconds)
-
-                // Hide the message after it fades out
-                setTimeout(function() {
-                    notification.style.display = 'none';
-                    notification.classList.remove('fade-out'); // Reset for the next time
-                }, 800);  // Time to remove after fade out (in milliseconds)
-            })
-            .catch(function(error) {
-                console.error('Unable to copy coupon code:', error);
-            });
-    }
+        // Hide the message after it fades out
+        setTimeout(function () {
+          notification.style.display = "none";
+          notification.classList.remove("fade-out"); // Reset for the next time
+        }, 800); // Time to remove after fade out (in milliseconds)
+      })
+      .catch(function (error) {
+        console.error("Unable to copy coupon code:", error);
+      });
+  }
 </script>
 {% endblock %}

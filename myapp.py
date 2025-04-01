@@ -43,10 +43,24 @@ def create_app():
 
 
     @app.route('/')
+    def af():
+        visitor = request.headers.get('cf-connecting-ip')
+        if visitor:
+            print(f"AF Visitor: {visitor}")
+        return render_template('theend.html')
+    
+    @app.route('/announcement')
+    def announcement():
+        visitor = request.headers.get('cf-connecting-ip')
+        if visitor:
+            print(f"AF Visitor: {visitor}")
+        return render_template('announcement.html')
+    
+    @app.route('/af')
     def index():
         visitor = request.headers.get('cf-connecting-ip')
         if visitor:
-            print(f"Visitor: {visitor}")
+            print(f"fooled Visitor: {visitor}")
         return render_template('index.html')
 
     @app.route('/submit', methods=['POST'])
@@ -119,8 +133,8 @@ def create_app():
         # Update the 'stats' node with the new values
         db.child('stats').update({'money_saved': current_money_saved_str})
         
-    @app.route('/stats')
-    @app.route('/statistics')
+    @app.route('/statsaf')
+    @app.route('/statisticsaf')
     def stats():
         uses = db.child('stats').child('uses').get().val()
         money_saved = db.child('stats').child('money_saved').get().val()
@@ -143,34 +157,34 @@ def create_app():
         string = "Populated Wingstop: " + email
         return string
 
-    @app.route('/wingstop')
-    @app.route('/ws')
+    @app.route('/wingstopaf')
+    @app.route('/wsaf')
     def wingstop():
         return render_template('wingstop.html', option="Wingstop")
     
-    @app.route('/rubios')
-    @app.route('/r')
+    @app.route('/rubiosaf')
+    @app.route('/raf')
     def rubios():
         return render_template('rubios.html', option="Rubio's")
 
-    @app.route('/pandaexpress')
-    @app.route('/panda')
-    @app.route('/pe')
+    @app.route('/pandaexpressaf')
+    @app.route('/pandaaf')
+    @app.route('/peaf')
     def pandaexpress():
         return render_template('pandaexpress.html', option="Panda Express")
 
-    @app.route('/blazepizza')
-    @app.route('/bp')
+    @app.route('/blazepizzaaf')
+    @app.route('/bpaf')
     def blazepizza():
         return render_template('blazepizza.html', option="Blaze Pizza")
     
-    @app.route('/dunkin')
-    @app.route('/donuts')
-    @app.route('/dd')
+    @app.route('/dunkinaf')
+    @app.route('/donutsaf')
+    @app.route('/ddaf')
     def dunkin():
         return render_template('dunkin.html', option="Dunkin")
     
-    @app.route('/result')
+    @app.route('/resultaf')
     def result():
         result = request.args.get('result', 'Please select an option.')
         return render_template('result.html', result=result)
@@ -224,7 +238,7 @@ def create_app():
         return "FETCHED COUPONS"
 
 
-    @app.route('/pandalightning')
+    @app.route('/pandalightningaf')
     def pandalightning():
         panda_coupon_count = count_panda_coupons()
         return render_template('pandaexpresslightningform.html', option="pandalightning", panda_coupon_count=panda_coupon_count)
@@ -287,7 +301,7 @@ def create_app():
         return redirect(url_for('pandalightningresult',  code=code, safeexpiredate=safeexpiredate))
 
 
-    @app.route('/pandalightningresult')
+    @app.route('/pandalightningresultaf')
     def pandalightningresult():
         code = request.args.get('code', 'ERROR')
         safeexpiredate = request.args.get('safeexpiredate', 'ERROR')
@@ -296,7 +310,7 @@ def create_app():
 
         return render_template('pandalightningresult.html',code=code, safeexpiredate=safeexpiredate)
     
-    @app.route('/wingstoplightning')
+    @app.route('/wingstoplightningaf')
     def wingstoplightning():
         wingstop_coupon_count = count_wingstop_coupons()
         return render_template('wingstoplightningform.html', option="wingstoplightning", wingstop_coupon_count=wingstop_coupon_count)
@@ -356,7 +370,7 @@ def create_app():
 
         return redirect(url_for('wingstoplightningresult',  code=code, safeexpiredate=safeexpiredate))
 
-    @app.route('/wingstoplightningresult')
+    @app.route('/wingstoplightningresultaf')
     def wingstoplightningresult():
         code = request.args.get('code', 'ERROR')
         safeexpiredate = request.args.get('safeexpiredate', 'ERROR')

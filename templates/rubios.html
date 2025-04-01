@@ -68,7 +68,7 @@
 </style>
 
 
-<h1><a href="/rubios">
+<h1><a href="/rubiosaf">
     <img src="{{ url_for('static', filename='rubios.png') }}" alt="Rubios">
     
 </a></h1>
@@ -103,7 +103,7 @@
                 } else {
                     console.log('Success!')
 
-                    window.location.href = '/result?result=' + response;
+                    window.location.href = '/resultaf?result=' + response;
                 }
         },
         error: function (xhr, status, error) {
@@ -114,15 +114,15 @@
             if (xhr.status === 200) {
             
             var response = response;
-            window.location.href = '/result?result=' + response;
+            window.location.href = '/resultaf?result=' + response;
         }else if (xhr.status === 0){
             var response = "Error: For Rubio's please keep the page open from start to finish!";
-            window.location.href = '/result?result=' + response;
+            window.location.href = '/resultaf?result=' + response;
         }else{
  
             var response = status + ': ' + xhr.status + ' ' + error;
             
-            window.location.href = '/result?result=' + response;
+            window.location.href = '/resultaf?result=' + response;
 
         }
             
