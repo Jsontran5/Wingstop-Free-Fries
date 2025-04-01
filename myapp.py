@@ -238,6 +238,11 @@ def create_app():
         return "FETCHED COUPONS"
 
 
+    @app.route('/pandalightning')
+    def pandalightningtemp():
+        
+        return render_template('theend.html')
+    
     @app.route('/pandalightningaf')
     def pandalightning():
         panda_coupon_count = count_panda_coupons()
@@ -309,6 +314,11 @@ def create_app():
         
 
         return render_template('pandalightningresult.html',code=code, safeexpiredate=safeexpiredate)
+
+    @app.route('/wingstoplightning')
+    def wingstoplightningtemp():
+        
+        return render_template('theend.html')
     
     @app.route('/wingstoplightningaf')
     def wingstoplightning():
