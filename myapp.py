@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory, abort
 import requests
 from blazefunction import blaze_pizza_survey
 from pandafunction import panda_survey
@@ -15,6 +15,7 @@ from dotenv import load_dotenv
 from threading import Thread
 
 RESTRICTED_EMAILS = ['foodsurveycodes@gmail.com','', " "]
+blocked_ips = ['23.88.105.37']
 ALLOWED_EMAILS = ['JasonBruincardNFC']
 pacific_tz = pytz.timezone('America/Los_Angeles')
 
@@ -41,26 +42,23 @@ db= firebase.database()
 def create_app():
     app = Flask(__name__)
 
-
-    @app.route('/')
+    @app.before_request
+    def block_ip():
+        if request.remote_addr in blocked_ips:
+            abort(403)  # Forbidden
+    @app.route('/aprilfools')
     def af():
-        visitor = request.headers.get('cf-connecting-ip')
-        if visitor:
-            print(f"AF Visitor: {visitor}")
         return render_template('theend.html')
     
-    @app.route('/announcement')
+    @app.route('/afannouncement')
     def announcement():
-        visitor = request.headers.get('cf-connecting-ip')
-        if visitor:
-            print(f"AF Visitor: {visitor}")
         return render_template('announcement.html')
-    
-    @app.route('/af')
+
+    @app.route('/')
     def index():
         visitor = request.headers.get('cf-connecting-ip')
         if visitor:
-            print(f"fooled Visitor: {visitor}")
+            print(f"Visitor: {visitor}")
         return render_template('index.html')
 
     @app.route('/submit', methods=['POST'])
@@ -133,8 +131,8 @@ def create_app():
         # Update the 'stats' node with the new values
         db.child('stats').update({'money_saved': current_money_saved_str})
         
-    @app.route('/statsaf')
-    @app.route('/statisticsaf')
+    @app.route('/stats')
+    @app.route('/statistics')
     def stats():
         uses = db.child('stats').child('uses').get().val()
         money_saved = db.child('stats').child('money_saved').get().val()
@@ -157,34 +155,34 @@ def create_app():
         string = "Populated Wingstop: " + email
         return string
 
-    @app.route('/wingstopaf')
-    @app.route('/wsaf')
+    @app.route('/wingstop')
+    @app.route('/ws')
     def wingstop():
         return render_template('wingstop.html', option="Wingstop")
     
-    @app.route('/rubiosaf')
-    @app.route('/raf')
+    @app.route('/rubios')
+    @app.route('/r')
     def rubios():
         return render_template('rubios.html', option="Rubio's")
 
-    @app.route('/pandaexpressaf')
-    @app.route('/pandaaf')
-    @app.route('/peaf')
+    @app.route('/pandaexpress')
+    @app.route('/panda')
+    @app.route('/pe')
     def pandaexpress():
         return render_template('pandaexpress.html', option="Panda Express")
 
-    @app.route('/blazepizzaaf')
-    @app.route('/bpaf')
+    @app.route('/blazepizza')
+    @app.route('/bp')
     def blazepizza():
         return render_template('blazepizza.html', option="Blaze Pizza")
     
-    @app.route('/dunkinaf')
-    @app.route('/donutsaf')
-    @app.route('/ddaf')
+    @app.route('/dunkin')
+    @app.route('/donuts')
+    @app.route('/dd')
     def dunkin():
         return render_template('dunkin.html', option="Dunkin")
     
-    @app.route('/resultaf')
+    @app.route('/result')
     def result():
         result = request.args.get('result', 'Please select an option.')
         return render_template('result.html', result=result)
@@ -239,11 +237,6 @@ def create_app():
 
 
     @app.route('/pandalightning')
-    def pandalightningtemp():
-        
-        return render_template('theend.html')
-    
-    @app.route('/pandalightningaf')
     def pandalightning():
         panda_coupon_count = count_panda_coupons()
         return render_template('pandaexpresslightningform.html', option="pandalightning", panda_coupon_count=panda_coupon_count)
@@ -306,7 +299,7 @@ def create_app():
         return redirect(url_for('pandalightningresult',  code=code, safeexpiredate=safeexpiredate))
 
 
-    @app.route('/pandalightningresultaf')
+    @app.route('/pandalightningresult')
     def pandalightningresult():
         code = request.args.get('code', 'ERROR')
         safeexpiredate = request.args.get('safeexpiredate', 'ERROR')
@@ -314,13 +307,8 @@ def create_app():
         
 
         return render_template('pandalightningresult.html',code=code, safeexpiredate=safeexpiredate)
-
-    @app.route('/wingstoplightning')
-    def wingstoplightningtemp():
-        
-        return render_template('theend.html')
     
-    @app.route('/wingstoplightningaf')
+    @app.route('/wingstoplightning')
     def wingstoplightning():
         wingstop_coupon_count = count_wingstop_coupons()
         return render_template('wingstoplightningform.html', option="wingstoplightning", wingstop_coupon_count=wingstop_coupon_count)
@@ -380,7 +368,7 @@ def create_app():
 
         return redirect(url_for('wingstoplightningresult',  code=code, safeexpiredate=safeexpiredate))
 
-    @app.route('/wingstoplightningresultaf')
+    @app.route('/wingstoplightningresult')
     def wingstoplightningresult():
         code = request.args.get('code', 'ERROR')
         safeexpiredate = request.args.get('safeexpiredate', 'ERROR')
