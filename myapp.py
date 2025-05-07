@@ -13,9 +13,10 @@ from firebase_admin import credentials, db
 import os
 from dotenv import load_dotenv
 from threading import Thread
+import re
 
 RESTRICTED_EMAILS = ['foodsurveycodes@gmail.com','', " "]
-blocked_ips = ['23.88.105.37']
+
 ALLOWED_EMAILS = ['JasonBruincardNFC']
 pacific_tz = pytz.timezone('America/Los_Angeles')
 
@@ -43,9 +44,11 @@ def create_app():
     app = Flask(__name__)
 
     @app.before_request
-    def block_ip():
-        if request.remote_addr in blocked_ips:
+    def block_request():
+        if re.match(r"^/wp-.*", request.path):
             abort(403)  # Forbidden
+    
+
     @app.route('/aprilfools')
     def af():
         return render_template('theend.html')
