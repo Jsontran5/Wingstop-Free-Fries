@@ -533,15 +533,32 @@ def create_app():
     @app.route('/<path:path>')
     def serve_spa(path):
         """Serve React SPA files or fallback to index.html for client-side routing"""
-        try:
-            # Try to serve the requested file from React build
-            return send_from_directory(app.static_folder, path)
-        except Exception:
-            # Fallback to index.html for React Router to handle
+        import os
+        
+        # Define SPA routes that should serve index.html
+        spa_routes = ['restaurant', 'result', 'stats', 'error']
+        
+        # Check if this is a SPA route
+        if path.split('/')[0] in spa_routes:
+            # Serve index.html for React Router to handle
             try:
                 return send_from_directory(app.static_folder, 'index.html')
             except Exception:
-                # Final fallback if React build not available
+                return render_template('index.html')
+        
+        # For other paths, try to serve the actual file first
+        try:
+            file_path = os.path.join(app.static_folder, path)
+            if os.path.isfile(file_path):
+                return send_from_directory(app.static_folder, path)
+            else:
+                # File doesn't exist, serve index.html for SPA
+                return send_from_directory(app.static_folder, 'index.html')
+        except Exception:
+            # Final fallback
+            try:
+                return send_from_directory(app.static_folder, 'index.html')
+            except Exception:
                 return render_template('index.html')
 
     return app
