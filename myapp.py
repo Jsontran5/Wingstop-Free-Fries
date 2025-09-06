@@ -535,30 +535,46 @@ def create_app():
         """Serve React SPA files or fallback to index.html for client-side routing"""
         import os
         
+        print(f"DEBUG: Requested path: {path}")
+        print(f"DEBUG: Static folder: {app.static_folder}")
+        
         # Define SPA routes that should serve index.html
         spa_routes = ['restaurant', 'result', 'stats', 'error']
+        path_parts = path.split('/')
+        first_part = path_parts[0] if path_parts else ''
+        
+        print(f"DEBUG: First part: {first_part}")
+        print(f"DEBUG: Is SPA route: {first_part in spa_routes}")
         
         # Check if this is a SPA route
-        if path.split('/')[0] in spa_routes:
+        if first_part in spa_routes:
+            print("DEBUG: Serving index.html for SPA route")
             # Serve index.html for React Router to handle
             try:
                 return send_from_directory(app.static_folder, 'index.html')
-            except Exception:
+            except Exception as e:
+                print(f"DEBUG: Error serving from static folder: {e}")
                 return render_template('index.html')
         
         # For other paths, try to serve the actual file first
         try:
-            file_path = os.path.join(app.static_folder, path)
-            if os.path.isfile(file_path):
+            full_path = os.path.join(app.static_folder, path)
+            print(f"DEBUG: Checking file path: {full_path}")
+            
+            if os.path.isfile(full_path):
+                print("DEBUG: File exists, serving static file")
                 return send_from_directory(app.static_folder, path)
             else:
+                print("DEBUG: File doesn't exist, serving index.html for SPA")
                 # File doesn't exist, serve index.html for SPA
                 return send_from_directory(app.static_folder, 'index.html')
-        except Exception:
+        except Exception as e:
+            print(f"DEBUG: Exception in file serving: {e}")
             # Final fallback
             try:
                 return send_from_directory(app.static_folder, 'index.html')
-            except Exception:
+            except Exception as e2:
+                print(f"DEBUG: Final fallback error: {e2}")
                 return render_template('index.html')
 
     return app
