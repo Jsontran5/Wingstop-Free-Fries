@@ -1,0 +1,200 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 5%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 5%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 5%;
+
+    --primary: 15 85% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
+
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 9%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 95%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 15 85% 60%;
+
+    --radius: 1rem;
+
+    /* Restaurant Brand Colors */
+    --wingstop-primary: 152 100% 21%;
+    --wingstop-secondary: 0 0% 0%;
+    --wingstop-accent: 152 100% 30%;
+    
+    --panda-primary: 0 66% 45%; 
+    --panda-secondary: 48 100% 50%;
+    --panda-accent: 0 66% 35%;
+    
+    --rubios-primary: 90 49% 52%;
+    --rubios-secondary: 36 100% 50%;
+    --rubios-accent: 90 49% 42%;
+    
+    --blaze-primary: 22 75% 52%;
+    --blaze-secondary: 24 100% 50%;
+    --blaze-accent: 22 75% 42%;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--wingstop-primary)), hsl(var(--panda-primary)));
+    --gradient-wingstop: linear-gradient(135deg, hsl(var(--wingstop-primary)), hsl(var(--wingstop-accent)));
+    --gradient-panda: linear-gradient(135deg, hsl(var(--panda-primary)), hsl(var(--panda-accent)));
+    --gradient-rubios: linear-gradient(135deg, hsl(var(--rubios-primary)), hsl(var(--rubios-accent)));
+    --gradient-blaze: linear-gradient(135deg, hsl(var(--blaze-primary)), hsl(var(--blaze-accent)));
+
+    /* Shadows */
+    --shadow-glow: 0 0 30px hsl(var(--primary) / 0.3);
+    --shadow-card: 0 10px 40px hsl(0 0% 0% / 0.15);
+    --shadow-restaurant: 0 20px 60px hsl(0 0% 0% / 0.25);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 9%;
+    --sidebar-primary: 0 0% 9%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 9%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 15 85% 60%;
+  }
+
+  .dark {
+    --background: 20 14% 4%;
+    --foreground: 0 0% 95%;
+
+    --card: 20 14% 4%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 20 14% 4%;
+    --popover-foreground: 0 0% 95%;
+
+    --secondary: 12 7% 15%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 12 7% 15%;
+    --muted-foreground: 0 0% 65%;
+
+    --accent: 12 7% 20%;
+    --accent-foreground: 0 0% 95%;
+
+    --border: 12 7% 15%;
+    --input: 12 7% 15%;
+
+    --sidebar-background: 20 14% 4%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 0 0% 95%;
+    --sidebar-primary-foreground: 20 14% 4%;
+    --sidebar-accent: 12 7% 15%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 12 7% 15%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans overflow-x-hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .gradient-wingstop {
+    background: var(--gradient-wingstop);
+  }
+  
+  .gradient-panda {
+    background: var(--gradient-panda);
+  }
+  
+  .gradient-rubios {
+    background: var(--gradient-rubios);
+  }
+  
+  .gradient-blaze {
+    background: var(--gradient-blaze);
+  }
+
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .shadow-restaurant {
+    box-shadow: var(--shadow-restaurant);
+  }
+
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+
+  .transition-bounce {
+    transition: var(--transition-bounce);
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .text-gradient {
+    background: var(--gradient-hero);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.15);
+  }
+  50% { 
+    box-shadow: 0 0 40px hsl(var(--primary) / 0.3);
+  }
+}

@@ -31,7 +31,7 @@ def rubios_survey():
     driver.get("https://www.tellrubios.com/")
     
     current_url = driver.current_url
-    wait = WebDriverWait(driver, 3)
+    wait = WebDriverWait(driver, 5)
 
     while not driver.current_url.startswith("https://www.tellrubios.com/Survey.aspx"):
         next_button = driver.find_element(by="id", value="NextButton")
