@@ -551,6 +551,16 @@ def create_app():
             print(f"DEBUG: Error serving result route: {e}")
             return render_template('index.html')
     
+    @app.route('/stats')
+    @app.route('/stats/')
+    def serve_stats():
+        print("DEBUG: Stats route hit")
+        try:
+            return send_from_directory(app.static_folder, 'index.html')
+        except Exception as e:
+            print(f"DEBUG: Error serving stats route: {e}")
+            return render_template('index.html')
+    
     @app.route('/error')
     @app.route('/error/')
     def serve_error():
