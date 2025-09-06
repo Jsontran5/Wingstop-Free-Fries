@@ -21,10 +21,11 @@ RESTRICTED_EMAILS = ['foodsurveycodes@gmail.com','', " "]
 ALLOWED_EMAILS = ['JasonBruincardNFC']
 pacific_tz = pytz.timezone('America/Los_Angeles')
 
-dotenv_path = '/etc/secrets/.env' #for render.com
-load_dotenv(dotenv_path=dotenv_path) #for render.com
-
-#load_dotenv()
+dotenv_path = "/etc/secrets/.env"
+if os.path.exists(dotenv_path):
+    load_dotenv(dotenv_path=dotenv_path)
+else:
+    load_dotenv()
 
 config = {
     "apiKey": os.getenv("API_KEY"),
@@ -529,53 +530,61 @@ def create_app():
             print(f"Lightning API Error: {str(e)}")
             return jsonify({"success": False, "error": "Failed to retrieve coupon"}), 500
 
+    # Specific routes for React Router paths
+    @app.route('/restaurant/')
+    @app.route('/restaurant/<path:subpath>')
+    def serve_restaurant(subpath=None):
+        print(f"DEBUG: Restaurant route hit with subpath: {subpath}")
+        try:
+            return send_from_directory(app.static_folder, 'index.html')
+        except Exception as e:
+            print(f"DEBUG: Error serving restaurant route: {e}")
+            return render_template('index.html')
+    
+    @app.route('/result')
+    @app.route('/result/')
+    def serve_result():
+        print("DEBUG: Result route hit")
+        try:
+            return send_from_directory(app.static_folder, 'index.html')
+        except Exception as e:
+            print(f"DEBUG: Error serving result route: {e}")
+            return render_template('index.html')
+    
+    @app.route('/error')
+    @app.route('/error/')
+    def serve_error():
+        print("DEBUG: Error route hit")
+        try:
+            return send_from_directory(app.static_folder, 'index.html')
+        except Exception as e:
+            print(f"DEBUG: Error serving error route: {e}")
+            return render_template('index.html')
+
     # Catch-all route to serve React SPA for client-side routing
     @app.route('/<path:path>')
     def serve_spa(path):
         """Serve React SPA files or fallback to index.html for client-side routing"""
         import os
         
-        print(f"DEBUG: Requested path: {path}")
-        print(f"DEBUG: Static folder: {app.static_folder}")
+        print(f"DEBUG: Catch-all route hit with path: {path}")
         
-        # Define SPA routes that should serve index.html
-        spa_routes = ['restaurant', 'result', 'stats', 'error']
-        path_parts = path.split('/')
-        first_part = path_parts[0] if path_parts else ''
-        
-        print(f"DEBUG: First part: {first_part}")
-        print(f"DEBUG: Is SPA route: {first_part in spa_routes}")
-        
-        # Check if this is a SPA route
-        if first_part in spa_routes:
-            print("DEBUG: Serving index.html for SPA route")
-            # Serve index.html for React Router to handle
-            try:
-                return send_from_directory(app.static_folder, 'index.html')
-            except Exception as e:
-                print(f"DEBUG: Error serving from static folder: {e}")
-                return render_template('index.html')
-        
-        # For other paths, try to serve the actual file first
+        # For static files, try to serve them
         try:
             full_path = os.path.join(app.static_folder, path)
-            print(f"DEBUG: Checking file path: {full_path}")
-            
             if os.path.isfile(full_path):
-                print("DEBUG: File exists, serving static file")
+                print(f"DEBUG: Serving static file: {path}")
                 return send_from_directory(app.static_folder, path)
-            else:
-                print("DEBUG: File doesn't exist, serving index.html for SPA")
-                # File doesn't exist, serve index.html for SPA
-                return send_from_directory(app.static_folder, 'index.html')
         except Exception as e:
-            print(f"DEBUG: Exception in file serving: {e}")
-            # Final fallback
-            try:
-                return send_from_directory(app.static_folder, 'index.html')
-            except Exception as e2:
-                print(f"DEBUG: Final fallback error: {e2}")
-                return render_template('index.html')
+            print(f"DEBUG: Error checking static file: {e}")
+        
+        # Default to serving index.html for SPA
+        print("DEBUG: Serving index.html from catch-all")
+        try:
+            return send_from_directory(app.static_folder, 'index.html')
+        except Exception as e:
+            print(f"DEBUG: Error serving index.html: {e}")
+            return render_template('index.html')
 
     return app
 
