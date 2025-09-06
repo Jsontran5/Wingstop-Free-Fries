@@ -21,7 +21,7 @@ if [[ -f "$SECRETS_DIR/client_secret.json" ]]; then
     cat "$RENDER_DIR/client_secret.json"
     ls
 else
-    echo "Error: client_secret.json not found in $SECRETS_DIR"
+    echo "Warning: client_secret.json not found in $SECRETS_DIR (skipping)"
 fi
 
 STORAGE_DIR=/opt/render/project/.render
@@ -38,7 +38,15 @@ else
   echo "...Using Chrome from cache"
 fi
 
+# Build React frontend (using Render's pre-installed Node.js)
+echo "...Building React frontend"
+cd wfffrontend
+npm ci
+npm run build
+cd ..
 
+# Install Python dependencies  
+echo "...Installing Python dependencies"
 /opt/render/project/src/.venv/bin/python3.11 -m pip install --upgrade pip
 pip install setuptools wheel
 pip install -r requirements.txt
