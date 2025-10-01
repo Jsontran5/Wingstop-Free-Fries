@@ -7,6 +7,7 @@ import { CheckCircle, Copy, Home, RotateCcw, Send } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import pandaLogo from '@/assets/panda-logo.png';
+import wingstopBanner from '@/assets/wingstop-banner.png';
 
 const ResultPage = () => {
   const navigate = useNavigate();
@@ -234,17 +235,78 @@ const ResultPage = () => {
                   </div>
                 </div>
               </Card>
-
-              {/* Action Buttons */}
-              <div className="flex justify-center mt-8">
-                <Button
-                  variant="default"
-                  onClick={() => navigate('/')}
-                >
-                  <Home className="w-4 h-4 mr-2" />
-                  Generate Another
-                </Button>
+            </div>
+          ) : restaurant.name === 'Wingstop' ? (
+            <div className="max-w-2xl mx-auto">
+              {/* Wingstop Header with Logo */}
+              <div className="mb-8">
+                <div className="rounded-t-lg overflow-hidden">
+                  <img 
+                    src={wingstopBanner} 
+                    alt="Wingstop Logo" 
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
               </div>
+
+              {/* Coupon Card */}
+              <Card className="border-2 border-gray-300 bg-white shadow-lg">
+                <div className="p-8">
+                  {/* Offer Title */}
+                  <div className="text-center mb-6">
+                    <h3 className="text-4xl font-black italic text-[#006341] mb-2">
+                      FREE REGULAR-SIZE,
+                    </h3>
+                    <h3 className="text-4xl font-black italic text-[#006341] mb-4">
+                      SEASONED FRY
+                    </h3>
+                    <p className="text-lg">
+                      with your next <span className="underline font-semibold">online purchase</span> of wings or tenders.
+                    </p>
+                  </div>
+
+                  {/* Divider */}
+                  <div className="w-full h-1 bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-600 mb-6"></div>
+
+                  {/* Redemption Instructions */}
+                  <div className="mb-6">
+                    <p className="text-[#006341] font-semibold text-center mb-4">
+                      To redeem, add the regular seasoned fry to your order and then enter the coupon code on the payment page when you order using our mobile app or <a href="https://www.wingstop.com" target="_blank" rel="noopener noreferrer" className="text-[#006341] underline hover:no-underline">wingstop.com</a>.
+                    </p>
+                  </div>
+
+                  {/* Code and Expiration */}
+                  <div className="bg-gray-50 p-4 rounded-lg mb-6">
+                    <div className="flex items-center justify-center gap-2 mb-3">
+                      <code className="text-xl font-mono font-bold">{coupon.code}</code>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleCopy}
+                      >
+                        {copied ? (
+                          <CheckCircle className="w-4 h-4" />
+                        ) : (
+                          <Copy className="w-4 h-4" />
+                        )}
+                      </Button>
+                    </div>
+                    <div className="text-center">
+                      <span className="font-bold">Expires:</span> {safeexpiredate}
+                    </div>
+                  </div>
+
+                  {/* Fine Print */}
+                  <div className="text-xs text-gray-600 text-center space-y-2">
+                    <p>
+                      Valid at participating locations only. <span className="font-semibold underline">Offer is redeemable on <a href="https://www.wingstop.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900">wingstop.com</a> or in the Wingstop mobile app only.</span>
+                    </p>
+                    <p>
+                      Offer expires 14 days after survey completion. Limit one per customer. Offer not valid with any other offers or promotions. Other restrictions may apply.
+                    </p>
+                  </div>
+                </div>
+              </Card>
             </div>
           ) : (
             <div className="max-w-md mx-auto">
@@ -309,20 +371,21 @@ const ResultPage = () => {
                       'Valid with any online purchase'
                     }</p>
                   </div>
-
-                  <div className="flex justify-center">
-                    <Button
-                      variant="default"
-                      onClick={() => navigate('/')}
-                    >
-                      <Home className="w-4 h-4 mr-2" />
-                      Generate Another
-                    </Button>
-                  </div>
                 </div>
               </Card>
             </div>
           )}
+
+          {/* Generate Another Button - Moved outside for all restaurant types */}
+          <div className="flex justify-center mt-8">
+            <Button
+              variant="default"
+              onClick={() => navigate('/')}
+            >
+              <Home className="w-4 h-4 mr-2" />
+              Generate Another
+            </Button>
+          </div>
         </div>
       </section>
 
@@ -388,7 +451,7 @@ const ResultPage = () => {
                   2
                 </div>
                 <p className="font-medium">Add All Required Items</p>
-                <p className="text-muted-foreground">To Basket</p>
+                <p className="text-muted-foreground">To Order</p>
               </div>
               
               <div className="space-y-2">
