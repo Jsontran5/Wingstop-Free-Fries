@@ -239,7 +239,7 @@ const ResultPage = () => {
           ) : restaurant.name === 'Wingstop' ? (
             <div className="max-w-2xl mx-auto">
               {/* Wingstop Header with Logo */}
-              <div className="mb-8">
+              <div>
                 <div className="rounded-t-lg overflow-hidden">
                   <img 
                     src={wingstopBanner} 
