@@ -337,14 +337,20 @@ def wingstopcoupondeleter():
 def count_panda_coupons():
     db_ref = db.child("Pandacoupons")
     all_coupons = db_ref.get()
-    count = len(all_coupons.each())
+    if all_coupons and all_coupons.each():
+        count = len(all_coupons.each())
+    else:
+        count = 0
     #print(f"Total number of coupons in the database: {count}")
     return count
 
 def count_wingstop_coupons():
     db_ref = db.child("Wingstopcoupons")
     all_coupons = db_ref.get()
-    count = len(all_coupons.each())
+    if all_coupons and all_coupons.each():
+        count = len(all_coupons.each())
+    else:
+        count = 0
     #print(f"Total number of coupons in the database: {count}")
     return count
 
@@ -488,7 +494,10 @@ def blazecoupondeleter():
 def count_blaze_coupons():
     db_ref = db.child("Blazecoupons")
     all_coupons = db_ref.get()
-    count = len(all_coupons.each())
+    if all_coupons and all_coupons.each():
+        count = len(all_coupons.each())
+    else:
+        count = 0
     #print(f"Total number of coupons in the database: {count}")
     return count
 
