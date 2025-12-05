@@ -347,9 +347,13 @@ const RestaurantPage = () => {
                 </form>
 
                 <div className="mt-4 text-center text-sm text-white/80">
-                  {!isCouponsAvailable && (restaurant === 'panda' || restaurant === 'wingstop' || restaurant === 'blaze' || restaurant === 'rubios') ? (
+                  {!isCouponsAvailable && restaurant === 'blaze' && couponCounts.blaze === 0 ? (
                     <p className="text-red-300">
-                      ⚠️ No coupons currently available. Will automaticallyrestock later tonight!
+                      ⚠️ Blaze Pizza method is currently down until further notice.
+                    </p>
+                  ) : !isCouponsAvailable && (restaurant === 'panda' || restaurant === 'wingstop' || restaurant === 'blaze' || restaurant === 'rubios') ? (
+                    <p className="text-red-300">
+                      ⚠️ No coupons currently available. Will automatically restock later tonight!
                     </p>
                   ) : (
                     <p>⚡ Instant delivery • 💲 Free • 📧 No spam</p>
