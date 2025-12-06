@@ -264,28 +264,29 @@ def PEcoupondeleter():
     mail.select('"UNUSED: IN DB"')
 
     i = 0
-    for coupon in all_coupons.each():
-        coupon_dict = coupon.val()
-        safeexpiredate = coupon_dict["safeexpiredateunix"]
-        currentdate = int(datetime.now(pacific_tz).timestamp())
-        
-        if currentdate > safeexpiredate:
-            db.child("Pandacoupons").child(coupon.key()).remove()
-            print(f"Removed {coupon.key()}, expired on {coupon_dict['safeexpiredate']}")
+    if all_coupons and all_coupons.each():
+        for coupon in all_coupons.each():
+            coupon_dict = coupon.val()
+            safeexpiredate = coupon_dict["safeexpiredateunix"]
+            currentdate = int(datetime.now(pacific_tz).timestamp())
+            
+            if currentdate > safeexpiredate:
+                db.child("Pandacoupons").child(coupon.key()).remove()
+                print(f"Removed {coupon.key()}, expired on {coupon_dict['safeexpiredate']}")
 
-            #MOVING EMAIL LABELS
-            search_text = coupon.key()
-            search_criteria = f'(TEXT "{search_text}")'
-            result, data = mail.search(None, search_criteria)
-            i += 1
-            if result == 'OK':
-                for num in data[0].split():
-                    mail.store(num, '+X-GM-LABELS', '"UNUSED: NOT IN DB"')
+                #MOVING EMAIL LABELS
+                search_text = coupon.key()
+                search_criteria = f'(TEXT "{search_text}")'
+                result, data = mail.search(None, search_criteria)
+                i += 1
+                if result == 'OK':
+                    for num in data[0].split():
+                        mail.store(num, '+X-GM-LABELS', '"UNUSED: NOT IN DB"')
 
-                    mail.store(num, '+FLAGS', '\\Deleted')
-                    mail.expunge()
+                        mail.store(num, '+FLAGS', '\\Deleted')
+                        mail.expunge()
 
-                    print(f'Moved {coupon.key()} from "UNUSED: IN DB" to "UNUSED: NOT IN DB"')
+                        print(f'Moved {coupon.key()} from "UNUSED: IN DB" to "UNUSED: NOT IN DB"')
     after_delete = count_panda_coupons()
     total_deleted = before_delete - after_delete
     print(f"Removed {total_deleted} Panda Express coupons")
@@ -308,26 +309,27 @@ def wingstopcoupondeleter():
     mail.select('"UNUSED: IN DB"')
 
     i=0
-    for coupon in all_coupons.each():
-        coupon_dict = coupon.val()
-        safeexpiredate = coupon_dict["safeexpiredateunix"]
-        currentdate = int(datetime.now(pacific_tz).timestamp())
-        
-        if currentdate > safeexpiredate:
-            db.child("Wingstopcoupons").child(coupon.key()).remove()
-            print(f"Removed {coupon.key()}, expired on {coupon_dict['safeexpiredate']}")
-            search_text = coupon.key()
-            search_criteria = f'(TEXT "{search_text}")'
-            result, data = mail.search(None, search_criteria)
-            i += 1
-            if result == 'OK':
-                for num in data[0].split():
-                    mail.store(num, '+X-GM-LABELS', '"UNUSED: NOT IN DB"')
+    if all_coupons and all_coupons.each():
+        for coupon in all_coupons.each():
+            coupon_dict = coupon.val()
+            safeexpiredate = coupon_dict["safeexpiredateunix"]
+            currentdate = int(datetime.now(pacific_tz).timestamp())
+            
+            if currentdate > safeexpiredate:
+                db.child("Wingstopcoupons").child(coupon.key()).remove()
+                print(f"Removed {coupon.key()}, expired on {coupon_dict['safeexpiredate']}")
+                search_text = coupon.key()
+                search_criteria = f'(TEXT "{search_text}")'
+                result, data = mail.search(None, search_criteria)
+                i += 1
+                if result == 'OK':
+                    for num in data[0].split():
+                        mail.store(num, '+X-GM-LABELS', '"UNUSED: NOT IN DB"')
 
-                    mail.store(num, '+FLAGS', '\\Deleted')
-                    mail.expunge()
+                        mail.store(num, '+FLAGS', '\\Deleted')
+                        mail.expunge()
 
-                    print(f'Moved {coupon.key()} from "UNUSED: IN DB" to "UNUSED: NOT IN DB"')
+                        print(f'Moved {coupon.key()} from "UNUSED: IN DB" to "UNUSED: NOT IN DB"')
                 
            
     after_delete = count_wingstop_coupons()
@@ -465,28 +467,29 @@ def blazecoupondeleter():
     mail.select('"UNUSED: IN DB"')
 
     i = 0
-    for coupon in all_coupons.each():
-        coupon_dict = coupon.val()
-        safeexpiredate = coupon_dict["safeexpiredateunix"]
-        currentdate = int(datetime.now(pacific_tz).timestamp())
-        
-        if currentdate > safeexpiredate:
-            db.child("Blazecoupons").child(coupon.key()).remove()
-            print(f"Removed {coupon.key()}, expired on {coupon_dict['safeexpiredate']}")
+    if all_coupons and all_coupons.each():
+        for coupon in all_coupons.each():
+            coupon_dict = coupon.val()
+            safeexpiredate = coupon_dict["safeexpiredateunix"]
+            currentdate = int(datetime.now(pacific_tz).timestamp())
+            
+            if currentdate > safeexpiredate:
+                db.child("Blazecoupons").child(coupon.key()).remove()
+                print(f"Removed {coupon.key()}, expired on {coupon_dict['safeexpiredate']}")
 
-            #MOVING EMAIL LABELS
-            search_text = coupon.key()
-            search_criteria = f'(TEXT "{search_text}")'
-            result, data = mail.search(None, search_criteria)
-            i += 1
-            if result == 'OK':
-                for num in data[0].split():
-                    mail.store(num, '+X-GM-LABELS', '"UNUSED: NOT IN DB"')
+                #MOVING EMAIL LABELS
+                search_text = coupon.key()
+                search_criteria = f'(TEXT "{search_text}")'
+                result, data = mail.search(None, search_criteria)
+                i += 1
+                if result == 'OK':
+                    for num in data[0].split():
+                        mail.store(num, '+X-GM-LABELS', '"UNUSED: NOT IN DB"')
 
-                    mail.store(num, '+FLAGS', '\\Deleted')
-                    mail.expunge()
+                        mail.store(num, '+FLAGS', '\\Deleted')
+                        mail.expunge()
 
-                    print(f'Moved {coupon.key()} from "UNUSED: IN DB" to "UNUSED: NOT IN DB"')
+                        print(f'Moved {coupon.key()} from "UNUSED: IN DB" to "UNUSED: NOT IN DB"')
     after_delete = count_blaze_coupons()
     total_deleted = before_delete - after_delete
     print(f"Removed {total_deleted} Blaze Pizza coupons")
