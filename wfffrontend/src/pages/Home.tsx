@@ -95,11 +95,11 @@ const Home = () => {
     {
       icon: <Zap className="w-6 h-6" />,
       title: 'Instant Coupons',
-      description: 'Get your discount codes in seconds, not minutes'
+      description: 'Get your discount codes in seconds!!!'
     },
     {
       icon: <DollarSign className="w-6 h-6" />,
-      title: 'Real Savings',
+      title: 'Big Savings',
       description: 'Save money on every order at your favorite restaurants'
     },
     {
@@ -126,7 +126,7 @@ const Home = () => {
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Instantly generate coupons for your favorite restaurants. 
-            No more filling out lengthy surveys.
+            No more filling out those lengthy surveys.
           </p>
         </div>
       </section>
