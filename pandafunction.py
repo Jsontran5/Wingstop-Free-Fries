@@ -8,6 +8,8 @@ from selenium.common.exceptions import TimeoutException
 import time
 import datetime
 from datetime import timedelta
+from dotenv import load_dotenv
+import os
 
 def panda_survey(email):
     chrome_options = webdriver.ChromeOptions()
@@ -21,6 +23,11 @@ def panda_survey(email):
     chrome_options.add_argument("--disable-dev-shm-usage")
     #chrome_options.add_argument("--incognito")
     chrome_options.binary_location = '/opt/render/project/.render/chrome/opt/google/chrome' #for render.com
+    
+    dotenv_path = '/etc/secrets/.env' #for render.com
+    load_dotenv(dotenv_path=dotenv_path) #for render.com
+
+    #load_dotenv()
 
     driver = webdriver.Chrome(options=chrome_options)
     
@@ -35,8 +42,33 @@ def panda_survey(email):
         driver.get("https://www.pandaguestexperience.com/")
 
         current_url = driver.current_url
-
+       
+        blocked = False
         while not driver.current_url.startswith("https://www.pandaguestexperience.com/Survey.aspx"):
+            if driver.current_url.startswith("https://www.pandaguestexperience.com/Block.aspx"):
+                print("Blocked, restarting...")
+                blcoked = True
+                driver.quit()
+                driver = webdriver.Chrome(options=chrome_options)
+                driver.get("https://www.pandaguestexperience.com/")
+
+                current_url = driver.current_url
+                continue
+            if blocked:
+                code_parts = os.getenv("BLOCKED_CODES").split(",")
+            else:
+                code_parts = os.getenv("NORMAL_CODES").split(",")
+   
+
+            driver.find_element(By.ID, "CN1").send_keys(code_parts[0])
+            driver.find_element(By.ID, "CN2").send_keys(code_parts[1])
+            driver.find_element(By.ID, "CN3").send_keys(code_parts[2])
+            driver.find_element(By.ID, "CN4").send_keys(code_parts[3])
+            driver.find_element(By.ID, "CN5").send_keys(code_parts[4])
+            driver.find_element(By.ID, "CN6").send_keys(code_parts[5])
+
+       
+
             next_button = driver.find_element(by="id", value="NextButton")
             next_button.click()
             wait_for_new_url(driver, current_url)
