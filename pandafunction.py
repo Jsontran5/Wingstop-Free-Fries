@@ -46,7 +46,10 @@ def panda_survey(email):
         blocked = False
         while not driver.current_url.startswith("https://www.pandaguestexperience.com/Survey.aspx"):
             if driver.current_url.startswith("https://www.pandaguestexperience.com/Block.aspx"):
-                print("Blocked, restarting...")
+                #print("Blocked, restarting...")
+                if driver:
+                    driver.quit()
+                return "Blocked"
                 blcoked = True
                 driver.quit()
                 driver = webdriver.Chrome(options=chrome_options)
