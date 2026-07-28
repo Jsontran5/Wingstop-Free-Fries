@@ -1,53 +1,53 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.service import Service
-from selenium.common.exceptions import TimeoutException
-from webdriver_manager.chrome import ChromeDriverManager
-import time
-import datetime
-from datetime import timedelta
+from dotenv import load_dotenv
 import os
 import traceback
 
 
 def wingstop_survey(email, headless=None):
  
-    # Configure Chrome to run in headless mode
+  
     chrome_options = webdriver.ChromeOptions()
 
-    if headless is None:
-        headless = os.getenv("WINGSTOP_HEADLESS", "1") != "0"
-
-    if headless:
-        headless_mode = os.getenv("WINGSTOP_HEADLESS_MODE", "new")
-        chrome_options.add_argument(f"--headless={headless_mode}" if headless_mode else "--headless")
+    chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--window-size=1920,1080")
     chrome_options.add_argument("--ignore-certificate-errors")
     chrome_options.add_argument("--disable-extensions")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
-    #chrome_options.add_argument("--incognito")
+    chrome_options.add_argument("--incognito")
     chrome_options.binary_location = '/opt/render/project/.render/chrome/opt/google/chrome' #UNCOMMENT BEFORE DEPLOYING TO RENDER.COM/PUSHING TO GITHUB
+    dotenv_path = '/etc/secrets/.env' #for render.com
+    load_dotenv(dotenv_path=dotenv_path) #for render.com
 
+    #load_dotenv()
     driver = None
-    def wait_for_new_url(driver, previous_url, timeout=5):
-        def url_changed(driver):
-            return driver.current_url != previous_url
-
-        wait = WebDriverWait(driver, timeout)
-        wait.until(url_changed)
-
-    #driver = webdriver.Chrome()
     try:
         driver = webdriver.Chrome(options=chrome_options)
-        driver.get("https://mywingstopsurvey.com/usa")
+        driver.get("https://mywingstopsurvey.com/usa?AspxAutoDetectCookieSupport=1")
 
         wait = WebDriverWait(driver, 10)
+
+        def fill_receipt_code():
+            receipt_code = os.getenv("WINGSTOP_CODE", "").strip()
+            if len(receipt_code) != 15 or not receipt_code.isdigit():
+                raise ValueError(
+                    "Set WINGSTOP_CODE to the 15-digit receipt code before running the survey."
+                )
+            code_chunks = [
+                receipt_code[index:index + 3]
+                for index in range(0, 15, 3)
+            ]
+            for index, chunk in enumerate(code_chunks, start=1):
+                code_input = wait.until(
+                    EC.element_to_be_clickable((By.ID, f"InputUSASmartCode{index}"))
+                )
+                code_input.clear()
+                code_input.send_keys(chunk)
 
         def click_next_and_wait_for_progress():
             current_url = driver.current_url
@@ -59,21 +59,30 @@ def wingstop_survey(email, headless=None):
                 or d.page_source != current_source
             )
 
-        while not driver.current_url.startswith("https://mywingstopsurvey.com/Survey.aspx"):
+        fill_receipt_code()
+
+        email_locator = (By.ID, "S000132")
+        confirm_email_locator = (By.ID, "S000133")
+
+        while not (
+            driver.find_elements(*email_locator)
+            and driver.find_elements(*confirm_email_locator)
+        ):
             click_next_and_wait_for_progress()
 
-        search_text = "Please fill out your coupon email below.  This information will not be used for any other purpose."
-        page_source = driver.page_source
+        print("Coupon email screen found.")
 
-        while search_text not in page_source:
-            click_next_and_wait_for_progress()
-            page_source = driver.page_source
-
-        send_email = driver.find_element(by="id", value="S000132")
+        send_email = wait.until(EC.element_to_be_clickable(email_locator))
+        send_email.click()
+        send_email.clear()
         send_email.send_keys(email)
+        wait.until(lambda d: send_email.get_attribute("value") == email)
 
-        conf_email = driver.find_element(by="id", value="S000133")
+        conf_email = wait.until(EC.element_to_be_clickable(confirm_email_locator))
+        conf_email.click()
+        conf_email.clear()
         conf_email.send_keys(email)
+        wait.until(lambda d: conf_email.get_attribute("value") == email)
 
         wait.until(EC.visibility_of_element_located((By.ID, "NextButton")))
         current_url = driver.current_url
@@ -81,10 +90,10 @@ def wingstop_survey(email, headless=None):
         next_button.click()
         wait.until(
             lambda d: d.current_url != current_url
-            or d.current_url.startswith("https://mywingstopsurvey.com/Finish.aspx")
+            or "Finish.aspx" in d.current_url
         )
 
-        if driver.current_url.startswith("https://mywingstopsurvey.com/Finish.aspx"):
+        if "Finish.aspx" in driver.current_url:
             result = "Success! Coupon sent to your email. - Wingstop (works online)"
         else:
             result = "Unexpected page encountered."
