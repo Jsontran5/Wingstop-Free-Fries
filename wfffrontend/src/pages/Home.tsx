@@ -4,7 +4,7 @@ import HomeFoodCarousel from '@/components/HomeFoodCarousel';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { TrendingUp, Users, DollarSign, Zap, Gift, User } from 'lucide-react';
+import { Check, DollarSign, Zap, Gift, User, Wrench } from 'lucide-react';
 import heroImage from '@/assets/hero-image.jpg';
 import wingstopFood from '@/assets/wingstop-food.jpg';
 import pandaFood from '@/assets/panda-food.jpg';
@@ -17,6 +17,7 @@ interface StatsData {
 }
 
 const Home = () => {
+  const [serviceUpdateVisible, setServiceUpdateVisible] = useState(true);
   const [stats, setStats] = useState<StatsData>({
     totalCoupons: 0,
     totalSaved: 0
@@ -54,6 +55,20 @@ const Home = () => {
 
   const formatNumber = (num: number) => {
     return num.toLocaleString();
+  };
+
+  const acknowledgeServiceUpdate = async () => {
+    try {
+      await fetch('/sendfeedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ feedback: 'Service update viewed' })
+      });
+    } catch (error) {
+      console.error('Could not send service update acknowledgement:', error);
+    } finally {
+      setServiceUpdateVisible(false);
+    }
   };
 
   const restaurants = [
@@ -111,6 +126,29 @@ const Home = () => {
 
   return (
     <div className="space-y-12">
+      {/* Service update */}
+      {serviceUpdateVisible && (
+        <section className="container mx-auto px-4 pt-4 -mb-8">
+          <div className="mx-auto flex max-w-3xl items-start gap-3 rounded-lg border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-foreground">
+            <Wrench className="mt-0.5 h-5 w-5 shrink-0 text-amber-600 dark:text-amber-400" aria-hidden="true" />
+            <div className="flex-1 leading-6">
+              <p className="font-semibold">Service update <span className="font-normal text-muted-foreground">• July 27, 2026</span></p>
+              <p>Sorry for the recent delay in coupon restocks. Panda Express and Wingstop surveys have been changing this past month. The Wingstop fix is now live and coupons are refilling automatically again. I&apos;m still working on Panda Express.</p>
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={acknowledgeServiceUpdate}
+              className="shrink-0 text-amber-700 hover:bg-amber-500/20 hover:text-amber-800 dark:text-amber-300 dark:hover:text-amber-200"
+              aria-label="Mark service update as viewed"
+              title="Got it"
+            >
+              <Check className="h-5 w-5" aria-hidden="true" />
+            </Button>
+          </div>
+        </section>
+      )}
+
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-12">
         <div className="text-center space-y-6">
