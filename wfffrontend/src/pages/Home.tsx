@@ -132,8 +132,8 @@ const Home = () => {
           <div className="mx-auto flex max-w-3xl items-start gap-3 rounded-lg border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-foreground">
             <Wrench className="mt-0.5 h-5 w-5 shrink-0 text-amber-600 dark:text-amber-400" aria-hidden="true" />
             <div className="flex-1 leading-6">
-              <p className="font-semibold">Service update <span className="font-normal text-muted-foreground">• July 27, 2026</span></p>
-              <p>Sorry for the recent delay in coupon restocks. Panda Express and Wingstop surveys have been changing this past month. The Wingstop fix is now live and coupons are refilling automatically again. I&apos;m still working on Panda Express.</p>
+              <p className="font-semibold">Service update <span className="font-normal text-muted-foreground">• September 8, 2026</span></p>
+              <p>The Panda Express fix is now live! 🥳 Coupons are refilling automatically again for both Wingstop and Panda Express. Enjoy the free food!</p>
             </div>
             <Button
               variant="ghost"
