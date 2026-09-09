@@ -22,7 +22,9 @@ def panda_survey(email):
     options.add_argument("--incognito")
     
     # Render.com support
-    options.binary_location = '/opt/render/project/.render/chrome/opt/google/chrome'
+    # undetected-chromedriver requires the exact executable file path, not the folder.
+    # Try /chrome or /google-chrome at the end of the path.
+    options.binary_location = '/opt/render/project/.render/chrome/opt/google/chrome/google-chrome'
     load_dotenv(dotenv_path='/etc/secrets/.env')
 
     # load_dotenv()
