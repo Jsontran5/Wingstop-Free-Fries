@@ -105,7 +105,6 @@ def panda_survey(email):
         
         while search_text not in driver.page_source:
             if "Block.aspx" in driver.current_url:
-                driver.save_screenshot("panda_diagnostics/blocked_survey.png")
                 return "Blocked during survey."
             try:
                 # Find all radio buttons. We'll just click the first one we see.
@@ -132,8 +131,6 @@ def panda_survey(email):
                 
                 next_btn = wait(5).until(EC.element_to_be_clickable((By.ID, "NextButton")))
                 
-                time.sleep(1) # small pause before next
-                driver.save_screenshot(f"panda_diagnostics/page_{time.time()}.png")
                 next_btn.click()
                 time.sleep(2) # Wait for next page to load
             except Exception as e:

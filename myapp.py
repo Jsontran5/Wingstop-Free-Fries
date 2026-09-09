@@ -123,20 +123,27 @@ def create_app():
     
     @app.route('/pandaemail/<email>')
     def pandaemail(email):
-        panda_survey(email)
-        string = "Populated Panda Express: " + email
-        return string
+        result = panda_survey(email)
+        if result and "Success" in result:
+            return f"Populated Panda Express: {email} - {result}"
+        else:
+            return f"Failed to populate Panda Express: {email} - Error: {result}"
+
     @app.route('/wingstopemail/<email>')
     def wingstopemail(email):
-        wingstop_survey(email)
-        string = "Populated Wingstop: " + email
-        return string
+        result = wingstop_survey(email)
+        if result and "Success" in result:
+            return f"Populated Wingstop: {email} - {result}"
+        else:
+            return f"Failed to populate Wingstop: {email} - Error: {result}"
 
     @app.route('/blazeemail/<email>')
     def blazeemail(email):
-        blaze_pizza_survey(email)
-        string = "Populated Blaze Pizza: " + email
-        return string
+        result = blaze_pizza_survey(email)
+        if result and "Success" in result:
+            return f"Populated Blaze Pizza: {email} - {result}"
+        else:
+            return f"Failed to populate Blaze Pizza: {email} - Error: {result}"
 
     @app.route('/rubiosemail/<email>')
     def rubiosemail(email):
