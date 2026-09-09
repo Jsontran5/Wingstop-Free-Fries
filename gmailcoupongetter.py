@@ -94,7 +94,7 @@ def wingstopcoupongetter():
         # Convert the datetime object to Unix timestamp
         datemailreceivedunix = int(date_object.timestamp())
         # Subtract the time to get only the date in Unix timestamp
-        safeexpiredateunix = (datemailreceivedunix) + (9 * 24 * 60 * 60)
+        safeexpiredateunix = (datemailreceivedunix) + (5 * 24 * 60 * 60)
         
        # print("safeexpiredateunix:", safeexpiredateunix)
 

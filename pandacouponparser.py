@@ -6,58 +6,47 @@ import pytz
 pacific_tz = pytz.timezone('America/Los_Angeles')
 
 def pandamailparse(email):
-    contents = email
+    soup = BeautifulSoup(email, 'html.parser')
+    
+    # 1. Try to find code by class name 'coupon-code'
+    code = None
+    code_span = soup.find('span', class_='coupon-code')
+    if code_span:
+        code = code_span.text.strip()
+    
+    # fallback: look for uppercase alphanumeric string >= 8 chars among !important spans
+    if not code:
+        code_elements = soup.find_all('span', style=lambda value: value and 'important' in value)
+        for el in code_elements:
+            c = el.text.strip()
+            # typically exactly 9 chars, uppercase and digits, but allow 8-15
+            if re.match(r'^[A-Z0-9]{8,15}$', c):
+                code = c
+                break
 
-    # Find elements with inline styles containing !important
-    soup = BeautifulSoup(contents, 'html.parser')
-
-# Find the element containing the code
-    code_elements = soup.find_all('span', style=lambda value: value and 'important' in value)
-
-# Extract the text from each element
-    codes = []
-    for code_element in code_elements:
-        code = code_element.text.strip()
-        codes.append(code)
-
-    # Print the extracted codes
-    if codes:
-        #print("Codes found:")
-        #print(codes[2])
-        #print(codes[3])
-
-        date_pattern = r'\d{2}/\d{2}/\d{4}'
-
-        dates = re.findall(date_pattern, codes[3])
-        first_date = dates[0] if dates else None
-        #print(first_date)
-
-        return codes[2], first_date
-        # date_format = "%m/%d/%Y"
-
-        # Parse the date string into a datetime object
-        # date_object = datetime.strptime(first_date, date_format)
-        # localized_date_object = pacific_tz.localize(date_object)
-
-        # Convert the datetime object to a Unix timestamp
-        # unix_timestamp = int(date_object.timestamp())
-
-        # Print the Unix timestamp
-        # print(unix_timestamp)
-
-        # expiredate = unix_timestamp - 24 * 60 * 60
-        # print(expiredate)
-
-        # formatted_date = datetime.fromtimestamp(expiredate, tz=pytz.utc).astimezone(pytz.timezone('America/Los_Angeles')).strftime("%m/%d/%Y")
-        # print(formatted_date)
-
-        # unix_time_pacific = int(datetime.now(pacific_tz).timestamp())
-        # print(unix_time_pacific)
-        # current_date = datetime.fromtimestamp(unix_time_pacific, tz=pytz.utc).astimezone(pytz.timezone('America/Los_Angeles')).strftime("%m/%d/%Y")
-        # print(current_date)
+    # 2. Try to find the date
+    text = soup.get_text(separator=' ')
+    date_pattern = r'\d{2}/\d{2}/\d{4}'
+    first_date = None
+    
+    # More specific search first
+    date_match = re.search(r'expire[s]? on (\d{2}/\d{2}/\d{4})', text, re.IGNORECASE)
+    if date_match:
+        first_date = date_match.group(1)
     else:
-        print("pandamailparse(): Codes not found")
-        return "NO CODE", "NO DATE"
+        # Fallback to any date
+        dates = re.findall(date_pattern, text)
+        if dates:
+            first_date = dates[0]
+
+    if not code:
+        print("pandamailparse(): Code not found")
+        return "NO CODE", first_date
+
+    if not first_date:
+        print("pandamailparse(): Date not found")
+        
+    return code, first_date
     
 def main():
     email = """<div id="mail"><div>

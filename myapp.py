@@ -173,14 +173,39 @@ def create_app():
     @app.route('/updatecoupondatabase')
     def updatecoupondatabase():
         print("======DELETING=======")
-        PEcoupondeleter()
-        wingstopcoupondeleter()
-        #blazecoupondeleter()
-        rubioscoupondeleter()
+        try:
+            PEcoupondeleter()
+        except Exception as e:
+            print(f"Error in PEcoupondeleter: {e}")
+        try:
+            wingstopcoupondeleter()
+        except Exception as e:
+            print(f"Error in wingstopcoupondeleter: {e}")
+        try:
+            #blazecoupondeleter()
+            pass
+        except Exception as e:
+            print(f"Error in blazecoupondeleter: {e}")
+        try:
+            rubioscoupondeleter()
+        except Exception as e:
+            print(f"Error in rubioscoupondeleter: {e}")
+        
         print("=====FETCHING========")
-        PEcoupongetter()
-        wingstopcoupongetter()
-        #blazecoupongetter()
+        try:
+            PEcoupongetter()
+        except Exception as e:
+            print(f"Error in PEcoupongetter: {e}")
+        try:
+            wingstopcoupongetter()
+        except Exception as e:
+            print(f"Error in wingstopcoupongetter: {e}")
+        try:
+            #blazecoupongetter()
+            pass
+        except Exception as e:
+            print(f"Error in blazecoupongetter: {e}")
+            
         print("=======COUNTING========")
         panda__coupon_count = count_panda_coupons()
         wingstop__coupon_count = count_wingstop_coupons()
@@ -198,10 +223,23 @@ def create_app():
     @app.route('/deleteexpiredcoupons')
     def deleteexpiredcoupons():
         print("======DELETING=======")
-        PEcoupondeleter()
-        wingstopcoupondeleter()
-        blazecoupondeleter()
-        rubioscoupondeleter()
+        try:
+            PEcoupondeleter()
+        except Exception as e:
+            print(f"Error in PEcoupondeleter: {e}")
+        try:
+            wingstopcoupondeleter()
+        except Exception as e:
+            print(f"Error in wingstopcoupondeleter: {e}")
+        try:
+            blazecoupondeleter()
+        except Exception as e:
+            print(f"Error in blazecoupondeleter: {e}")
+        try:
+            rubioscoupondeleter()
+        except Exception as e:
+            print(f"Error in rubioscoupondeleter: {e}")
+            
         print("=======COUNTING========")
         panda__coupon_count = count_panda_coupons()
         wingstop__coupon_count = count_wingstop_coupons()
@@ -219,9 +257,19 @@ def create_app():
     @app.route('/fetchcoupons')
     def fetchcoupons():
         print("=====FETCHING========")
-        PEcoupongetter()
-        wingstopcoupongetter()
-        blazecoupongetter()
+        try:
+            PEcoupongetter()
+        except Exception as e:
+            print(f"Error in PEcoupongetter: {e}")
+        try:
+            wingstopcoupongetter()
+        except Exception as e:
+            print(f"Error in wingstopcoupongetter: {e}")
+        try:
+            blazecoupongetter()
+        except Exception as e:
+            print(f"Error in blazecoupongetter: {e}")
+            
         print("=======COUNTING========")
         panda__coupon_count = count_panda_coupons()
         wingstop__coupon_count = count_wingstop_coupons()
