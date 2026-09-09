@@ -76,7 +76,7 @@ def panda_survey(email):
             hour = os.getenv("PANDA_TIME_HOUR").zfill(2)
             minute = os.getenv("PANDA_TIME_MINUTE").zfill(2)
             meridian = os.getenv("PANDA_TIME_MERIDIAN")
-            order_num = os.getenv("PANDA_ORDER")
+            order_num = str(random.randint(100000, 999999))
             
             display_date = visit_date.strftime("%m/%d/%Y")
             clear_and_type(store_input, store_num)
@@ -105,7 +105,12 @@ def panda_survey(email):
         # Now just loop through the survey clicking 'NextButton' until email field appears
         search_text = "Please provide your email address to receive your coupon code."
         
+        loop_count = 0
         while search_text not in driver.page_source:
+            loop_count += 1
+            if loop_count > 30:
+                return "Blocked or stuck on survey page. Max loops reached."
+            
             if "Block.aspx" in driver.current_url:
                 return "Blocked during survey."
             try:
