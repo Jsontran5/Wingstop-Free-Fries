@@ -64,10 +64,14 @@ def wingstop_survey(email, headless=None):
         email_locator = (By.ID, "S000132")
         confirm_email_locator = (By.ID, "S000133")
 
+        loop_count = 0
         while not (
             driver.find_elements(*email_locator)
             and driver.find_elements(*confirm_email_locator)
         ):
+            loop_count += 1
+            if loop_count > 30:
+                raise Exception("Blocked or stuck on Wingstop survey.")
             click_next_and_wait_for_progress()
 
         print("Coupon email screen found.")
