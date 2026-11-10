@@ -132,8 +132,17 @@ const Home = () => {
           <div className="mx-auto flex max-w-3xl items-start gap-3 rounded-lg border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-foreground">
             <Wrench className="mt-0.5 h-5 w-5 shrink-0 text-amber-600 dark:text-amber-400" aria-hidden="true" />
             <div className="flex-1 leading-6">
-              <p className="font-semibold">Service update <span className="font-normal text-muted-foreground">• September 8, 2026</span></p>
-              <p>The Panda Express fix is now live! 🥳 Coupons are refilling automatically again for both Wingstop and Panda Express. Enjoy the free food!</p>
+              <p className="font-semibold">Service update <span className="font-normal text-muted-foreground">• November 9, 2026</span></p>
+              <p>
+                Hey guys, I think I actually have the Panda Express method working again this time!😅Apologies for the downtime over the past month. Recruiting has had me completely tied up. It should be refilling properly now, but as always, please{' '}
+                <a
+                  href="mailto:foodsurveycodes@gmail.com"
+                  className="underline font-medium hover:text-amber-700 dark:hover:text-amber-300"
+                >
+                  let me know
+                </a>{' '}
+                if a restaurant is empty. Huge thank you to everyone who stuck around and kept using the Wingstop method in the meantime. You guys are the best! Enjoy the food.
+              </p>
             </div>
             <Button
               variant="ghost"
