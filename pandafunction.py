@@ -11,8 +11,31 @@ from datetime import timedelta
 import pytz
 from dotenv import load_dotenv
 import os
+import re
+import subprocess
 from pathlib import Path
 import random
+
+def get_chrome_version_main(binary_location=None):
+    exe = binary_location or uc.find_chrome_executable()
+    if exe and os.path.exists(exe):
+        try:
+            out = subprocess.check_output([exe, "--version"], stderr=subprocess.STDOUT, text=True, timeout=5)
+            m = re.search(r"(\d+)\.\d+\.\d+", out)
+            if m:
+                return int(m.group(1))
+        except Exception:
+            pass
+        parent = os.path.dirname(exe)
+        if os.path.isdir(parent):
+            versions = [
+                int(m.group(1))
+                for entry in os.listdir(parent)
+                if (m := re.match(r"^(\d+)\.\d+\.\d+\.\d+$", entry))
+            ]
+            if versions:
+                return max(versions)
+    return None
 
 def panda_survey(email):
     options = uc.ChromeOptions()
@@ -31,8 +54,9 @@ def panda_survey(email):
 
     # load_dotenv()
 
-    # Use undetected-chromedriver
-    driver = uc.Chrome(options=options, version_main=152)
+    # Use undetected-chromedriver with dynamically detected Chrome major version
+    version_main = get_chrome_version_main(getattr(options, "binary_location", None))
+    driver = uc.Chrome(options=options, version_main=version_main)
     
     def wait(timeout=10):
         return WebDriverWait(driver, timeout)
