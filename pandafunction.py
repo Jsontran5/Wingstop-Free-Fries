@@ -10,9 +10,12 @@ import datetime
 from datetime import timedelta
 import pytz
 from dotenv import load_dotenv
+import gc
 import os
 import re
+import shutil
 import subprocess
+import tempfile
 from pathlib import Path
 import random
 
@@ -37,6 +40,22 @@ def get_chrome_version_main(binary_location=None):
                 return max(versions)
     return None
 
+def get_cached_uc_driver_path(version_main):
+    try:
+        patcher = uc.Patcher(version_main=version_main)
+        ext = ".exe" if os.name == "nt" else ""
+        cached_path = os.path.join(patcher.data_path, f"uc_driver_v{version_main or 'auto'}{ext}")
+        if os.path.exists(cached_path) and patcher.is_binary_patched(cached_path):
+            return cached_path
+        patcher.auto()
+        if os.path.exists(patcher.executable_path):
+            shutil.copy2(patcher.executable_path, cached_path)
+            os.chmod(cached_path, 0o755)
+            return cached_path
+    except Exception as e:
+        print(f"Warning: could not cache uc driver: {e}")
+    return None
+
 def panda_survey(email):
     options = uc.ChromeOptions()
     options.add_argument("--headless=new")
@@ -45,6 +64,16 @@ def panda_survey(email):
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--incognito")
+    options.add_argument("--disable-background-networking")
+    options.add_argument("--disable-default-apps")
+    options.add_argument("--disable-sync")
+    options.add_argument("--disable-translate")
+    options.add_argument("--mute-audio")
+    options.add_argument("--no-first-run")
+    options.add_argument("--disk-cache-size=1")
+    options.add_argument("--media-cache-size=1")
+    options.add_argument("--renderer-process-limit=1")
+    options.add_argument("--js-flags=--max-old-space-size=128")
     
     # Render.com support
     # undetected-chromedriver requires the exact executable file path, not the folder.
@@ -54,10 +83,9 @@ def panda_survey(email):
 
     # load_dotenv()
 
-    # Use undetected-chromedriver with dynamically detected Chrome major version
-    version_main = get_chrome_version_main(getattr(options, "binary_location", None))
-    driver = uc.Chrome(options=options, version_main=version_main)
-    
+    driver = None
+    user_data_dir = tempfile.mkdtemp(prefix="panda_uc_")
+
     def wait(timeout=10):
         return WebDriverWait(driver, timeout)
 
@@ -82,6 +110,15 @@ def panda_survey(email):
         raise last_error
 
     try:
+        # Use undetected-chromedriver with dynamically detected Chrome major version
+        version_main = get_chrome_version_main(getattr(options, "binary_location", None))
+        driver_executable_path = get_cached_uc_driver_path(version_main)
+        driver = uc.Chrome(
+            options=options,
+            version_main=version_main,
+            user_data_dir=user_data_dir,
+            driver_executable_path=driver_executable_path,
+        )
         driver.get("https://www.pandaguestexperience.com/?POSType=PieceMeal")
 
         # Wait for either the block page or the receipt entry / survey page
@@ -188,7 +225,27 @@ def panda_survey(email):
     except Exception as e:
         result = f"An error occurred: {str(e)}"
     finally:
-        driver.quit()
+        browser_pid = getattr(driver, "browser_pid", None) if driver else None
+        if driver:
+            try:
+                driver.quit()
+            except Exception:
+                pass
+        if os.name != "nt":
+            if browser_pid:
+                try:
+                    os.kill(browser_pid, 9)
+                except Exception:
+                    pass
+            if user_data_dir:
+                try:
+                    subprocess.run(["pkill", "-9", "-f", user_data_dir], check=False)
+                except Exception:
+                    pass
+            time.sleep(0.2)
+        if user_data_dir:
+            shutil.rmtree(user_data_dir, ignore_errors=True)
+        gc.collect()
 
     return result
 

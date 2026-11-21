@@ -287,6 +287,7 @@ def PEcoupondeleter():
                         mail.expunge()
 
                         print(f'Moved {coupon.key()} from "UNUSED: IN DB" to "UNUSED: NOT IN DB"')
+    mail.logout()
     after_delete = count_panda_coupons()
     total_deleted = before_delete - after_delete
     print(f"Removed {total_deleted} Panda Express coupons")
@@ -332,6 +333,7 @@ def wingstopcoupondeleter():
                         print(f'Moved {coupon.key()} from "UNUSED: IN DB" to "UNUSED: NOT IN DB"')
                 
            
+    mail.logout()
     after_delete = count_wingstop_coupons()
     total_deleted = before_delete - after_delete
     print(f"Removed {total_deleted} Wingstop coupons")
@@ -490,6 +492,7 @@ def blazecoupondeleter():
                         mail.expunge()
 
                         print(f'Moved {coupon.key()} from "UNUSED: IN DB" to "UNUSED: NOT IN DB"')
+    mail.logout()
     after_delete = count_blaze_coupons()
     total_deleted = before_delete - after_delete
     print(f"Removed {total_deleted} Blaze Pizza coupons")
@@ -632,6 +635,7 @@ def usedcoupon(code):
             mail.expunge()
             
             print(f'Moved {code} from "UNUSED: IN DB" to "USED: NOT IN DB"')
+    mail.logout()
 
 
 def main():

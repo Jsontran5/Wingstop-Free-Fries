@@ -3,22 +3,40 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+import gc
+import os
+import shutil
+import subprocess
+import tempfile
 import time
 
 
 def rubios_survey():
     chrome_options = webdriver.ChromeOptions()
 
-    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--headless=new")
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--window-size=1920,1080")
     chrome_options.add_argument("--ignore-certificate-errors")
     chrome_options.add_argument("--disable-extensions")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
-    #chrome_options.add_argument("--incognito")
-    chrome_options.binary_location = '/opt/render/project/.render/chrome/opt/google/chrome' #for render.com
+    chrome_options.add_argument("--incognito")
+    chrome_options.add_argument("--disable-background-networking")
+    chrome_options.add_argument("--disable-default-apps")
+    chrome_options.add_argument("--disable-sync")
+    chrome_options.add_argument("--disable-translate")
+    chrome_options.add_argument("--mute-audio")
+    chrome_options.add_argument("--no-first-run")
+    chrome_options.add_argument("--disk-cache-size=1")
+    chrome_options.add_argument("--media-cache-size=1")
+    chrome_options.add_argument("--renderer-process-limit=1")
+    chrome_options.add_argument("--js-flags=--max-old-space-size=128")
+    chrome_options.binary_location = '/opt/render/project/.render/chrome/opt/google/chrome/google-chrome' #for render.com
 
+    driver = None
+    user_data_dir = tempfile.mkdtemp(prefix="rubios_chrome_")
+    chrome_options.add_argument(f"--user-data-dir={user_data_dir}")
     try:
         driver = webdriver.Chrome(options=chrome_options)
         def wait_for_new_url(driver, previous_url, timeout=5):
@@ -88,12 +106,21 @@ def rubios_survey():
     except Exception as e:
         result = f"An error occurred: {str(e)}"
     finally:
-        if 'driver' in locals() and driver is not None:
-            driver.quit()
-        return result
-        
-    input("Press Enter to close the browser...")
-    driver.quit()
+        if driver is not None:
+            try:
+                driver.quit()
+            except Exception:
+                pass
+        if os.name != "nt" and user_data_dir:
+            try:
+                subprocess.run(["pkill", "-9", "-f", user_data_dir], check=False)
+            except Exception:
+                pass
+        if user_data_dir:
+            shutil.rmtree(user_data_dir, ignore_errors=True)
+        gc.collect()
+
+    return result
 
 def main():
     valid_code = rubios_survey()
